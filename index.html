@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunrise Alarm</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json"> <!-- Per PWA -->
+    <title>Sunrise Alarm Migliorata</title>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiU3VucmlzZSBBbGFybSIsInNob3J0X25hbWUiOiJTdW5yaXNlIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmZmZmZmYiLCJ0aGVtZV9jb2xvciI6IiMwMDdiZmYiLCJpY29ucyI6W3sic3JjIjoic3VucmlzZS1pY29uLTE5Mi5wbmciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn0seyJzcmMiOiJzdW5yaXNlLWljb24tNTEyLnBuZyIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9wbmcifV19">
     <meta name="theme-color" content="#ffffff">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; color: #333; padding: 20px; text-align: center; }
+        #main { max-width: 400px; margin: auto; }
+        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #alarm-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: background 300s linear; }
+        #time-display { font-size: 24px; position: absolute; top: 20px; left: 20px; }
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
     <div id="main">
-        <h1>Sunrise Alarm</h1>
+        <h1>Sunrise Alarm Migliorata</h1>
         <input type="time" id="alarm-time" value="07:00">
         <button id="set-alarm">Imposta Sveglia</button>
         <button id="test-alarm">Test (10 sec)</button>
@@ -21,6 +28,178 @@
         <div id="time-display"></div>
         <button id="stop-alarm">STOP</button>
     </div>
-    <script src="script.js"></script>
+    <script>
+        // Variabili configurabili
+        let alarmTimeout;
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let audioSource = null;
+        let gainNode = null; // Per fade volume smooth
+        let audioBuffer = null; // Buffer per audio caricato
+        let audioFile = null;
+        const fadeDuration = 600000; // 10 min fade audio
+        const lightFadeDuration = 300000; // 5 min fade luce
+        const vibrationDelay = 300000; // 5 min delay vibrazione
+        const vibrationFadeDuration = 300000; // 5 min fade vibrazione
+        let isAlarmActive = false;
+        let lightInterval, volumeInterval, vibInterval;
+
+        // Richiedi permessi
+        async function requestPermissions() {
+            if (Notification.permission !== 'granted') {
+                await Notification.requestPermission();
+            }
+            if ('wakeLock' in navigator) {
+                try {
+                    await navigator.wakeLock.request('screen');
+                } catch (err) { console.error('Wake Lock failed:', err); }
+            }
+        }
+
+        // Carica audio personalizzato e prepara buffer
+        document.getElementById('audio-file').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                audioFile = file;
+                const arrayBuffer = await file.arrayBuffer();
+                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+            }
+        });
+
+        // Imposta sveglia
+        document.getElementById('set-alarm').addEventListener('click', () => {
+            const timeInput = document.getElementById('alarm-time').value;
+            if (!timeInput) return;
+            const [hours, minutes] = timeInput.split(':').map(Number);
+            const now = new Date();
+            let alarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+            if (alarmTime < now) alarmTime.setDate(alarmTime.getDate() + 1);
+            const delay = alarmTime - now;
+            clearTimeout(alarmTimeout);
+            alarmTimeout = setTimeout(triggerAlarm, delay);
+            document.getElementById('status').textContent = `Sveglia impostata per ${timeInput}`;
+            showNotification('Sveglia impostata', { body: `Alle ${timeInput}` });
+        });
+
+        // Test mode
+        document.getElementById('test-alarm').addEventListener('click', () => {
+            clearTimeout(alarmTimeout);
+            alarmTimeout = setTimeout(triggerAlarm, 10000);
+            document.getElementById('status').textContent = 'Test in corso...';
+        });
+
+        // Trigger alarm migliorato
+        async function triggerAlarm() {
+            if (isAlarmActive) return;
+            isAlarmActive = true;
+            await requestPermissions();
+
+            // Mostra schermo full-screen
+            const alarmScreen = document.getElementById('alarm-screen');
+            alarmScreen.style.display = 'flex';
+            alarmScreen.requestFullscreen().catch(() => {});
+            document.getElementById('time-display').textContent = new Date().toLocaleTimeString();
+
+            // Fade luce smooth (da nero a arancione/bianco, usando requestAnimationFrame per no flash)
+            let lightStart = performance.now();
+            alarmScreen.style.background = 'rgba(0,0,0,1)';
+            function fadeLight(timestamp) {
+                const progress = (timestamp - lightStart) / lightFadeDuration;
+                if (progress >= 1) {
+                    alarmScreen.style.background = 'rgb(255, 200, 150)'; // Colore alba finale
+                    return;
+                }
+                const r = Math.min(255, progress * 255);
+                const g = Math.min(200, progress * 200);
+                const b = Math.min(150, progress * 150);
+                alarmScreen.style.background = `rgb(${r}, ${g}, ${b})`;
+                lightInterval = requestAnimationFrame(fadeLight);
+            }
+            lightInterval = requestAnimationFrame(fadeLight);
+
+            // Audio fade smooth con Web Audio API (no lag, volume lineare logaritmico)
+            if (audioBuffer) {
+                audioSource = audioContext.createBufferSource();
+                audioSource.buffer = audioBuffer;
+                audioSource.loop = true;
+                gainNode = audioContext.createGain();
+                gainNode.gain.value = 0; // Inizia a 0
+                audioSource.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                audioSource.start();
+
+                let volumeStart = performance.now();
+                function fadeVolume(timestamp) {
+                    const progress = (timestamp - volumeStart) / fadeDuration;
+                    if (progress >= 1) {
+                        gainNode.gain.value = 1; // Max volume
+                        return;
+                    }
+                    gainNode.gain.value = Math.pow(progress, 2); // Curva logaritmica delicata
+                    volumeInterval = requestAnimationFrame(fadeVolume);
+                }
+                volumeInterval = requestAnimationFrame(fadeVolume);
+            }
+
+            // Vibrazione graduale dopo delay (pattern crescente, no vib costante)
+            setTimeout(() => {
+                let vibStart = performance.now();
+                function fadeVib(timestamp) {
+                    const progress = (timestamp - vibStart) / vibrationFadeDuration;
+                    if (progress >= 1) return;
+                    const intensity = Math.min(500, progress * 500); // Da 0 a 500ms
+                    const pause = 1000 - intensity; // Pause decrescente
+                    navigator.vibrate([intensity, pause]);
+                    vibInterval = requestAnimationFrame(fadeVib);
+                }
+                vibInterval = requestAnimationFrame(fadeVib);
+            }, vibrationDelay);
+
+            showNotification('Sveglia!', { body: 'Tempo di svegliarsi!' });
+        }
+
+        // Stop alarm migliorato (fade out smooth)
+        document.getElementById('stop-alarm').addEventListener('click', () => {
+            isAlarmActive = false;
+            if (audioSource) {
+                let fadeOutStart = performance.now();
+                function fadeOutVolume(timestamp) {
+                    const progress = (timestamp - fadeOutStart) / 5000; // 5 sec fade out
+                    if (progress >= 1) {
+                        audioSource.stop();
+                        return;
+                    }
+                    gainNode.gain.value = 1 - Math.pow(progress, 2);
+                    requestAnimationFrame(fadeOutVolume);
+                }
+                requestAnimationFrame(fadeOutVolume);
+            }
+            navigator.vibrate(0); // Stop vib
+            cancelAnimationFrame(lightInterval);
+            cancelAnimationFrame(volumeInterval);
+            cancelAnimationFrame(vibInterval);
+            const alarmScreen = document.getElementById('alarm-screen');
+            alarmScreen.style.background = 'rgba(0,0,0,0)';
+            setTimeout(() => { alarmScreen.style.display = 'none'; if (document.fullscreenElement) document.exitFullscreen(); }, 1000);
+            document.getElementById('status').textContent = 'Sveglia fermata';
+        });
+
+        // Mostra notifica
+        function showNotification(title, options) {
+            if (Notification.permission === 'granted') {
+                new Notification(title, options);
+            }
+        }
+
+        // Service Worker per offline/PWA
+        const swCode = `
+            self.addEventListener('install', (event) => { self.skipWaiting(); });
+            self.addEventListener('activate', (event) => { event.waitUntil(self.clients.claim()); });
+        `;
+        if ('serviceWorker' in navigator) {
+            const swBlob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(swBlob);
+            navigator.serviceWorker.register(swUrl).then(() => console.log('SW registrato')).catch(err => console.error('SW error:', err));
+        }
+    </script>
 </body>
 </html>
