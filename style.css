@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; text-align: center; }
+#main { max-width: 400px; margin: auto; }
+button { padding: 10px; margin: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
+#alarm-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: black; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
+#alarm-screen.hidden { display: none; }
+#time-display { font-size: 24px; position: absolute; top: 20px; left: 20px; }
