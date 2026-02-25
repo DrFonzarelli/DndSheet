@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunrise Alarm</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json"> <!-- Per PWA -->
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <div id="main">
+        <h1>Sunrise Alarm</h1>
+        <input type="time" id="alarm-time" value="07:00">
+        <button id="set-alarm">Imposta Sveglia</button>
+        <button id="test-alarm">Test (10 sec)</button>
+        <input type="file" id="audio-file" accept="audio/*">
+        <p id="status">Nessuna sveglia impostata</p>
+    </div>
+    <div id="alarm-screen" class="hidden">
+        <div id="time-display"></div>
+        <button id="stop-alarm">STOP</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
