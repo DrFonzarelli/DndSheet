@@ -1,205 +1,711 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunrise Alarm Migliorata</title>
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiU3VucmlzZSBBbGFybSIsInNob3J0X25hbWUiOiJTdW5yaXNlIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmZmZmZmYiLCJ0aGVtZV9jb2xvciI6IiMwMDdiZmYiLCJpY29ucyI6W3sic3JjIjoic3VucmlzZS1pY29uLTE5Mi5wbmciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn0seyJzcmMiOiJzdW5yaXNlLWljb24tNTEyLnBuZyIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9wbmcifV19">
-    <meta name="theme-color" content="#ffffff">
-    <style>
-        body { font-family: Arial, sans-serif; background: #f0f0f0; color: #333; padding: 20px; text-align: center; }
-        #main { max-width: 400px; margin: auto; }
-        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        #alarm-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0); color: white; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: background 300s linear; }
-        #time-display { font-size: 24px; position: absolute; top: 20px; left: 20px; }
-        .hidden { display: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sir Percius">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f0d08">
+<title>Sir Percius Precarius</title>
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sir%20Percius%20Precarius%22%2C%22short_name%22%3A%22Percius%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f0d08%22%2C%22theme_color%22%3A%22%230f0d08%22%7D">
+<style>
+:root {
+  --bg:#0f0d08; --bg2:#1a1610; --bg3:#221d13;
+  --pa:#c9a96e; --pd:#8a6e42;
+  --go:#d4a843; --gd:#7a5f24;
+  --re:#c43030;
+  --in:#e8d5b0; --id:#9a8a6a;
+  --bo:#3d3020; --bb:#6a5030;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+
+/* LANG SWITCH via body class */
+body.en .it{display:none!important;}
+body.en .en{display:block!important;}
+body:not(.en) .en{display:none!important;}
+body:not(.en) .it{display:block!important;}
+body.en .it-i{display:none!important;}
+body.en .en-i{display:inline!important;}
+body:not(.en) .en-i{display:none!important;}
+body:not(.en) .it-i{display:inline!important;}
+
+body{background:var(--bg);color:var(--in);font-family:Georgia,'Times New Roman',serif;font-size:16px;min-height:100dvh;padding-bottom:72px;padding-top:env(safe-area-inset-top);}
+.P{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;}
+
+/* HEADER */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--bb);padding:12px 14px 10px;padding-top:calc(12px + env(safe-area-inset-top));position:sticky;top:0;z-index:50;box-shadow:0 3px 16px #00000077;}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.cname{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:18px;font-weight:700;color:var(--go);}
+.csub{font-style:italic;color:var(--id);font-size:13px;margin-top:2px;line-height:1.4;}
+.hdr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+
+/* HP */
+.hpw{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
+.hpl{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:9px;color:var(--pd);letter-spacing:.12em;text-transform:uppercase;}
+.hpc{display:flex;align-items:center;gap:5px;}
+.hpb{width:30px;height:30px;border-radius:5px;border:1px solid var(--bb);background:var(--bg3);color:var(--go);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;}
+.hpb:active{background:var(--bo);}
+.hpn{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:24px;font-weight:700;color:var(--re);min-width:36px;text-align:center;}
+.hpm{color:var(--id);font-size:12px;text-align:right;}
+
+/* LANG BTN */
+.lbtn{padding:4px 10px;border-radius:20px;border:1px solid var(--bb);background:var(--bg3);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:12px;color:var(--go);cursor:pointer;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.lbtn:active{background:var(--bo);}
+
+/* NAV */
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bb);display:flex;z-index:100;box-shadow:0 -3px 14px #00000055;padding-bottom:env(safe-area-inset-bottom);}
+.nb{flex:1;padding:7px 2px 9px;background:none;border:none;color:var(--id);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:9px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;user-select:none;}
+.nb .ic{font-size:19px;}
+.nb.active{color:var(--go);}
+
+/* PAGES */
+.pg{display:none;padding:14px;}
+.pg.active{display:block;}
+
+/* SECTION */
+.sec{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--pd);border-bottom:1px solid var(--bo);padding-bottom:5px;margin-bottom:10px;margin-top:18px;}
+.sec:first-child{margin-top:0;}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
+.sb{background:var(--bg2);border:1px solid var(--bo);border-radius:7px;padding:8px 5px;text-align:center;}
+.sn{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:7.5px;letter-spacing:.1em;color:var(--pd);text-transform:uppercase;}
+.ss{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:26px;font-weight:700;color:var(--in);line-height:1.1;}
+.sm{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:14px;color:var(--go);font-weight:600;}
+
+/* COMBAT */
+.cg{display:grid;gap:7px;margin-bottom:7px;}
+.cg4{grid-template-columns:repeat(4,1fr);}
+.cg2{grid-template-columns:repeat(2,1fr);}
+.cb2{background:var(--bg2);border:1px solid var(--bo);border-radius:7px;padding:8px 5px;text-align:center;}
+.cl{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:7px;letter-spacing:.07em;color:var(--pd);text-transform:uppercase;line-height:1.4;}
+.cv{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:21px;font-weight:700;color:var(--go);}
+
+/* ROWS */
+.rows{display:flex;flex-direction:column;gap:4px;}
+.row{display:flex;align-items:center;gap:8px;padding:5px 9px;background:var(--bg2);border:1px solid var(--bo);border-radius:5px;}
+.dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--bb);flex-shrink:0;}
+.dot.f{background:var(--go);border-color:var(--go);}
+.rn{flex:1;font-size:14px;}
+.rs{font-size:11px;color:var(--id);font-style:italic;min-width:26px;}
+.rv{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:14px;font-weight:600;color:var(--go);min-width:28px;text-align:right;}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--bo);border-radius:8px;margin-bottom:9px;overflow:hidden;}
+.ch{padding:10px 13px 8px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;user-select:none;}
+.ch:active{background:var(--bg3);}
+.ct{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:15px;font-weight:600;color:var(--pa);line-height:1.2;}
+.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px;}
+.tag{font-size:11px;color:var(--id);background:var(--bg3);border:1px solid var(--bo);border-radius:3px;padding:1px 5px;font-style:italic;}
+.tag.g{color:var(--go);border-color:var(--gd);}
+.chv{color:var(--gd);font-size:13px;flex-shrink:0;margin-top:3px;transition:transform .2s;}
+.card.open .chv{transform:rotate(180deg);}
+.cbody{display:none;padding:10px 13px 12px;border-top:1px solid var(--bo);}
+.card.open .cbody{display:block;}
+.tx{font-size:15px;line-height:1.65;color:var(--in);}
+.tx p{margin-bottom:7px;}
+.tx p:last-child{margin-bottom:0;}
+.tx strong{color:var(--pa);font-weight:600;}
+.tx em{color:var(--go);font-style:italic;}
+.olbl{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);margin-bottom:6px;}
+.note{margin-top:10px;padding:7px 10px;background:var(--bg3);border-left:2px solid var(--gd);border-radius:4px;font-style:italic;color:var(--id);font-size:14px;line-height:1.5;}
+
+/* SLOT */
+.srow{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--bg2);border:1px solid var(--bo);border-radius:8px;margin-bottom:9px;cursor:pointer;user-select:none;}
+.srow:active{background:var(--bg3);}
+.slbl{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:11px;color:var(--pd);letter-spacing:.06em;flex:1;text-transform:uppercase;}
+.spip{width:24px;height:24px;border-radius:50%;border:2px solid var(--gd);background:var(--go);box-shadow:0 0 7px var(--gd);transition:all .15s;flex-shrink:0;}
+.spip.used{background:#1a1610;border-color:var(--bo);box-shadow:none;}
+
+/* INLINE STAT */
+.ist{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg2);border:1px solid var(--bo);border-radius:5px;margin-bottom:5px;}
+.istl{font-size:14px;}
+.istv{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:15px;font-weight:600;color:var(--go);}
+
+/* PROF */
+.pi{padding:6px 10px;background:var(--bg2);border:1px solid var(--bo);border-radius:5px;font-size:14px;margin-bottom:4px;}
+.pi span{color:var(--id);font-style:italic;font-size:13px;}
+
+/* LORE */
+.lore{background:var(--bg2);border:1px solid var(--bo);border-left:3px solid var(--gd);border-radius:6px;padding:11px 13px;margin-bottom:9px;}
+.lt{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:10px;letter-spacing:.14em;color:var(--pd);text-transform:uppercase;margin-bottom:5px;}
+.lb{font-size:15px;line-height:1.7;color:var(--in);}
+.lb em{color:var(--go);font-style:italic;}
+
+/* BUTTONS */
+.abtn{width:100%;padding:11px;background:var(--bg3);border:1px solid var(--bb);border-radius:8px;color:var(--pa);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:13px;letter-spacing:.07em;cursor:pointer;margin-top:11px;text-transform:uppercase;user-select:none;}
+.abtn:active{background:var(--bo);}
+.brow{display:flex;gap:8px;}
+.brow .abtn{margin-top:0;}
+.rule{height:1px;background:linear-gradient(to right,transparent,var(--gd),transparent);margin:14px 0;opacity:.35;}
+
+/* FoD */
+.fpips{display:flex;gap:8px;}
+.fp{width:22px;height:22px;border-radius:50%;border:2px solid var(--gd);background:var(--go);box-shadow:0 0 6px var(--gd);cursor:pointer;transition:all .15s;}
+.fp.used{background:var(--bg3);border-color:var(--bo);box-shadow:none;}
+</style>
 </head>
 <body>
-    <div id="main">
-        <h1>Sunrise Alarm Migliorata</h1>
-        <input type="time" id="alarm-time" value="07:00">
-        <button id="set-alarm">Imposta Sveglia</button>
-        <button id="test-alarm">Test (10 sec)</button>
-        <input type="file" id="audio-file" accept="audio/*">
-        <p id="status">Nessuna sveglia impostata</p>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div>
+      <div class="cname P">Sir Percius Precarius</div>
+      <div class="csub it">Warlock Infero Lv1 · Umano · Caotico Neutrale · ~200 anni</div>
+      <div class="csub en">Undead Warlock Lv1 · Human · Chaotic Neutral · ~200 years old</div>
     </div>
-    <div id="alarm-screen" class="hidden">
-        <div id="time-display"></div>
-        <button id="stop-alarm">STOP</button>
+    <div class="hpw">
+      <div class="hpl it">Punti Ferita</div>
+      <div class="hpl en">Hit Points</div>
+      <div class="hpc">
+        <button class="hpb" onclick="changeHP(-1)">−</button>
+        <div class="hpn" id="hp-cur">9</div>
+        <button class="hpb" onclick="changeHP(1)">+</button>
+      </div>
+      <div class="hpm">/ 9 max</div>
     </div>
-    <script>
-        // Variabili configurabili
-        let alarmTimeout;
-        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        let audioSource = null;
-        let gainNode = null; // Per fade volume smooth
-        let audioBuffer = null; // Buffer per audio caricato
-        let audioFile = null;
-        const fadeDuration = 600000; // 10 min fade audio
-        const lightFadeDuration = 300000; // 5 min fade luce
-        const vibrationDelay = 300000; // 5 min delay vibrazione
-        const vibrationFadeDuration = 300000; // 5 min fade vibrazione
-        let isAlarmActive = false;
-        let lightInterval, volumeInterval, vibInterval;
+  </div>
+  <div class="hdr-bot">
+    <div style="font-size:12px;color:var(--id);font-style:italic;">
+      <span class="it">Sfondo: Cavaliere dell'Ordine · Dado vita: d8</span>
+      <span class="en">Background: Knight of the Order · Hit Die: d8</span>
+    </div>
+    <button class="lbtn" onclick="toggleLang()">
+      <span class="it-i">🇬🇧 EN</span><span class="en-i">🇮🇹 IT</span>
+    </button>
+  </div>
+</div>
 
-        // Richiedi permessi
-        async function requestPermissions() {
-            if (Notification.permission !== 'granted') {
-                await Notification.requestPermission();
-            }
-            if ('wakeLock' in navigator) {
-                try {
-                    await navigator.wakeLock.request('screen');
-                } catch (err) { console.error('Wake Lock failed:', err); }
-            }
-        }
+<!-- NAV -->
+<nav>
+  <button class="nb active" onclick="showPage('stats',this)"><span class="ic">⚔️</span><span class="it-i">Stat</span><span class="en-i">Stats</span></button>
+  <button class="nb" onclick="showPage('spells',this)"><span class="ic">🕯️</span><span class="it-i">Magia</span><span class="en-i">Spells</span></button>
+  <button class="nb" onclick="showPage('gear',this)"><span class="ic">🛡️</span><span class="it-i">Equip</span><span class="en-i">Gear</span></button>
+  <button class="nb" onclick="showPage('features',this)"><span class="ic">📜</span><span class="it-i">Trait</span><span class="en-i">Traits</span></button>
+  <button class="nb" onclick="showPage('lore',this)"><span class="ic">🪶</span>Lore</button>
+</nav>
 
-        // Carica audio personalizzato e prepara buffer
-        document.getElementById('audio-file').addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                audioFile = file;
-                const arrayBuffer = await file.arrayBuffer();
-                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-            }
-        });
+<!-- ═══════════ STATS ═══════════ -->
+<div id="page-stats" class="pg active">
+  <div class="sec it">Caratteristiche</div><div class="sec en">Ability Scores</div>
+  <div class="sg">
+    <div class="sb"><div class="sn"><span class="it">Forza</span><span class="en">Strength</span></div><div class="ss">14</div><div class="sm">+2</div></div>
+    <div class="sb"><div class="sn"><span class="it">Destrezza</span><span class="en">Dexterity</span></div><div class="ss">8</div><div class="sm">−1</div></div>
+    <div class="sb"><div class="sn"><span class="it">Costituzione</span><span class="en">Constitution</span></div><div class="ss">12</div><div class="sm">+1</div></div>
+    <div class="sb"><div class="sn"><span class="it">Intelligenza</span><span class="en">Intelligence</span></div><div class="ss">15</div><div class="sm">+2</div></div>
+    <div class="sb"><div class="sn"><span class="it">Saggezza</span><span class="en">Wisdom</span></div><div class="ss">6</div><div class="sm">−2</div></div>
+    <div class="sb"><div class="sn"><span class="it">Carisma</span><span class="en">Charisma</span></div><div class="ss">17</div><div class="sm">+3</div></div>
+  </div>
+  <div style="font-size:12px;color:var(--id);font-style:italic;margin-bottom:10px;padding-left:2px;">
+    <span class="it">✦ Carisma 17 include +1 dal feat Attore</span>
+    <span class="en">✦ Charisma 17 includes +1 from Actor feat</span>
+  </div>
 
-        // Imposta sveglia
-        document.getElementById('set-alarm').addEventListener('click', () => {
-            const timeInput = document.getElementById('alarm-time').value;
-            if (!timeInput) return;
-            const [hours, minutes] = timeInput.split(':').map(Number);
-            const now = new Date();
-            let alarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
-            if (alarmTime < now) alarmTime.setDate(alarmTime.getDate() + 1);
-            const delay = alarmTime - now;
-            clearTimeout(alarmTimeout);
-            alarmTimeout = setTimeout(triggerAlarm, delay);
-            document.getElementById('status').textContent = `Sveglia impostata per ${timeInput}`;
-            showNotification('Sveglia impostata', { body: `Alle ${timeInput}` });
-        });
+  <div class="sec it">Combattimento</div><div class="sec en">Combat</div>
+  <div class="cg cg4">
+    <div class="cb2"><div class="cl">CA / AC</div><div class="cv">18</div></div>
+    <div class="cb2"><div class="cl"><span class="it">Iniziativa</span><span class="en">Initiative</span></div><div class="cv">−1</div></div>
+    <div class="cb2"><div class="cl"><span class="it">Velocità</span><span class="en">Speed</span></div><div class="cv">30</div></div>
+    <div class="cb2"><div class="cl"><span class="it">Bonus Prof.</span><span class="en">Prof. Bonus</span></div><div class="cv">+2</div></div>
+  </div>
+  <div class="cg cg2">
+    <div class="cb2"><div class="cl">Spell Save DC</div><div class="cv">13</div></div>
+    <div class="cb2"><div class="cl">Spell Attack</div><div class="cv">+5</div></div>
+  </div>
 
-        // Test mode
-        document.getElementById('test-alarm').addEventListener('click', () => {
-            clearTimeout(alarmTimeout);
-            alarmTimeout = setTimeout(triggerAlarm, 10000);
-            document.getElementById('status').textContent = 'Test in corso...';
-        });
+  <div class="sec it">Tiri Salvezza</div><div class="sec en">Saving Throws</div>
+  <div class="rows">
+    <div class="row"><div class="dot"></div><div class="rn"><span class="it">Forza</span><span class="en">Strength</span></div><div class="rv">+2</div></div>
+    <div class="row"><div class="dot"></div><div class="rn"><span class="it">Destrezza</span><span class="en">Dexterity</span></div><div class="rv">−1</div></div>
+    <div class="row"><div class="dot"></div><div class="rn"><span class="it">Costituzione</span><span class="en">Constitution</span></div><div class="rv">+1</div></div>
+    <div class="row"><div class="dot"></div><div class="rn"><span class="it">Intelligenza</span><span class="en">Intelligence</span></div><div class="rv">+2</div></div>
+    <div class="row"><div class="dot f"></div><div class="rn"><span class="it">Saggezza ✦</span><span class="en">Wisdom ✦</span></div><div class="rv">+0</div></div>
+    <div class="row"><div class="dot f"></div><div class="rn"><span class="it">Carisma ✦</span><span class="en">Charisma ✦</span></div><div class="rv">+5</div></div>
+  </div>
 
-        // Trigger alarm migliorato
-        async function triggerAlarm() {
-            if (isAlarmActive) return;
-            isAlarmActive = true;
-            await requestPermissions();
+  <div class="sec it">Abilità</div><div class="sec en">Skills</div>
+  <div class="rows">
+    <div class="row"><div class="dot f"></div><div class="rn"><span class="it">Raggiro</span><span class="en">Deception</span></div><div class="rs">CHA</div><div class="rv">+5</div></div>
+    <div class="row"><div class="dot f"></div><div class="rn"><span class="it">Indagare</span><span class="en">Investigation</span></div><div class="rs">INT</div><div class="rv">+4</div></div>
+    <div class="row"><div class="dot f"></div><div class="rn"><span class="it">Natura</span><span class="en">Nature</span></div><div class="rs">INT</div><div class="rv">+4</div></div>
+    <div class="row"><div class="dot f"></div><div class="rn"><span class="it">Persuasione</span><span class="en">Persuasion</span></div><div class="rs">CHA</div><div class="rv">+5</div></div>
+  </div>
 
-            // Mostra schermo full-screen
-            const alarmScreen = document.getElementById('alarm-screen');
-            alarmScreen.style.display = 'flex';
-            alarmScreen.requestFullscreen().catch(() => {});
-            document.getElementById('time-display').textContent = new Date().toLocaleTimeString();
+  <div class="sec it">Competenze</div><div class="sec en">Proficiencies</div>
+  <div class="pi">🛡 <span class="it">Armatura pesante <span>(concessione DM)</span></span><span class="en">Heavy Armor <span>(DM concession)</span></span></div>
+  <div class="pi">🛡 <span class="it">Scudi</span><span class="en">Shields</span></div>
+  <div class="pi">⚔️ <span class="it">Armi semplici</span><span class="en">Simple Weapons</span></div>
+  <div class="pi">⚔️ <span class="it">Armi da guerra</span><span class="en">Martial Weapons</span></div>
+  <div class="pi">🎲 <span class="it">Gaming set <span>(da definire)</span></span><span class="en">Gaming set <span>(TBD)</span></span></div>
+</div>
 
-            // Fade luce smooth (da nero a arancione/bianco, usando requestAnimationFrame per no flash)
-            let lightStart = performance.now();
-            alarmScreen.style.background = 'rgba(0,0,0,1)';
-            function fadeLight(timestamp) {
-                const progress = (timestamp - lightStart) / lightFadeDuration;
-                if (progress >= 1) {
-                    alarmScreen.style.background = 'rgb(255, 200, 150)'; // Colore alba finale
-                    return;
-                }
-                const r = Math.min(255, progress * 255);
-                const g = Math.min(200, progress * 200);
-                const b = Math.min(150, progress * 150);
-                alarmScreen.style.background = `rgb(${r}, ${g}, ${b})`;
-                lightInterval = requestAnimationFrame(fadeLight);
-            }
-            lightInterval = requestAnimationFrame(fadeLight);
+<!-- ═══════════ SPELLS ═══════════ -->
+<div id="page-spells" class="pg">
 
-            // Audio fade smooth con Web Audio API (no lag, volume lineare logaritmico)
-            if (audioBuffer) {
-                audioSource = audioContext.createBufferSource();
-                audioSource.buffer = audioBuffer;
-                audioSource.loop = true;
-                gainNode = audioContext.createGain();
-                gainNode.gain.value = 0; // Inizia a 0
-                audioSource.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                audioSource.start();
+  <div class="sec it">Slot Incantesimo</div><div class="sec en">Spell Slots</div>
+  <div class="srow" onclick="toggleSlot()">
+    <div class="slbl">
+      <span class="it">1° livello — recupera con riposo breve</span>
+      <span class="en">1st level — recovers on short rest</span>
+    </div>
+    <div class="spip" id="slot-pip"></div>
+  </div>
 
-                let volumeStart = performance.now();
-                function fadeVolume(timestamp) {
-                    const progress = (timestamp - volumeStart) / fadeDuration;
-                    if (progress >= 1) {
-                        gainNode.gain.value = 1; // Max volume
-                        return;
-                    }
-                    gainNode.gain.value = Math.pow(progress, 2); // Curva logaritmica delicata
-                    volumeInterval = requestAnimationFrame(fadeVolume);
-                }
-                volumeInterval = requestAnimationFrame(fadeVolume);
-            }
+  <div class="sec it">Cantrip — nessuno slot necessario</div>
+  <div class="sec en">Cantrips — no slot needed</div>
 
-            // Vibrazione graduale dopo delay (pattern crescente, no vib costante)
-            setTimeout(() => {
-                let vibStart = performance.now();
-                function fadeVib(timestamp) {
-                    const progress = (timestamp - vibStart) / vibrationFadeDuration;
-                    if (progress >= 1) return;
-                    const intensity = Math.min(500, progress * 500); // Da 0 a 500ms
-                    const pause = 1000 - intensity; // Pause decrescente
-                    navigator.vibrate([intensity, pause]);
-                    vibInterval = requestAnimationFrame(fadeVib);
-                }
-                vibInterval = requestAnimationFrame(fadeVib);
-            }, vibrationDelay);
+  <!-- PRESTIDIGITATION -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Prestidigitazione</span><span class="en">Prestidigitation</span></div>
+        <div class="tags">
+          <span class="tag"><span class="it">Cantrip · Trasmutazione</span><span class="en">Cantrip · Transmutation</span></span>
+          <span class="tag"><span class="it">Azione</span><span class="en">Action</span></span>
+          <span class="tag">10 ft</span>
+          <span class="tag"><span class="it">fino a 1 ora</span><span class="en">up to 1 hour</span></span>
+        </div>
+      </div>
+      <div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (PHB)</div>
+        <div class="tx">
+          <p>Questo incantesimo è un piccolo trucco magico che gli incantatori alle prime armi usano per esercitarsi. All'interno della gittata, crei uno dei seguenti effetti magici:</p>
+          <p>• Crei un <strong>effetto sensoriale istantaneo e innocuo</strong>, come una doccia di scintille, un soffio di vento, fievoli note musicali, o uno strano odore.<br>
+          • <strong>Accendi o spengi istantaneamente</strong> una candela, una torcia, o un piccolo falò.<br>
+          • <strong>Pulisci o sporchi istantaneamente</strong> un oggetto non più grande di 1 piede cubo.<br>
+          • <strong>Raffreddi, scaldi, o insaporisci</strong> fino a 1 piede cubo di materiale non vivente per 1 ora.<br>
+          • Fai apparire su un oggetto o superficie un <strong>colore, un piccolo segno, o un simbolo</strong> per 1 ora.<br>
+          • Crei un <strong>ninnolo non magico o un'immagine illusoria</strong> abbastanza piccola da stare in mano, che dura fino alla fine del tuo prossimo turno.</p>
+          <p>Se lanci questo incantesimo più volte, puoi avere fino a <em>tre effetti non istantanei</em> attivi contemporaneamente, e puoi congedarli come azione.</p>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (PHB)</div>
+        <div class="tx">
+          <p>This spell is a minor magical trick that novice spellcasters use for practice. You create one of the following magical effects within range:</p>
+          <p>• You create an instantaneous, <strong>harmless sensory effect</strong>, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor.<br>
+          • You <strong>instantaneously light or snuff out</strong> a candle, a torch, or a small campfire.<br>
+          • You <strong>instantaneously clean or soil</strong> an object no larger than 1 cubic foot.<br>
+          • You <strong>chill, warm, or flavor</strong> up to 1 cubic foot of nonliving material for 1 hour.<br>
+          • You make a <strong>color, a small mark, or a symbol</strong> appear on an object or a surface for 1 hour.<br>
+          • You create a <strong>nonmagical trinket or an illusory image</strong> that can fit in your hand and lasts until the end of your next turn.</p>
+          <p>If you cast this spell multiple times, you can have up to <em>three non-instantaneous effects</em> active at a time, and you can dismiss such an effect as an action.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            showNotification('Sveglia!', { body: 'Tempo di svegliarsi!' });
-        }
+  <!-- THAUMATURGY -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Taumaturgia</span><span class="en">Thaumaturgy</span></div>
+        <div class="tags">
+          <span class="tag"><span class="it">Cantrip · Trasmutazione</span><span class="en">Cantrip · Transmutation</span></span>
+          <span class="tag"><span class="it">Azione</span><span class="en">Action</span></span>
+          <span class="tag">30 ft</span>
+          <span class="tag"><span class="it">fino a 1 min</span><span class="en">up to 1 min</span></span>
+        </div>
+      </div>
+      <div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (PHB)</div>
+        <div class="tx">
+          <p>Manifesti un piccolo prodigio, un segno di potere soprannaturale, entro la gittata. Crei uno dei seguenti effetti magici entro la gittata:</p>
+          <p>• La tua voce <strong>risuona fino a tre volte più forte del normale</strong> per 1 minuto.<br>
+          • Fai sfarfallare, brillare, affievolire, o <strong>cambiare colore alle fiamme</strong> entro la gittata per 1 minuto.<br>
+          • Causi <strong>innocui tremori nel suolo</strong> per 1 minuto.<br>
+          • Crei un <strong>suono istantaneo</strong> che ha origine da un punto a tua scelta entro la gittata, come un rombo di tuono, il verso di un corvo, o sinistre voci bisbigliate.<br>
+          • Fai <strong>spalancare o sbattere violentemente</strong> una porta o finestra non chiusa a chiave.<br>
+          • <strong>Alteri l'aspetto dei tuoi occhi</strong> per 1 minuto.</p>
+          <p>Se lanci questo incantesimo più volte, puoi avere fino a <em>tre effetti da 1 minuto</em> attivi contemporaneamente, e puoi congedarli come azione.</p>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (PHB)</div>
+        <div class="tx">
+          <p>You manifest a minor wonder, a sign of supernatural power, within range. You create one of the following magical effects within range:</p>
+          <p>• Your voice <strong>booms up to three times as loud as normal</strong> for 1 minute.<br>
+          • You cause flames within range to <strong>flicker, brighten, dim, or change color</strong> for 1 minute.<br>
+          • You cause <strong>harmless tremors in the ground</strong> for 1 minute.<br>
+          • You create an <strong>instantaneous sound</strong> that originates from a point of your choice within range, such as a rumble of thunder, the cry of a raven, or ominous whispered voices.<br>
+          • You instantaneously cause an <strong>unlocked door or window to fly open or slam shut</strong>.<br>
+          • You <strong>alter the appearance of your eyes</strong> for 1 minute.</p>
+          <p>If you cast this spell multiple times, you can have up to <em>three 1-minute effects</em> active at a time, and you can dismiss such an effect as an action.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Stop alarm migliorato (fade out smooth)
-        document.getElementById('stop-alarm').addEventListener('click', () => {
-            isAlarmActive = false;
-            if (audioSource) {
-                let fadeOutStart = performance.now();
-                function fadeOutVolume(timestamp) {
-                    const progress = (timestamp - fadeOutStart) / 5000; // 5 sec fade out
-                    if (progress >= 1) {
-                        audioSource.stop();
-                        return;
-                    }
-                    gainNode.gain.value = 1 - Math.pow(progress, 2);
-                    requestAnimationFrame(fadeOutVolume);
-                }
-                requestAnimationFrame(fadeOutVolume);
-            }
-            navigator.vibrate(0); // Stop vib
-            cancelAnimationFrame(lightInterval);
-            cancelAnimationFrame(volumeInterval);
-            cancelAnimationFrame(vibInterval);
-            const alarmScreen = document.getElementById('alarm-screen');
-            alarmScreen.style.background = 'rgba(0,0,0,0)';
-            setTimeout(() => { alarmScreen.style.display = 'none'; if (document.fullscreenElement) document.exitFullscreen(); }, 1000);
-            document.getElementById('status').textContent = 'Sveglia fermata';
-        });
+  <div class="sec it">Incantesimi — usa uno slot</div>
+  <div class="sec en">Spells — uses a slot</div>
 
-        // Mostra notifica
-        function showNotification(title, options) {
-            if (Notification.permission === 'granted') {
-                new Notification(title, options);
-            }
-        }
+  <!-- CHARM PERSON -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Ammalia Persone</span><span class="en">Charm Person</span></div>
+        <div class="tags">
+          <span class="tag g"><span class="it">Slot 1° · Ammaliamento</span><span class="en">1st slot · Enchantment</span></span>
+          <span class="tag"><span class="it">Azione</span><span class="en">Action</span></span>
+          <span class="tag">30 ft · 1h</span>
+          <span class="tag"><span class="it">senza Conc.</span><span class="en">no Conc.</span></span>
+        </div>
+      </div>
+      <div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (PHB)</div>
+        <div class="tx">
+          <p>Tenti di ammaliare un umanoide che riesci a vedere entro la gittata. Deve effettuare un <strong>Tiro Salvezza su Saggezza</strong>, e lo fa con <em>vantaggio</em> se tu o i tuoi compagni state combattendo contro di essa. Se fallisce il tiro salvezza, è <strong>ammaliata da te</strong> finché l'incantesimo non termina, o finché tu o i tuoi compagni non fate qualcosa di dannoso nei suoi confronti. La creatura ammaliata ti <strong>considera un amico fidato</strong>. Quando l'incantesimo termina, la creatura <strong>sa di essere stata ammaliata da te</strong>.</p>
+          <p><em>A livelli superiori:</em> puoi bersagliare una creatura aggiuntiva per ogni livello di slot oltre il 1°. Le creature devono essere entro 30 ft l'una dall'altra.</p>
+          <div class="note">TS Saggezza CD 13. Dura 1 ora oppure termina se la ferisci. Nessuna concentrazione richiesta.</div>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (PHB)</div>
+        <div class="tx">
+          <p>You attempt to charm a humanoid you can see within range. It must make a <strong>Wisdom saving throw</strong>, and does so with <em>advantage</em> if you or your companions are fighting it. If it fails the saving throw, it is <strong>charmed by you</strong> until the spell ends or until you or your companions do anything harmful to it. The charmed creature regards you as a <strong>friendly acquaintance</strong>. When the spell ends, the creature <strong>knows it was charmed by you</strong>.</p>
+          <p><em>At Higher Levels:</em> When cast using a 2nd-level slot or higher, you can target one additional creature for each slot level above 1st. The creatures must be within 30 feet of each other when you target them.</p>
+          <div class="note">Wisdom Save DC 13. Lasts 1 hour or ends on harm. No concentration required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Service Worker per offline/PWA
-        const swCode = `
-            self.addEventListener('install', (event) => { self.skipWaiting(); });
-            self.addEventListener('activate', (event) => { event.waitUntil(self.clients.claim()); });
-        `;
-        if ('serviceWorker' in navigator) {
-            const swBlob = new Blob([swCode], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).then(() => console.log('SW registrato')).catch(err => console.error('SW error:', err));
-        }
-    </script>
+  <!-- HEX -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Malocchio</span><span class="en">Hex</span></div>
+        <div class="tags">
+          <span class="tag g"><span class="it">Slot 1° · Ammaliamento</span><span class="en">1st slot · Enchantment</span></span>
+          <span class="tag"><span class="it">Az. Bonus</span><span class="en">Bonus Action</span></span>
+          <span class="tag">90 ft · 1h</span>
+          <span class="tag"><span class="it">Conc.</span><span class="en">Conc.</span></span>
+        </div>
+      </div>
+      <div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (PHB)</div>
+        <div class="tx">
+          <p>Poni una maledizione su una creatura che riesci a vedere entro la gittata. Finché l'incantesimo dura, infliggi <strong>1d6 danni necrotici extra</strong> al bersaglio ogni volta che lo colpisci con un tiro per colpire. Inoltre, <strong>scegli una caratteristica</strong> quando lanci l'incantesimo. Il bersaglio ha <em>svantaggio</em> ai tiri per le prove di caratteristica effettuate con quella caratteristica.</p>
+          <p>Se il bersaglio scende a 0 punti ferita prima che l'incantesimo termini, puoi usare un'<strong>azione bonus in un turno successivo</strong> per maledire una nuova creatura.</p>
+          <p>Un incantesimo <em>rimuovi maledizione</em> lanciato sul bersaglio pone fine prematuramente a questo incantesimo.</p>
+          <div class="note">Combo: Malocchio (az. bonus) + attacco spadone (azione) = 2d6+2 taglio +1d6 necrotico su ogni colpo. Se il bersaglio muore, sposti la maledizione gratuitamente.</div>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (PHB)</div>
+        <div class="tx">
+          <p>You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra <strong>1d6 necrotic damage</strong> to the target whenever you hit it with an attack roll. Also, <strong>choose one ability</strong> when you cast the spell. The target has <em>disadvantage</em> on ability checks made with the chosen ability.</p>
+          <p>If the target drops to 0 hit points before this spell ends, you can use a <strong>bonus action on a subsequent turn</strong> to curse a new creature.</p>
+          <p>A <em>remove curse</em> cast on the target ends this spell early.</p>
+          <div class="note">Combo: Hex (bonus action) + greatsword attack (action) = 2d6+2 slashing +1d6 necrotic per hit. If the target dies, you move the curse for free.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="abtn" id="rest-btn" onclick="shortRest(this)">
+    <span class="it">☽ Riposo Breve — Recupera Slot</span>
+    <span class="en">☽ Short Rest — Recover Slot</span>
+  </button>
+</div>
+
+<!-- ═══════════ GEAR ═══════════ -->
+<div id="page-gear" class="pg">
+  <div class="sec it">Armi</div><div class="sec en">Weapons</div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Spadone — con miniatura</span><span class="en">Greatsword — with portrait</span></div>
+        <div class="tags"><span class="tag g">+4 · 2d6+2 <span class="it">taglio</span><span class="en">slashing</span></span><span class="tag"><span class="it">Pesante · 2 mani</span><span class="en">Heavy · Two-handed</span></span></div>
+      </div><div class="chv">▼</div>
+    </div>
+    <div class="cbody"><div class="tx">
+      <p class="it">Nell'elsa è incastonato un <em>miniaturale</em> — un giovane cavaliere in armatura di Sanctaphrax. Non lo riconosci. Sei tu, duecento anni fa.</p>
+      <p class="en">The hilt holds a <em>miniature portrait</em> — a young knight in Sanctaphrax armor, gaze steady. You don't recognize him. It's you, two hundred years ago.</p>
+    </div></div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Lancia — con stendardo</span><span class="en">Spear — with banner</span></div>
+        <div class="tags"><span class="tag g">+4 · 1d6+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Lancio 20/60</span><span class="en">Thrown 20/60</span></span></div>
+      </div><div class="chv">▼</div>
+    </div>
+    <div class="cbody"><div class="tx">
+      <p class="it">Sulla cuspide è avvolto lo <em>stendardo dell'Ordine</em> — sbiadito, ma riconoscibile. Mischia o lancio: +4, 1d6+2 perforante.</p>
+      <p class="en">The tip bears the <em>Order's banner</em> — faded, but still readable. Melee or thrown: +4, 1d6+2 piercing.</p>
+    </div></div>
+  </div>
+
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Pugnali ×2</span><span class="en">Daggers ×2</span></div>
+        <div class="tags"><span class="tag g">+4 · 1d4+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Fine · Lancio 20/60</span><span class="en">Finesse · Thrown 20/60</span></span></div>
+      </div><div class="chv">▼</div>
+    </div>
+    <div class="cbody"><div class="tx">
+      <p><span class="it">Mischia o lancio: +4, 1d4+2 perforante.</span><span class="en">Melee or thrown: +4, 1d4+2 piercing.</span></p>
+    </div></div>
+  </div>
+
+  <div class="sec it">Difesa</div><div class="sec en">Defense</div>
+  <div class="ist"><span class="istl"><span class="it">Armatura pesante</span><span class="en">Heavy Armor (Plate)</span></span><span class="istv">CA / AC 18</span></div>
+  <div class="ist"><span class="istl"><span class="it">Scudo</span><span class="en">Shield</span></span><span class="istv"><span class="it">già incluso</span><span class="en">already included</span></span></div>
+
+  <div class="sec it">Zaino dell'Accademico</div><div class="sec en">Scholar's Pack</div>
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div><div class="ct"><span class="it">Contenuto</span><span class="en">Contents</span></div>
+      <div class="tags"><span class="tag"><span class="it">Tocca per espandere</span><span class="en">Tap to expand</span></span></div></div>
+      <div class="chv">▼</div>
+    </div>
+    <div class="cbody"><div class="tx">
+      <p class="it">• Libro di sapere<br>• Inchiostro + penna<br>• 10 pergamene<br>• Sacchetto di sabbia<br>• Coltellino piccolo<br>• Abiti da viaggio</p>
+      <p class="en">• Book of lore<br>• Ink + pen<br>• 10 sheets of parchment<br>• Sand bag (for drying ink)<br>• Small knife<br>• Traveler's clothes</p>
+    </div></div>
+  </div>
+
+  <div class="sec it">Denaro</div><div class="sec en">Currency</div>
+  <div class="ist"><span class="istl"><span class="it">Monete d'oro</span><span class="en">Gold Pieces</span></span><span class="istv" id="gp-val">10 GP</span></div>
+  <div class="brow" style="margin-top:8px;">
+    <button class="abtn" onclick="changeGP(-1)">− 1 GP</button>
+    <button class="abtn" onclick="changeGP(1)">+ 1 GP</button>
+  </div>
+</div>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<div id="page-features" class="pg">
+  <div class="sec it">Capacità di Classe</div><div class="sec en">Class Feature</div>
+
+  <!-- FORM OF DREAD -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Forma del Terrore</span><span class="en">Form of Dread</span></div>
+        <div class="tags">
+          <span class="tag g"><span class="it">Warlock Infero Lv1</span><span class="en">Undead Warlock Lv1</span></span>
+          <span class="tag"><span class="it">Az. Bonus · 1 min</span><span class="en">Bonus Action · 1 min</span></span>
+          <span class="tag" id="fod-tag">2 / 2</span>
+        </div>
+      </div><div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (Van Richten's Guide to Ravenloft)</div>
+        <div class="tx">
+          <p>A partire dal 1° livello, puoi imbevere la tua presenza con il più tenue accenno del terrore custodito dal tuo patrono. Come <strong>azione bonus</strong>, ti trasformi per 1 minuto. Mentre sei trasformato, ottieni i seguenti benefici:</p>
+          <p>• Guadagni <strong>punti ferita temporanei</strong> pari a 1d10 + il tuo livello da warlock.<br>
+          • <strong>Una volta durante ciascuno dei tuoi turni</strong>, quando colpisci una creatura con un tiro per colpire, puoi costringerla a effettuare un Tiro Salvezza su Saggezza, e se il tiro salvezza fallisce, il bersaglio diventa <strong>spaventato da te</strong> fino alla fine del tuo prossimo turno.<br>
+          • Sei <strong>immune alla condizione spaventato</strong>.</p>
+          <p>Puoi trasformarti un numero di volte pari al tuo <em>bonus di competenza</em>, e recuperi tutti gli utilizzi spesi quando concludi un <strong>riposo lungo</strong>.</p>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (Van Richten's Guide to Ravenloft)</div>
+        <div class="tx">
+          <p>Starting at 1st level, you can imbue your presence with the barest hint of the dread harbored by your patron. As a <strong>bonus action</strong>, you transform for 1 minute. You gain the following benefits while transformed:</p>
+          <p>• You gain <strong>temporary hit points</strong> equal to 1d10 + your warlock level.<br>
+          • <strong>Once during each of your turns</strong>, when you hit a creature with an attack roll, you can force it to make a Wisdom saving throw, and if the saving throw fails, the target becomes <strong>frightened of you</strong> until the end of your next turn.<br>
+          • You are <strong>immune to the frightened condition</strong>.</p>
+          <p>You can transform a number of times equal to your <em>proficiency bonus</em>, and you regain all expended uses when you finish a <strong>long rest</strong>.</p>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:12px;" onclick="event.stopPropagation()">
+        <div class="fpips">
+          <div class="fp" id="fod-0" onclick="toggleFoD(0)"></div>
+          <div class="fp" id="fod-1" onclick="toggleFoD(1)"></div>
+        </div>
+        <button class="abtn" style="margin:0;flex:1;padding:8px;" onclick="resetFoD()">
+          <span class="it">↺ Riposo lungo</span><span class="en">↺ Long rest</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec it">Capacità di Sfondo</div><div class="sec en">Background Feature</div>
+
+  <!-- KNIGHTLY REGARD -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Riguardo Cavalleresco</span><span class="en">Knightly Regard</span></div>
+        <div class="tags">
+          <span class="tag g"><span class="it">Cavaliere dell'Ordine</span><span class="en">Knight of the Order</span></span>
+          <span class="tag"><span class="it">Passivo</span><span class="en">Passive</span></span>
+        </div>
+      </div><div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (Sword Coast Adventurer's Guide)</div>
+        <div class="tx">
+          <p>Ricevi <strong>riparo e soccorso</strong> dai membri del tuo ordine cavalleresco e da coloro che sono simpatici ai suoi obiettivi. Se il tuo ordine è associato a una particolare divinità, puoi ottenere aiuto dai templi e da altri seguaci di quella divinità, oltre che dall'ordine stesso. I cavalieri del tuo ordine potrebbero anche essere disposti a <strong>garantire per te</strong> di fronte alla nobiltà del territorio.</p>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (Sword Coast Adventurer's Guide)</div>
+        <div class="tx">
+          <p>You receive <strong>shelter and succor</strong> from members of your knightly order and those who are sympathetic to its aims. If your order is associated with a particular deity, you can gain aid from temples and other followers of that deity, as well as the order itself. Knights of your order might also be willing to <strong>vouch for you</strong> before the nobility of the land.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">Feat</div>
+
+  <!-- ACTOR -->
+  <div class="card" onclick="toggleCard(this)">
+    <div class="ch">
+      <div>
+        <div class="ct"><span class="it">Attore</span><span class="en">Actor</span></div>
+        <div class="tags">
+          <span class="tag g">Feat · PHB</span>
+          <span class="tag"><span class="it">+1 CAR → 17</span><span class="en">+1 CHA → 17</span></span>
+          <span class="tag"><span class="it">Passivo</span><span class="en">Passive</span></span>
+        </div>
+      </div><div class="chv">▼</div>
+    </div>
+    <div class="cbody">
+      <div class="it">
+        <div class="olbl">Testo ufficiale (PHB)</div>
+        <div class="tx">
+          <p>Abile nella mimica e nel teatro, ottieni i seguenti benefici:</p>
+          <p>• <strong>Aumenta il tuo punteggio di Carisma di 1</strong>, fino a un massimo di 20.<br>
+          • Hai <strong>vantaggio</strong> alle prove di Carisma (Raggiro) e di Carisma (Intrattenimento) quando cerchi di spacciarti per un'altra persona.<br>
+          • Puoi <strong>imitare il parlato</strong> di un'altra persona o i suoni prodotti da altre creature. Devi aver sentito la persona parlare, o la creatura emettere il suono, per almeno 1 minuto. Un ascoltatore può stabilire che l'effetto è contraffatto con una prova di <em>Saggezza (Intuizione) in contrapposizione alla tua prova di Carisma (Raggiro)</em>.</p>
+          <div class="note">Con Taumaturgia (voce 3×) + Raggiro +5 + vantaggio: praticamente impossibile da smascherare.</div>
+        </div>
+      </div>
+      <div class="en">
+        <div class="olbl">Official text (PHB)</div>
+        <div class="tx">
+          <p>Skilled at mimicry and dramatics, you gain the following benefits:</p>
+          <p>• <strong>Increase your Charisma score by 1</strong>, to a maximum of 20.<br>
+          • You have <strong>advantage</strong> on Charisma (Deception) and Charisma (Performance) checks when trying to pass yourself off as a different person.<br>
+          • You can <strong>mimic the speech</strong> of another person or the sounds made by other creatures. You must have heard the person speaking, or heard the creature make the sound, for at least 1 minute. A successful <em>Wisdom (Insight) check contested by your Charisma (Deception) check</em> allows a listener to determine that the effect is faked.</p>
+          <div class="note">With Thaumaturgy (voice 3×) + Deception +5 + advantage: nearly impossible to detect.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ LORE ═══════════ -->
+<div id="page-lore" class="pg">
+  <div class="lore">
+    <div class="lt"><span class="it">Chi sei</span><span class="en">Who you are</span></div>
+    <div class="lb it">Sir Percius Precarius. Già Cavaliere d'Accademia di <em>Sanctaphrax</em> e cercatore di pietre dell'anima per conto dell'Ordine. Hai perso la memoria — come tutti i tuoi compagni — dopo un incidente di cui conosci solo i contorni.</div>
+    <div class="lb en">Sir Percius Precarius. Former Academy Knight of <em>Sanctaphrax</em> and soul-stone seeker for the Order. You lost your memory — as did all your companions — after an incident whose full shape still eludes you.</div>
+  </div>
+  <div class="lore">
+    <div class="lt"><span class="it">Il Patto</span><span class="en">The Pact</span></div>
+    <div class="lb it">Vecchio e spaventato di morire, hai ceduto. Una delle pietre che custodivi ti ha <em>chiamato</em>. L'hai rotta. Le anime intrappolate — tra cui un potente stregone Waif — sono entrate in te. Il Waif non è abbastanza forte da controllarti, così ha accettato il patto: tu sopravvivi, lui ottiene un corpo. <em>Il tuo patrono è dentro di te.</em></div>
+    <div class="lb en">Old and afraid to die, you broke. One of the stones you were guarding <em>called to you</em>. You shattered it. The trapped souls — including a powerful Waif sorcerer — entered you. The Waif wasn't strong enough to dominate you, so he accepted the bargain: you survive, he gets a body. <em>Your patron lives inside you.</em></div>
+  </div>
+  <div class="lore">
+    <div class="lt"><span class="it">La Colpa</span><span class="en">The Guilt</span></div>
+    <div class="lb it">Hai causato — o contribuito a causare — lo schianto di un <em>galeone volante</em>. Eravate in cerca di <em>Stormphrax</em> — fumini solidificati che cambiano peso con la luce. Nessuno sa che eri tu. Neanche tu ne sei completamente sicuro. Ma sai di aver fatto qualcosa.</div>
+    <div class="lb en">You caused — or helped cause — the crash of a <em>sky galleon</em>. You were searching for <em>Stormphrax</em> — solidified stormclouds that change weight with light. Nobody knows it was you. You're not entirely sure yourself. But you know you did something.</div>
+  </div>
+  <div class="lore">
+    <div class="lt"><span class="it">La Spada</span><span class="en">The Sword</span></div>
+    <div class="lb it">Il miniaturale nell'elsa ritrae un giovane cavaliere in armatura di Sanctaphrax. Lo trovi familiare, ma non sai perché. Sei tu, duecento anni fa.</div>
+    <div class="lb en">The portrait in the hilt shows a young knight in Sanctaphrax armor. He looks familiar, but you can't place why. It's you, two hundred years ago.</div>
+  </div>
+  <div class="lore">
+    <div class="lt"><span class="it">L'Armatura</span><span class="en">The Armor</span></div>
+    <div class="lb it">Autentica, ma di duecento anni fa. Stile desueto, incisioni di un'epoca passata. Chi conosce la storia dell'Ordine la riconosce come <em>quella dell'incidente</em>. Nessuno sospetta tu sia il sopravvissuto.</div>
+    <div class="lb en">Authentic, but two centuries old. Obsolete style, engravings of a forgotten era. Those who know the Order's history recognize it as the armor <em>from that incident</em>. Nobody suspects you are the survivor.</div>
+  </div>
+  <div class="lore">
+    <div class="lt"><span class="it">Personalità</span><span class="en">Personality</span></div>
+    <div class="lb it">Caotico Neutrale. <em>Egoista ma non malvagio.</em> Vecchio brontolone che pensa di sapere tutto — e per certi versi ha ragione, ha vissuto duecento anni. Diffidente, cinico, con un codice cavalleresco sepolto sotto due secoli di compromessi.</div>
+    <div class="lb en">Chaotic Neutral. <em>Selfish, not evil.</em> A grumpy old man who thinks he knows everything — and in many ways he does, having lived two centuries. Wary, cynical, with a chivalric code buried under two hundred years of compromise.</div>
+  </div>
+  <div class="rule"></div>
+  <div class="sec it">Il Mondo — Il Bordo</div><div class="sec en">The World — The Edge</div>
+  <div class="lore">
+    <div class="lt">Sanctaphrax</div>
+    <div class="lb it"><em>Città fluttuante</em> tenuta ancorata da catene. Sede dell'Ordine dei Cavalieri d'Accademia, studiosi-guerrieri in cerca di <em>Stormphrax</em> — cristalli di temporale condensato, pesantissimi al buio e privi di peso alla luce.</div>
+    <div class="lb en">A <em>floating city</em> held down by anchor chains. Home of the Order of Academy Knights, scholar-warriors who sought <em>Stormphrax</em> — condensed storm crystals, impossibly heavy in darkness and weightless in light.</div>
+  </div>
+  <div class="lore">
+    <div class="lt"><span class="it">I Waif</span><span class="en">The Waifs</span></div>
+    <div class="lb it">Creature telepate del Bordo. Capaci di leggere i pensieri e influenzare le menti. Il Waif dentro di te è il più potente delle anime che hai assorbito — ma non abbastanza da sopraffarti. Per ora siete soci, per necessità.</div>
+    <div class="lb en">Telepathic creatures of the Edge. Able to read minds and influence others. The Waif inside you is the most powerful of the souls you absorbed — but not powerful enough to overwhelm you. For now, you are partners out of necessity.</div>
+  </div>
+</div>
+
+<script>
+let S={hp:9,gp:10,slotUsed:false,fod:[false,false],lang:'it'};
+function load(){try{const d=localStorage.getItem('percius_v3');if(d)Object.assign(S,JSON.parse(d));}catch(e){}}
+function save(){try{localStorage.setItem('percius_v3',JSON.stringify(S));}catch(e){}}
+
+function render(){
+  const h=document.getElementById('hp-cur');
+  h.textContent=S.hp;
+  h.style.color=S.hp<=2?'#e05050':S.hp<=5?'#d49030':'#c43030';
+  document.getElementById('gp-val').textContent=S.gp+' GP';
+  const pip=document.getElementById('slot-pip');
+  S.slotUsed?pip.classList.add('used'):pip.classList.remove('used');
+  const avail=S.fod.filter(u=>!u).length;
+  document.getElementById('fod-tag').textContent=avail+' / 2';
+  S.fod.forEach((used,i)=>{
+    const el=document.getElementById('fod-'+i);
+    if(el) used?el.classList.add('used'):el.classList.remove('used');
+  });
+  document.body.className=S.lang==='en'?'en':'';
+}
+
+function changeHP(n){S.hp=Math.max(0,Math.min(9,S.hp+n));save();render();}
+function changeGP(n){S.gp=Math.max(0,S.gp+n);save();render();}
+function toggleSlot(){S.slotUsed=!S.slotUsed;save();render();}
+function toggleFoD(i){S.fod[i]=!S.fod[i];save();render();}
+function resetFoD(){S.fod=[false,false];save();render();}
+
+function shortRest(btn){
+  S.slotUsed=false;save();render();
+  const orig=btn.innerHTML;
+  btn.textContent=S.lang==='en'?'✓ Slot recovered!':'✓ Slot recuperato!';
+  setTimeout(()=>{btn.innerHTML=orig;},2000);
+}
+
+function toggleLang(){S.lang=S.lang==='it'?'en':'it';save();render();}
+
+function showPage(name,btn){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function toggleCard(card){card.classList.toggle('open');}
+
+if('serviceWorker' in navigator){
+  const sw=`const C='p-v1';self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+}
+
+load();render();
+</script>
 </body>
 </html>
