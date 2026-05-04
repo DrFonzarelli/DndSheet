@@ -18,10 +18,10 @@
   --re:#c43030;
   --in:#e8d5b0; --id:#9a8a6a;
   --bo:#3d3020; --bb:#6a5030;
+  --tactic:#1a1020; --tacborder:#4a3060; --tacaccent:#9060c0;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 
-/* LANG SWITCH via body class */
 body.en .it{display:none!important;}
 body.en .en{display:block!important;}
 body:not(.en) .en{display:none!important;}
@@ -32,16 +32,13 @@ body:not(.en) .en-i{display:none!important;}
 body:not(.en) .it-i{display:inline!important;}
 
 body{background:var(--bg);color:var(--in);font-family:Georgia,'Times New Roman',serif;font-size:16px;min-height:100dvh;padding-bottom:72px;padding-top:env(safe-area-inset-top);}
-.P{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;}
 
 /* HEADER */
 .hdr{background:var(--bg2);border-bottom:1px solid var(--bb);padding:12px 14px 10px;padding-top:calc(12px + env(safe-area-inset-top));position:sticky;top:0;z-index:50;box-shadow:0 3px 16px #00000077;}
 .hdr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-.cname{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:18px;font-weight:700;color:var(--go);}
+.cname{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;font-size:18px;font-weight:700;color:var(--go);}
 .csub{font-style:italic;color:var(--id);font-size:13px;margin-top:2px;line-height:1.4;}
 .hdr-bot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
-
-/* HP */
 .hpw{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
 .hpl{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:9px;color:var(--pd);letter-spacing:.12em;text-transform:uppercase;}
 .hpc{display:flex;align-items:center;gap:5px;}
@@ -49,15 +46,13 @@ body{background:var(--bg);color:var(--in);font-family:Georgia,'Times New Roman',
 .hpb:active{background:var(--bo);}
 .hpn{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:24px;font-weight:700;color:var(--re);min-width:36px;text-align:center;}
 .hpm{color:var(--id);font-size:12px;text-align:right;}
-
-/* LANG BTN */
 .lbtn{padding:4px 10px;border-radius:20px;border:1px solid var(--bb);background:var(--bg3);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:12px;color:var(--go);cursor:pointer;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;margin-top:2px;}
 .lbtn:active{background:var(--bo);}
 
-/* NAV */
+/* NAV — 6 buttons */
 nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bb);display:flex;z-index:100;box-shadow:0 -3px 14px #00000055;padding-bottom:env(safe-area-inset-bottom);}
-.nb{flex:1;padding:7px 2px 9px;background:none;border:none;color:var(--id);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:9px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;user-select:none;}
-.nb .ic{font-size:19px;}
+.nb{flex:1;padding:6px 1px 8px;background:none;border:none;color:var(--id);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:8px;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;user-select:none;}
+.nb .ic{font-size:17px;}
 .nb.active{color:var(--go);}
 
 /* PAGES */
@@ -68,12 +63,26 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
 .sec{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--pd);border-bottom:1px solid var(--bo);padding-bottom:5px;margin-bottom:10px;margin-top:18px;}
 .sec:first-child{margin-top:0;}
 
-/* STATS */
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
-.sb{background:var(--bg2);border:1px solid var(--bo);border-radius:7px;padding:8px 5px;text-align:center;}
+/* ── STAT BOXES (now tappable) ── */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px;}
+.sb{background:var(--bg2);border:1px solid var(--bo);border-radius:7px;padding:8px 5px;text-align:center;cursor:pointer;transition:border-color .15s, background .15s;user-select:none;}
+.sb:active{background:var(--bg3);}
+.sb.selected{border-color:var(--go);background:var(--bg3);}
 .sn{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:7.5px;letter-spacing:.1em;color:var(--pd);text-transform:uppercase;}
 .ss{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:26px;font-weight:700;color:var(--in);line-height:1.1;}
 .sm{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:14px;color:var(--go);font-weight:600;}
+
+/* STAT DETAIL PANEL */
+.stat-panel{display:none;background:var(--bg2);border:1px solid var(--go);border-radius:8px;padding:12px 13px;margin-bottom:10px;animation:fadeIn .15s ease;}
+.stat-panel.visible{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.sp-title{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:13px;font-weight:700;color:var(--go);margin-bottom:8px;letter-spacing:.04em;}
+.sp-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--bo);font-size:13px;}
+.sp-row:last-child{border-bottom:none;}
+.sp-lbl{color:var(--id);font-style:italic;}
+.sp-val{color:var(--in);font-weight:600;font-family:'Palatino Linotype',Palatino,Georgia,serif;}
+.sp-val.prof{color:var(--go);}
+.sp-note{font-size:12px;color:var(--pd);font-style:italic;margin-top:7px;line-height:1.5;border-top:1px solid var(--bo);padding-top:7px;}
 
 /* COMBAT */
 .cg{display:grid;gap:7px;margin-bottom:7px;}
@@ -145,6 +154,38 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
 .fpips{display:flex;gap:8px;}
 .fp{width:22px;height:22px;border-radius:50%;border:2px solid var(--gd);background:var(--go);box-shadow:0 0 6px var(--gd);cursor:pointer;transition:all .15s;}
 .fp.used{background:var(--bg3);border-color:var(--bo);box-shadow:none;}
+
+/* ── TACTICS PAGE ── */
+.tactic-block{background:var(--tactic);border:1px solid var(--tacborder);border-radius:8px;margin-bottom:10px;overflow:hidden;}
+.tactic-header{padding:11px 13px 9px;display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;user-select:none;}
+.tactic-header:active{background:#22103a;}
+.tactic-title{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:15px;font-weight:600;color:#c0a0e0;line-height:1.2;}
+.tactic-sub{font-size:12px;color:#7a5a9a;margin-top:3px;font-style:italic;}
+.tactic-chev{color:#7a5a9a;font-size:13px;flex-shrink:0;margin-top:3px;transition:transform .2s;}
+.tactic-block.open .tactic-chev{transform:rotate(180deg);}
+.tactic-body{display:none;padding:10px 13px 13px;border-top:1px solid var(--tacborder);}
+.tactic-block.open .tactic-body{display:block;}
+.tt{font-size:15px;line-height:1.7;color:#d0c0e8;}
+.tt p{margin-bottom:8px;}
+.tt p:last-child{margin-bottom:0;}
+.tt strong{color:#c0a0e0;font-weight:600;}
+.tt em{color:var(--go);font-style:italic;}
+
+/* Turn sequence */
+.turn-seq{margin:10px 0;}
+.turn{display:flex;gap:10px;padding:8px 10px;border-radius:6px;margin-bottom:6px;background:#120a1e;border:1px solid var(--tacborder);}
+.turn-n{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:11px;font-weight:700;color:var(--tacaccent);min-width:28px;margin-top:2px;letter-spacing:.05em;text-transform:uppercase;}
+.turn-txt{font-size:14px;color:#d0c0e8;line-height:1.6;}
+.turn-txt strong{color:#c0a0e0;}
+.turn-txt em{color:var(--go);}
+
+/* Warning box */
+.warn{background:#1a0a0a;border:1px solid #6a2020;border-left:3px solid var(--re);border-radius:6px;padding:9px 12px;margin:10px 0;font-size:14px;color:#d0a0a0;line-height:1.6;}
+.warn strong{color:#e08080;}
+
+/* Tip box */
+.tip{background:#0a1a0a;border:1px solid #2a5a2a;border-left:3px solid #5a9a5a;border-radius:6px;padding:9px 12px;margin:10px 0;font-size:14px;color:#a0c8a0;line-height:1.6;}
+.tip strong{color:#80d080;}
 </style>
 </head>
 <body>
@@ -153,7 +194,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
 <div class="hdr">
   <div class="hdr-top">
     <div>
-      <div class="cname P">Sir Percius Precarius</div>
+      <div class="cname">Sir Percius Precarius</div>
       <div class="csub it">Warlock Infero Lv1 · Umano · Caotico Neutrale · ~200 anni</div>
       <div class="csub en">Undead Warlock Lv1 · Human · Chaotic Neutral · ~200 years old</div>
     </div>
@@ -170,8 +211,8 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   </div>
   <div class="hdr-bot">
     <div style="font-size:12px;color:var(--id);font-style:italic;">
-      <span class="it">Sfondo: Cavaliere dell'Ordine · Dado vita: d8</span>
-      <span class="en">Background: Knight of the Order · Hit Die: d8</span>
+      <span class="it">Cavaliere dell'Ordine · d8 · Prof +2</span>
+      <span class="en">Knight of the Order · d8 · Prof +2</span>
     </div>
     <button class="lbtn" onclick="toggleLang()">
       <span class="it-i">🇬🇧 EN</span><span class="en-i">🇮🇹 IT</span>
@@ -179,29 +220,55 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   </div>
 </div>
 
-<!-- NAV -->
+<!-- NAV — 6 tabs -->
 <nav>
   <button class="nb active" onclick="showPage('stats',this)"><span class="ic">⚔️</span><span class="it-i">Stat</span><span class="en-i">Stats</span></button>
   <button class="nb" onclick="showPage('spells',this)"><span class="ic">🕯️</span><span class="it-i">Magia</span><span class="en-i">Spells</span></button>
-  <button class="nb" onclick="showPage('gear',this)"><span class="ic">🛡️</span><span class="it-i">Equip</span><span class="en-i">Gear</span></button>
-  <button class="nb" onclick="showPage('features',this)"><span class="ic">📜</span><span class="it-i">Trait</span><span class="en-i">Traits</span></button>
+  <button class="nb" onclick="showPage('gear',this)"><span class="ic">🛡️</span>Equip</button>
+  <button class="nb" onclick="showPage('features',this)"><span class="ic">📜</span>Trait</button>
+  <button class="nb" onclick="showPage('tactics',this)"><span class="ic">🎯</span><span class="it-i">Tattiche</span><span class="en-i">Tactics</span></button>
   <button class="nb" onclick="showPage('lore',this)"><span class="ic">🪶</span>Lore</button>
 </nav>
 
-<!-- ═══════════ STATS ═══════════ -->
+<!-- ═══════════════ STATS ═══════════════ -->
 <div id="page-stats" class="pg active">
-  <div class="sec it">Caratteristiche</div><div class="sec en">Ability Scores</div>
+
+  <div class="sec it">Caratteristiche — tocca per dettagli</div>
+  <div class="sec en">Ability Scores — tap for details</div>
+
   <div class="sg">
-    <div class="sb"><div class="sn"><span class="it">Forza</span><span class="en">Strength</span></div><div class="ss">14</div><div class="sm">+2</div></div>
-    <div class="sb"><div class="sn"><span class="it">Destrezza</span><span class="en">Dexterity</span></div><div class="ss">8</div><div class="sm">−1</div></div>
-    <div class="sb"><div class="sn"><span class="it">Costituzione</span><span class="en">Constitution</span></div><div class="ss">12</div><div class="sm">+1</div></div>
-    <div class="sb"><div class="sn"><span class="it">Intelligenza</span><span class="en">Intelligence</span></div><div class="ss">15</div><div class="sm">+2</div></div>
-    <div class="sb"><div class="sn"><span class="it">Saggezza</span><span class="en">Wisdom</span></div><div class="ss">6</div><div class="sm">−2</div></div>
-    <div class="sb"><div class="sn"><span class="it">Carisma</span><span class="en">Charisma</span></div><div class="ss">17</div><div class="sm">+3</div></div>
+    <div class="sb" onclick="showStatDetail('str',this)">
+      <div class="sn"><span class="it">Forza</span><span class="en">Strength</span></div>
+      <div class="ss">14</div><div class="sm">+2</div>
+    </div>
+    <div class="sb" onclick="showStatDetail('dex',this)">
+      <div class="sn"><span class="it">Destrezza</span><span class="en">Dexterity</span></div>
+      <div class="ss">8</div><div class="sm">−1</div>
+    </div>
+    <div class="sb" onclick="showStatDetail('con',this)">
+      <div class="sn"><span class="it">Costituzione</span><span class="en">Constitution</span></div>
+      <div class="ss">12</div><div class="sm">+1</div>
+    </div>
+    <div class="sb" onclick="showStatDetail('int',this)">
+      <div class="sn"><span class="it">Intelligenza</span><span class="en">Intelligence</span></div>
+      <div class="ss">15</div><div class="sm">+2</div>
+    </div>
+    <div class="sb" onclick="showStatDetail('wis',this)">
+      <div class="sn"><span class="it">Saggezza</span><span class="en">Wisdom</span></div>
+      <div class="ss">6</div><div class="sm">−2</div>
+    </div>
+    <div class="sb" onclick="showStatDetail('cha',this)">
+      <div class="sn"><span class="it">Carisma</span><span class="en">Charisma</span></div>
+      <div class="ss">17</div><div class="sm">+3</div>
+    </div>
   </div>
+
+  <!-- STAT DETAIL PANEL -->
+  <div class="stat-panel" id="stat-panel"></div>
+
   <div style="font-size:12px;color:var(--id);font-style:italic;margin-bottom:10px;padding-left:2px;">
-    <span class="it">✦ Carisma 17 include +1 dal feat Attore</span>
-    <span class="en">✦ Charisma 17 includes +1 from Actor feat</span>
+    <span class="it">✦ = competente · ✦✦ = competente (Carisma 17 include +1 da Actor)</span>
+    <span class="en">✦ = proficient · (Charisma 17 includes +1 from Actor feat)</span>
   </div>
 
   <div class="sec it">Combattimento</div><div class="sec en">Combat</div>
@@ -242,179 +309,90 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   <div class="pi">🎲 <span class="it">Gaming set <span>(da definire)</span></span><span class="en">Gaming set <span>(TBD)</span></span></div>
 </div>
 
-<!-- ═══════════ SPELLS ═══════════ -->
+<!-- ═══════════════ SPELLS ═══════════════ -->
 <div id="page-spells" class="pg">
-
   <div class="sec it">Slot Incantesimo</div><div class="sec en">Spell Slots</div>
   <div class="srow" onclick="toggleSlot()">
-    <div class="slbl">
-      <span class="it">1° livello — recupera con riposo breve</span>
-      <span class="en">1st level — recovers on short rest</span>
-    </div>
+    <div class="slbl"><span class="it">1° livello — recupera con riposo breve</span><span class="en">1st level — recovers on short rest</span></div>
     <div class="spip" id="slot-pip"></div>
   </div>
 
   <div class="sec it">Cantrip — nessuno slot necessario</div>
   <div class="sec en">Cantrips — no slot needed</div>
 
-  <!-- PRESTIDIGITATION -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Prestidigitazione</span><span class="en">Prestidigitation</span></div>
-        <div class="tags">
-          <span class="tag"><span class="it">Cantrip · Trasmutazione</span><span class="en">Cantrip · Transmutation</span></span>
-          <span class="tag"><span class="it">Azione</span><span class="en">Action</span></span>
-          <span class="tag">10 ft</span>
-          <span class="tag"><span class="it">fino a 1 ora</span><span class="en">up to 1 hour</span></span>
-        </div>
-      </div>
-      <div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Prestidigitazione</span><span class="en">Prestidigitation</span></div>
+      <div class="tags"><span class="tag"><span class="it">Cantrip · Trasmutazione</span><span class="en">Cantrip · Transmutation</span></span><span class="tag"><span class="it">Azione</span><span class="en">Action</span></span><span class="tag">10 ft</span><span class="tag"><span class="it">fino a 1 ora</span><span class="en">up to 1 hour</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (PHB)</div>
-        <div class="tx">
-          <p>Questo incantesimo è un piccolo trucco magico che gli incantatori alle prime armi usano per esercitarsi. All'interno della gittata, crei uno dei seguenti effetti magici:</p>
-          <p>• Crei un <strong>effetto sensoriale istantaneo e innocuo</strong>, come una doccia di scintille, un soffio di vento, fievoli note musicali, o uno strano odore.<br>
-          • <strong>Accendi o spengi istantaneamente</strong> una candela, una torcia, o un piccolo falò.<br>
-          • <strong>Pulisci o sporchi istantaneamente</strong> un oggetto non più grande di 1 piede cubo.<br>
-          • <strong>Raffreddi, scaldi, o insaporisci</strong> fino a 1 piede cubo di materiale non vivente per 1 ora.<br>
-          • Fai apparire su un oggetto o superficie un <strong>colore, un piccolo segno, o un simbolo</strong> per 1 ora.<br>
-          • Crei un <strong>ninnolo non magico o un'immagine illusoria</strong> abbastanza piccola da stare in mano, che dura fino alla fine del tuo prossimo turno.</p>
-          <p>Se lanci questo incantesimo più volte, puoi avere fino a <em>tre effetti non istantanei</em> attivi contemporaneamente, e puoi congedarli come azione.</p>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (PHB)</div>
-        <div class="tx">
-          <p>This spell is a minor magical trick that novice spellcasters use for practice. You create one of the following magical effects within range:</p>
-          <p>• You create an instantaneous, <strong>harmless sensory effect</strong>, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor.<br>
-          • You <strong>instantaneously light or snuff out</strong> a candle, a torch, or a small campfire.<br>
-          • You <strong>instantaneously clean or soil</strong> an object no larger than 1 cubic foot.<br>
-          • You <strong>chill, warm, or flavor</strong> up to 1 cubic foot of nonliving material for 1 hour.<br>
-          • You make a <strong>color, a small mark, or a symbol</strong> appear on an object or a surface for 1 hour.<br>
-          • You create a <strong>nonmagical trinket or an illusory image</strong> that can fit in your hand and lasts until the end of your next turn.</p>
-          <p>If you cast this spell multiple times, you can have up to <em>three non-instantaneous effects</em> active at a time, and you can dismiss such an effect as an action.</p>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (PHB)</div><div class="tx">
+        <p>Crei uno dei seguenti effetti magici entro la gittata:</p>
+        <p>• <strong>Effetto sensoriale istantaneo e innocuo</strong> (scintille, soffio di vento, note musicali, odore strano).<br>• <strong>Accendi o spegni</strong> una candela, torcia o piccolo falò.<br>• <strong>Pulisci o sporca</strong> un oggetto fino a 1 piede cubo.<br>• <strong>Raffredda, scalda o insaporisce</strong> fino a 1 piede cubo di materiale non vivente per 1 ora.<br>• <strong>Colore, segno o simbolo</strong> su una superficie per 1 ora.<br>• <strong>Ninnolo non magico o immagine illusoria</strong> abbastanza piccola da stare in mano, fino alla fine del tuo prossimo turno.</p>
+        <p>Fino a <em>tre effetti non istantanei</em> attivi contemporaneamente.</p>
+      </div></div>
+      <div class="en"><div class="olbl">Official text (PHB)</div><div class="tx">
+        <p>You create one of the following magical effects within range:</p>
+        <p>• An instantaneous, <strong>harmless sensory effect</strong> (sparks, puff of wind, faint notes, odd odor).<br>• <strong>Light or snuff out</strong> a candle, torch, or small campfire.<br>• <strong>Clean or soil</strong> an object no larger than 1 cubic foot.<br>• <strong>Chill, warm, or flavor</strong> up to 1 cubic foot of nonliving material for 1 hour.<br>• A <strong>color, mark, or symbol</strong> on a surface for 1 hour.<br>• A <strong>nonmagical trinket or illusory image</strong> that fits in your hand, lasting until end of your next turn.</p>
+        <p>Up to <em>three non-instantaneous effects</em> active at a time.</p>
+      </div></div>
     </div>
   </div>
 
-  <!-- THAUMATURGY -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Taumaturgia</span><span class="en">Thaumaturgy</span></div>
-        <div class="tags">
-          <span class="tag"><span class="it">Cantrip · Trasmutazione</span><span class="en">Cantrip · Transmutation</span></span>
-          <span class="tag"><span class="it">Azione</span><span class="en">Action</span></span>
-          <span class="tag">30 ft</span>
-          <span class="tag"><span class="it">fino a 1 min</span><span class="en">up to 1 min</span></span>
-        </div>
-      </div>
-      <div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Taumaturgia</span><span class="en">Thaumaturgy</span></div>
+      <div class="tags"><span class="tag"><span class="it">Cantrip · Trasmutazione</span><span class="en">Cantrip · Transmutation</span></span><span class="tag"><span class="it">Azione</span><span class="en">Action</span></span><span class="tag">30 ft</span><span class="tag"><span class="it">fino a 1 min</span><span class="en">up to 1 min</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (PHB)</div>
-        <div class="tx">
-          <p>Manifesti un piccolo prodigio, un segno di potere soprannaturale, entro la gittata. Crei uno dei seguenti effetti magici entro la gittata:</p>
-          <p>• La tua voce <strong>risuona fino a tre volte più forte del normale</strong> per 1 minuto.<br>
-          • Fai sfarfallare, brillare, affievolire, o <strong>cambiare colore alle fiamme</strong> entro la gittata per 1 minuto.<br>
-          • Causi <strong>innocui tremori nel suolo</strong> per 1 minuto.<br>
-          • Crei un <strong>suono istantaneo</strong> che ha origine da un punto a tua scelta entro la gittata, come un rombo di tuono, il verso di un corvo, o sinistre voci bisbigliate.<br>
-          • Fai <strong>spalancare o sbattere violentemente</strong> una porta o finestra non chiusa a chiave.<br>
-          • <strong>Alteri l'aspetto dei tuoi occhi</strong> per 1 minuto.</p>
-          <p>Se lanci questo incantesimo più volte, puoi avere fino a <em>tre effetti da 1 minuto</em> attivi contemporaneamente, e puoi congedarli come azione.</p>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (PHB)</div>
-        <div class="tx">
-          <p>You manifest a minor wonder, a sign of supernatural power, within range. You create one of the following magical effects within range:</p>
-          <p>• Your voice <strong>booms up to three times as loud as normal</strong> for 1 minute.<br>
-          • You cause flames within range to <strong>flicker, brighten, dim, or change color</strong> for 1 minute.<br>
-          • You cause <strong>harmless tremors in the ground</strong> for 1 minute.<br>
-          • You create an <strong>instantaneous sound</strong> that originates from a point of your choice within range, such as a rumble of thunder, the cry of a raven, or ominous whispered voices.<br>
-          • You instantaneously cause an <strong>unlocked door or window to fly open or slam shut</strong>.<br>
-          • You <strong>alter the appearance of your eyes</strong> for 1 minute.</p>
-          <p>If you cast this spell multiple times, you can have up to <em>three 1-minute effects</em> active at a time, and you can dismiss such an effect as an action.</p>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (PHB)</div><div class="tx">
+        <p>Crei uno dei seguenti effetti magici entro la gittata:</p>
+        <p>• Voce <strong>tre volte più forte del normale</strong> per 1 min.<br>• Fiamme che <strong>sfarfallano, cambiano colore</strong> per 1 min.<br>• <strong>Innocui tremori</strong> nel suolo per 1 min.<br>• <strong>Suono istantaneo</strong> (tuono, verso di corvo, voci sinistre) da un punto a scelta.<br>• Porta o finestra non chiusa che si <strong>spalanca o sbatte</strong>.<br>• <strong>Aspetto dei tuoi occhi alterato</strong> per 1 min.</p>
+        <p>Fino a <em>tre effetti da 1 minuto</em> attivi contemporaneamente.</p>
+      </div></div>
+      <div class="en"><div class="olbl">Official text (PHB)</div><div class="tx">
+        <p>You create one of the following magical effects within range:</p>
+        <p>• Voice <strong>booms up to three times as loud</strong> for 1 minute.<br>• Flames <strong>flicker, brighten, dim, or change color</strong> for 1 minute.<br>• <strong>Harmless tremors</strong> in the ground for 1 minute.<br>• An <strong>instantaneous sound</strong> (thunder, raven cry, whispered voices) from a point of your choice.<br>• An unlocked door or window <strong>flies open or slams shut</strong>.<br>• Your <strong>eyes alter appearance</strong> for 1 minute.</p>
+        <p>Up to <em>three 1-minute effects</em> active at a time.</p>
+      </div></div>
     </div>
   </div>
 
-  <div class="sec it">Incantesimi — usa uno slot</div>
-  <div class="sec en">Spells — uses a slot</div>
+  <div class="sec it">Incantesimi — usa uno slot</div><div class="sec en">Spells — uses a slot</div>
 
-  <!-- CHARM PERSON -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Ammalia Persone</span><span class="en">Charm Person</span></div>
-        <div class="tags">
-          <span class="tag g"><span class="it">Slot 1° · Ammaliamento</span><span class="en">1st slot · Enchantment</span></span>
-          <span class="tag"><span class="it">Azione</span><span class="en">Action</span></span>
-          <span class="tag">30 ft · 1h</span>
-          <span class="tag"><span class="it">senza Conc.</span><span class="en">no Conc.</span></span>
-        </div>
-      </div>
-      <div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Ammalia Persone</span><span class="en">Charm Person</span></div>
+      <div class="tags"><span class="tag g"><span class="it">Slot 1° · Ammaliamento</span><span class="en">1st slot · Enchantment</span></span><span class="tag"><span class="it">Azione</span><span class="en">Action</span></span><span class="tag">30 ft · 1h</span><span class="tag"><span class="it">senza Conc.</span><span class="en">no Conc.</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (PHB)</div>
-        <div class="tx">
-          <p>Tenti di ammaliare un umanoide che riesci a vedere entro la gittata. Deve effettuare un <strong>Tiro Salvezza su Saggezza</strong>, e lo fa con <em>vantaggio</em> se tu o i tuoi compagni state combattendo contro di essa. Se fallisce il tiro salvezza, è <strong>ammaliata da te</strong> finché l'incantesimo non termina, o finché tu o i tuoi compagni non fate qualcosa di dannoso nei suoi confronti. La creatura ammaliata ti <strong>considera un amico fidato</strong>. Quando l'incantesimo termina, la creatura <strong>sa di essere stata ammaliata da te</strong>.</p>
-          <p><em>A livelli superiori:</em> puoi bersagliare una creatura aggiuntiva per ogni livello di slot oltre il 1°. Le creature devono essere entro 30 ft l'una dall'altra.</p>
-          <div class="note">TS Saggezza CD 13. Dura 1 ora oppure termina se la ferisci. Nessuna concentrazione richiesta.</div>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (PHB)</div>
-        <div class="tx">
-          <p>You attempt to charm a humanoid you can see within range. It must make a <strong>Wisdom saving throw</strong>, and does so with <em>advantage</em> if you or your companions are fighting it. If it fails the saving throw, it is <strong>charmed by you</strong> until the spell ends or until you or your companions do anything harmful to it. The charmed creature regards you as a <strong>friendly acquaintance</strong>. When the spell ends, the creature <strong>knows it was charmed by you</strong>.</p>
-          <p><em>At Higher Levels:</em> When cast using a 2nd-level slot or higher, you can target one additional creature for each slot level above 1st. The creatures must be within 30 feet of each other when you target them.</p>
-          <div class="note">Wisdom Save DC 13. Lasts 1 hour or ends on harm. No concentration required.</div>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (PHB)</div><div class="tx">
+        <p>Un umanoide visibile entro 30 ft supera un <strong>TS Saggezza CD 13</strong> o è <strong>ammaliato da te</strong> per 1 ora (o finché tu o i tuoi alleati gli fate del male). Ha <em>vantaggio</em> al TS se stai già combattendo contro di esso. La creatura ammaliata ti considera un <strong>amico fidato</strong>. Alla fine sa di essere stata ammaliata.</p>
+        <p><em>A livelli superiori:</em> +1 bersaglio per ogni livello di slot sopra il 1°, entro 30 ft l'uno dall'altro.</p>
+        <div class="note">Usalo PRIMA del combattimento. In combattimento ha vantaggio al TS — quasi sprecato. / TS Saggezza CD 13. Dura 1 ora oppure termina se la ferisci. Nessuna concentrazione richiesta.</div>
+      </div></div>
+      <div class="en"><div class="olbl">Official text (PHB)</div><div class="tx">
+        <p>A humanoid you can see within range must make a <strong>Wisdom save DC 13</strong> or be <strong>charmed by you</strong> for 1 hour (or until you/allies harm it). It makes this save with <em>advantage</em> if you are fighting it. The charmed creature regards you as a <strong>friendly acquaintance</strong>. When it ends, the creature knows it was charmed.</p>
+        <p><em>At Higher Levels:</em> +1 additional target per slot level above 1st, within 30 ft of each other.</p>
+        <div class="note">Use BEFORE combat. In combat it saves with advantage — nearly wasted. / TS Saggezza CD 13. Dura 1 ora oppure termina se la ferisci. Nessuna concentrazione richiesta.</div>
+      </div></div>
     </div>
   </div>
 
-  <!-- HEX -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Malocchio</span><span class="en">Hex</span></div>
-        <div class="tags">
-          <span class="tag g"><span class="it">Slot 1° · Ammaliamento</span><span class="en">1st slot · Enchantment</span></span>
-          <span class="tag"><span class="it">Az. Bonus</span><span class="en">Bonus Action</span></span>
-          <span class="tag">90 ft · 1h</span>
-          <span class="tag"><span class="it">Conc.</span><span class="en">Conc.</span></span>
-        </div>
-      </div>
-      <div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Malocchio</span><span class="en">Hex</span></div>
+      <div class="tags"><span class="tag g"><span class="it">Slot 1° · Ammaliamento</span><span class="en">1st slot · Enchantment</span></span><span class="tag"><span class="it">Az. Bonus</span><span class="en">Bonus Action</span></span><span class="tag">90 ft · 1h</span><span class="tag"><span class="it">Conc.</span><span class="en">Conc.</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (PHB)</div>
-        <div class="tx">
-          <p>Poni una maledizione su una creatura che riesci a vedere entro la gittata. Finché l'incantesimo dura, infliggi <strong>1d6 danni necrotici extra</strong> al bersaglio ogni volta che lo colpisci con un tiro per colpire. Inoltre, <strong>scegli una caratteristica</strong> quando lanci l'incantesimo. Il bersaglio ha <em>svantaggio</em> ai tiri per le prove di caratteristica effettuate con quella caratteristica.</p>
-          <p>Se il bersaglio scende a 0 punti ferita prima che l'incantesimo termini, puoi usare un'<strong>azione bonus in un turno successivo</strong> per maledire una nuova creatura.</p>
-          <p>Un incantesimo <em>rimuovi maledizione</em> lanciato sul bersaglio pone fine prematuramente a questo incantesimo.</p>
-          <div class="note">Combo: Malocchio (az. bonus) + attacco spadone (azione) = 2d6+2 taglio +1d6 necrotico su ogni colpo. Se il bersaglio muore, sposti la maledizione gratuitamente.</div>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (PHB)</div>
-        <div class="tx">
-          <p>You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra <strong>1d6 necrotic damage</strong> to the target whenever you hit it with an attack roll. Also, <strong>choose one ability</strong> when you cast the spell. The target has <em>disadvantage</em> on ability checks made with the chosen ability.</p>
-          <p>If the target drops to 0 hit points before this spell ends, you can use a <strong>bonus action on a subsequent turn</strong> to curse a new creature.</p>
-          <p>A <em>remove curse</em> cast on the target ends this spell early.</p>
-          <div class="note">Combo: Hex (bonus action) + greatsword attack (action) = 2d6+2 slashing +1d6 necrotic per hit. If the target dies, you move the curse for free.</div>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (PHB)</div><div class="tx">
+        <p>Maledici una creatura visibile entro 90 ft. Finché dura: <strong>+1d6 danni necrotici</strong> ogni volta che la colpisci. Scegli una caratteristica: il bersaglio ha <em>svantaggio</em> alle relative prove. Se scende a 0 PF, sposta la maledizione (azione bonus, nessun nuovo slot). Un <em>rimuovi maledizione</em> la cancella.</p>
+        <div class="note">Richiede concentrazione — se subisci danno, TS Costituzione (CD 10 o metà danno) o perdi Hex e lo slot. / Combo: Hex (bonus action) + greatsword attack (action) = 2d6+2 slashing +1d6 necrotic per hit. If the target dies, you move the curse for free.</div>
+      </div></div>
+      <div class="en"><div class="olbl">Official text (PHB)</div><div class="tx">
+        <p>Curse a creature you can see within 90 ft. Until it ends: deal an extra <strong>1d6 necrotic</strong> whenever you hit it. Choose one ability: target has <em>disadvantage</em> on ability checks with that ability. If it drops to 0 hp, move the curse (bonus action, no new slot). A <em>remove curse</em> ends it early.</p>
+        <div class="note">Requires concentration — if you take damage, CON save (DC 10 or half damage) or lose Hex and the slot. / Combo: Hex (bonus action) + greatsword attack (action) = 2d6+2 slashing +1d6 necrotic per hit. If the target dies, you move the curse for free.</div>
+      </div></div>
     </div>
   </div>
 
@@ -424,257 +402,387 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   </button>
 </div>
 
-<!-- ═══════════ GEAR ═══════════ -->
+<!-- ═══════════════ GEAR ═══════════════ -->
 <div id="page-gear" class="pg">
   <div class="sec it">Armi</div><div class="sec en">Weapons</div>
-
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Spadone — con miniatura</span><span class="en">Greatsword — with portrait</span></div>
-        <div class="tags"><span class="tag g">+4 · 2d6+2 <span class="it">taglio</span><span class="en">slashing</span></span><span class="tag"><span class="it">Pesante · 2 mani</span><span class="en">Heavy · Two-handed</span></span></div>
-      </div><div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Spadone — con miniatura</span><span class="en">Greatsword — with portrait</span></div>
+      <div class="tags"><span class="tag g">+4 · 2d6+2 <span class="it">taglio</span><span class="en">slashing</span></span><span class="tag"><span class="it">Pesante · 2 mani</span><span class="en">Heavy · Two-handed</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx">
       <p class="it">Nell'elsa è incastonato un <em>miniaturale</em> — un giovane cavaliere in armatura di Sanctaphrax. Non lo riconosci. Sei tu, duecento anni fa.</p>
-      <p class="en">The hilt holds a <em>miniature portrait</em> — a young knight in Sanctaphrax armor, gaze steady. You don't recognize him. It's you, two hundred years ago.</p>
+      <p class="en">The hilt holds a <em>miniature portrait</em> — a young knight in Sanctaphrax armor. You don't recognize him. It's you, two hundred years ago.</p>
     </div></div>
   </div>
-
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Lancia — con stendardo</span><span class="en">Spear — with banner</span></div>
-        <div class="tags"><span class="tag g">+4 · 1d6+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Lancio 20/60</span><span class="en">Thrown 20/60</span></span></div>
-      </div><div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Lancia — con stendardo</span><span class="en">Spear — with banner</span></div>
+      <div class="tags"><span class="tag g">+4 · 1d6+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Lancio 20/60</span><span class="en">Thrown 20/60</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx">
       <p class="it">Sulla cuspide è avvolto lo <em>stendardo dell'Ordine</em> — sbiadito, ma riconoscibile. Mischia o lancio: +4, 1d6+2 perforante.</p>
-      <p class="en">The tip bears the <em>Order's banner</em> — faded, but still readable. Melee or thrown: +4, 1d6+2 piercing.</p>
+      <p class="en">The tip bears the <em>Order's banner</em> — faded but readable. Melee or thrown: +4, 1d6+2 piercing.</p>
     </div></div>
   </div>
-
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Pugnali ×2</span><span class="en">Daggers ×2</span></div>
-        <div class="tags"><span class="tag g">+4 · 1d4+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Fine · Lancio 20/60</span><span class="en">Finesse · Thrown 20/60</span></span></div>
-      </div><div class="chv">▼</div>
-    </div>
-    <div class="cbody"><div class="tx">
-      <p><span class="it">Mischia o lancio: +4, 1d4+2 perforante.</span><span class="en">Melee or thrown: +4, 1d4+2 piercing.</span></p>
-    </div></div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Pugnali ×2</span><span class="en">Daggers ×2</span></div>
+      <div class="tags"><span class="tag g">+4 · 1d4+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Fine · Lancio 20/60</span><span class="en">Finesse · Thrown 20/60</span></span></div>
+    </div><div class="chv">▼</div></div>
+    <div class="cbody"><div class="tx"><p><span class="it">Mischia o lancio: +4, 1d4+2 perforante.</span><span class="en">Melee or thrown: +4, 1d4+2 piercing.</span></p></div></div>
   </div>
-
   <div class="sec it">Difesa</div><div class="sec en">Defense</div>
   <div class="ist"><span class="istl"><span class="it">Armatura pesante</span><span class="en">Heavy Armor (Plate)</span></span><span class="istv">CA / AC 18</span></div>
-  <div class="ist"><span class="istl"><span class="it">Scudo</span><span class="en">Shield</span></span><span class="istv"><span class="it">già incluso</span><span class="en">already included</span></span></div>
-
+  <div class="ist"><span class="istl"><span class="it">Scudo (già incluso)</span><span class="en">Shield (already included)</span></span><span class="istv">—</span></div>
   <div class="sec it">Zaino dell'Accademico</div><div class="sec en">Scholar's Pack</div>
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div><div class="ct"><span class="it">Contenuto</span><span class="en">Contents</span></div>
-      <div class="tags"><span class="tag"><span class="it">Tocca per espandere</span><span class="en">Tap to expand</span></span></div></div>
-      <div class="chv">▼</div>
-    </div>
+    <div class="ch"><div><div class="ct"><span class="it">Contenuto</span><span class="en">Contents</span></div></div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx">
-      <p class="it">• Libro di sapere<br>• Inchiostro + penna<br>• 10 pergamene<br>• Sacchetto di sabbia<br>• Coltellino piccolo<br>• Abiti da viaggio</p>
-      <p class="en">• Book of lore<br>• Ink + pen<br>• 10 sheets of parchment<br>• Sand bag (for drying ink)<br>• Small knife<br>• Traveler's clothes</p>
+      <p class="it">• Libro di sapere · Inchiostro + penna · 10 pergamene · Sacchetto di sabbia · Coltellino · Abiti da viaggio</p>
+      <p class="en">• Book of lore · Ink + pen · 10 parchment sheets · Sand bag · Small knife · Traveler's clothes</p>
     </div></div>
   </div>
-
   <div class="sec it">Denaro</div><div class="sec en">Currency</div>
   <div class="ist"><span class="istl"><span class="it">Monete d'oro</span><span class="en">Gold Pieces</span></span><span class="istv" id="gp-val">10 GP</span></div>
-  <div class="brow" style="margin-top:8px;">
-    <button class="abtn" onclick="changeGP(-1)">− 1 GP</button>
-    <button class="abtn" onclick="changeGP(1)">+ 1 GP</button>
-  </div>
+  <div class="brow" style="margin-top:8px;"><button class="abtn" onclick="changeGP(-1)">− 1 GP</button><button class="abtn" onclick="changeGP(1)">+ 1 GP</button></div>
 </div>
 
-<!-- ═══════════ FEATURES ═══════════ -->
+<!-- ═══════════════ FEATURES ═══════════════ -->
 <div id="page-features" class="pg">
   <div class="sec it">Capacità di Classe</div><div class="sec en">Class Feature</div>
-
-  <!-- FORM OF DREAD -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Forma del Terrore</span><span class="en">Form of Dread</span></div>
-        <div class="tags">
-          <span class="tag g"><span class="it">Warlock Infero Lv1</span><span class="en">Undead Warlock Lv1</span></span>
-          <span class="tag"><span class="it">Az. Bonus · 1 min</span><span class="en">Bonus Action · 1 min</span></span>
-          <span class="tag" id="fod-tag">2 / 2</span>
-        </div>
-      </div><div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Forma del Terrore</span><span class="en">Form of Dread</span></div>
+      <div class="tags"><span class="tag g"><span class="it">Warlock Infero Lv1</span><span class="en">Undead Warlock Lv1</span></span><span class="tag"><span class="it">Az. Bonus · 1 min</span><span class="en">Bonus Action · 1 min</span></span><span class="tag" id="fod-tag">2 / 2</span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (Van Richten's Guide to Ravenloft)</div>
-        <div class="tx">
-          <p>A partire dal 1° livello, puoi imbevere la tua presenza con il più tenue accenno del terrore custodito dal tuo patrono. Come <strong>azione bonus</strong>, ti trasformi per 1 minuto. Mentre sei trasformato, ottieni i seguenti benefici:</p>
-          <p>• Guadagni <strong>punti ferita temporanei</strong> pari a 1d10 + il tuo livello da warlock.<br>
-          • <strong>Una volta durante ciascuno dei tuoi turni</strong>, quando colpisci una creatura con un tiro per colpire, puoi costringerla a effettuare un Tiro Salvezza su Saggezza, e se il tiro salvezza fallisce, il bersaglio diventa <strong>spaventato da te</strong> fino alla fine del tuo prossimo turno.<br>
-          • Sei <strong>immune alla condizione spaventato</strong>.</p>
-          <p>Puoi trasformarti un numero di volte pari al tuo <em>bonus di competenza</em>, e recuperi tutti gli utilizzi spesi quando concludi un <strong>riposo lungo</strong>.</p>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (Van Richten's Guide to Ravenloft)</div>
-        <div class="tx">
-          <p>Starting at 1st level, you can imbue your presence with the barest hint of the dread harbored by your patron. As a <strong>bonus action</strong>, you transform for 1 minute. You gain the following benefits while transformed:</p>
-          <p>• You gain <strong>temporary hit points</strong> equal to 1d10 + your warlock level.<br>
-          • <strong>Once during each of your turns</strong>, when you hit a creature with an attack roll, you can force it to make a Wisdom saving throw, and if the saving throw fails, the target becomes <strong>frightened of you</strong> until the end of your next turn.<br>
-          • You are <strong>immune to the frightened condition</strong>.</p>
-          <p>You can transform a number of times equal to your <em>proficiency bonus</em>, and you regain all expended uses when you finish a <strong>long rest</strong>.</p>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (Van Richten's Guide to Ravenloft)</div><div class="tx">
+        <p>Come <strong>azione bonus</strong>, ti trasformi per 1 minuto:</p>
+        <p>• <strong>PF temporanei</strong> pari a 1d10 + livello warlock.<br>• <strong>Una volta per turno</strong>, quando colpisci con un attacco, forza un TS Saggezza CD 13: se fallisce, il bersaglio è <strong>spaventato da te</strong> fino alla fine del tuo prossimo turno.<br>• Sei <strong>immune alla condizione spaventato</strong>.</p>
+        <p>Usi pari al <em>bonus di competenza</em> (2). Recupera con <strong>riposo lungo</strong>.</p>
+      </div></div>
+      <div class="en"><div class="olbl">Official text (Van Richten's Guide to Ravenloft)</div><div class="tx">
+        <p>As a <strong>bonus action</strong>, you transform for 1 minute:</p>
+        <p>• Gain <strong>temporary hit points</strong> equal to 1d10 + warlock level.<br>• <strong>Once per turn</strong>, when you hit with an attack, force a Wisdom save DC 13: on failure, target is <strong>frightened of you</strong> until end of your next turn.<br>• You are <strong>immune to the frightened condition</strong>.</p>
+        <p>Uses equal to <em>proficiency bonus</em> (2). Regain on <strong>long rest</strong>.</p>
+      </div></div>
       <div style="margin-top:12px;display:flex;align-items:center;gap:12px;" onclick="event.stopPropagation()">
-        <div class="fpips">
-          <div class="fp" id="fod-0" onclick="toggleFoD(0)"></div>
-          <div class="fp" id="fod-1" onclick="toggleFoD(1)"></div>
-        </div>
-        <button class="abtn" style="margin:0;flex:1;padding:8px;" onclick="resetFoD()">
-          <span class="it">↺ Riposo lungo</span><span class="en">↺ Long rest</span>
-        </button>
+        <div class="fpips"><div class="fp" id="fod-0" onclick="toggleFoD(0)"></div><div class="fp" id="fod-1" onclick="toggleFoD(1)"></div></div>
+        <button class="abtn" style="margin:0;flex:1;padding:8px;" onclick="resetFoD()"><span class="it">↺ Riposo lungo</span><span class="en">↺ Long rest</span></button>
       </div>
     </div>
   </div>
 
   <div class="sec it">Capacità di Sfondo</div><div class="sec en">Background Feature</div>
-
-  <!-- KNIGHTLY REGARD -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Riguardo Cavalleresco</span><span class="en">Knightly Regard</span></div>
-        <div class="tags">
-          <span class="tag g"><span class="it">Cavaliere dell'Ordine</span><span class="en">Knight of the Order</span></span>
-          <span class="tag"><span class="it">Passivo</span><span class="en">Passive</span></span>
-        </div>
-      </div><div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Riguardo Cavalleresco</span><span class="en">Knightly Regard</span></div>
+      <div class="tags"><span class="tag g"><span class="it">Cavaliere dell'Ordine</span><span class="en">Knight of the Order</span></span><span class="tag"><span class="it">Passivo</span><span class="en">Passive</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (Sword Coast Adventurer's Guide)</div>
-        <div class="tx">
-          <p>Ricevi <strong>riparo e soccorso</strong> dai membri del tuo ordine cavalleresco e da coloro che sono simpatici ai suoi obiettivi. Se il tuo ordine è associato a una particolare divinità, puoi ottenere aiuto dai templi e da altri seguaci di quella divinità, oltre che dall'ordine stesso. I cavalieri del tuo ordine potrebbero anche essere disposti a <strong>garantire per te</strong> di fronte alla nobiltà del territorio.</p>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (Sword Coast Adventurer's Guide)</div>
-        <div class="tx">
-          <p>You receive <strong>shelter and succor</strong> from members of your knightly order and those who are sympathetic to its aims. If your order is associated with a particular deity, you can gain aid from temples and other followers of that deity, as well as the order itself. Knights of your order might also be willing to <strong>vouch for you</strong> before the nobility of the land.</p>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (SCAG)</div><div class="tx"><p>Ricevi <strong>riparo e soccorso</strong> dai membri del tuo ordine e da chi è loro simpatico. Se l'ordine è associato a una divinità, puoi ottenere aiuto anche dai suoi templi e seguaci. I cavalieri potrebbero <strong>garantire per te</strong> davanti alla nobiltà.</p></div></div>
+      <div class="en"><div class="olbl">Official text (SCAG)</div><div class="tx"><p>You receive <strong>shelter and succor</strong> from members of your knightly order and those sympathetic to its aims. If associated with a deity, you can gain aid from its temples too. Knights of your order might <strong>vouch for you</strong> before the nobility.</p></div></div>
     </div>
   </div>
 
   <div class="sec">Feat</div>
-
-  <!-- ACTOR -->
   <div class="card" onclick="toggleCard(this)">
-    <div class="ch">
-      <div>
-        <div class="ct"><span class="it">Attore</span><span class="en">Actor</span></div>
-        <div class="tags">
-          <span class="tag g">Feat · PHB</span>
-          <span class="tag"><span class="it">+1 CAR → 17</span><span class="en">+1 CHA → 17</span></span>
-          <span class="tag"><span class="it">Passivo</span><span class="en">Passive</span></span>
-        </div>
-      </div><div class="chv">▼</div>
-    </div>
+    <div class="ch"><div>
+      <div class="ct"><span class="it">Attore</span><span class="en">Actor</span></div>
+      <div class="tags"><span class="tag g">Feat · PHB</span><span class="tag"><span class="it">+1 CAR → 17</span><span class="en">+1 CHA → 17</span></span></div>
+    </div><div class="chv">▼</div></div>
     <div class="cbody">
-      <div class="it">
-        <div class="olbl">Testo ufficiale (PHB)</div>
-        <div class="tx">
-          <p>Abile nella mimica e nel teatro, ottieni i seguenti benefici:</p>
-          <p>• <strong>Aumenta il tuo punteggio di Carisma di 1</strong>, fino a un massimo di 20.<br>
-          • Hai <strong>vantaggio</strong> alle prove di Carisma (Raggiro) e di Carisma (Intrattenimento) quando cerchi di spacciarti per un'altra persona.<br>
-          • Puoi <strong>imitare il parlato</strong> di un'altra persona o i suoni prodotti da altre creature. Devi aver sentito la persona parlare, o la creatura emettere il suono, per almeno 1 minuto. Un ascoltatore può stabilire che l'effetto è contraffatto con una prova di <em>Saggezza (Intuizione) in contrapposizione alla tua prova di Carisma (Raggiro)</em>.</p>
-          <div class="note">Con Taumaturgia (voce 3×) + Raggiro +5 + vantaggio: praticamente impossibile da smascherare.</div>
-        </div>
-      </div>
-      <div class="en">
-        <div class="olbl">Official text (PHB)</div>
-        <div class="tx">
-          <p>Skilled at mimicry and dramatics, you gain the following benefits:</p>
-          <p>• <strong>Increase your Charisma score by 1</strong>, to a maximum of 20.<br>
-          • You have <strong>advantage</strong> on Charisma (Deception) and Charisma (Performance) checks when trying to pass yourself off as a different person.<br>
-          • You can <strong>mimic the speech</strong> of another person or the sounds made by other creatures. You must have heard the person speaking, or heard the creature make the sound, for at least 1 minute. A successful <em>Wisdom (Insight) check contested by your Charisma (Deception) check</em> allows a listener to determine that the effect is faked.</p>
-          <div class="note">With Thaumaturgy (voice 3×) + Deception +5 + advantage: nearly impossible to detect.</div>
-        </div>
-      </div>
+      <div class="it"><div class="olbl">Testo ufficiale (PHB)</div><div class="tx">
+        <p>• <strong>+1 Carisma</strong> (max 20).<br>• <strong>Vantaggio</strong> a Carisma (Raggiro) e Carisma (Intrattenimento) quando ti spacci per un'altra persona.<br>• Puoi <strong>imitare voce e suoni</strong> di chi hai sentito per almeno 1 minuto. Per smascherarti: <em>prova Saggezza (Intuizione) in contrapposizione alla tua Carisma (Raggiro)</em>.</p>
+        <div class="note">Con Taumaturgia (voce 3×) + Raggiro +5 + vantaggio: praticamente impossibile da smascherare.</div>
+      </div></div>
+      <div class="en"><div class="olbl">Official text (PHB)</div><div class="tx">
+        <p>• <strong>+1 Charisma</strong> (max 20).<br>• <strong>Advantage</strong> on Charisma (Deception) and Charisma (Performance) when passing yourself off as a different person.<br>• You can <strong>mimic speech and sounds</strong> of anyone heard for at least 1 minute. To detect: <em>Wisdom (Insight) contested by your Charisma (Deception)</em>.</p>
+        <div class="note">With Thaumaturgy (voice 3×) + Deception +5 + advantage: nearly impossible to detect.</div>
+      </div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ LORE ═══════════ -->
+<!-- ═══════════════ TACTICS ═══════════════ -->
+<div id="page-tactics" class="pg">
+
+  <div class="sec it">Tattiche di Combattimento</div>
+  <div class="sec en">Combat Tactics</div>
+
+  <!-- COMBO -->
+  <div class="tactic-block" onclick="toggleTactic(this)">
+    <div class="tactic-header">
+      <div>
+        <div class="tactic-title"><span class="it">🎯 Il Combo Principale</span><span class="en">🎯 The Core Combo</span></div>
+        <div class="tactic-sub"><span class="it">quello che tutti sbagliano la prima volta</span><span class="en">what everyone messes up at first</span></div>
+      </div>
+      <div class="tactic-chev">▼</div>
+    </div>
+    <div class="tactic-body">
+      <div class="tt">
+        <p class="it">Form of Dread e Hex sono entrambe azioni bonus. Non puoi fare entrambe nello stesso turno — ma non è un problema, perché Form of Dread <strong>dura un minuto intero</strong>. La sequenza corretta:</p>
+        <p class="en">Form of Dread and Hex are both bonus actions. You can't use both in the same turn — but that's fine, because Form of Dread <strong>lasts a full minute</strong>. The correct sequence:</p>
+      </div>
+      <div class="turn-seq">
+        <div class="turn">
+          <div class="turn-n"><span class="it">T1</span><span class="en">R1</span></div>
+          <div class="turn-txt it"><strong>Az. Bonus:</strong> Form of Dread (PF temp 1d10+1, trasformazione attiva) · <strong>Azione:</strong> Attacco con la spadona (+4, 2d6+2) — se colpisci, prova di paura (TS Sag CD 13)</div>
+          <div class="turn-txt en"><strong>Bonus Action:</strong> Form of Dread (temp HP 1d10+1, transformation active) · <strong>Action:</strong> Greatsword attack (+4, 2d6+2) — on hit, fear attempt (WIS save DC 13)</div>
+        </div>
+        <div class="turn">
+          <div class="turn-n"><span class="it">T2</span><span class="en">R2</span></div>
+          <div class="turn-txt it"><strong>Az. Bonus:</strong> Hex (Form of Dread è ancora attiva — l'azione bonus è libera) · <strong>Azione:</strong> Attacco → <em>2d6+2 taglio + 1d6 necrotico</em> + prova di paura</div>
+          <div class="turn-txt en"><strong>Bonus Action:</strong> Hex (Form of Dread still running — bonus action is free) · <strong>Action:</strong> Attack → <em>2d6+2 slashing + 1d6 necrotic</em> + fear attempt</div>
+        </div>
+        <div class="turn">
+          <div class="turn-n"><span class="it">T3+</span><span class="en">R3+</span></div>
+          <div class="turn-txt it"><strong>Azione:</strong> Attacca. Danno pieno + necrotico + paura. Hex si sposta se il bersaglio muore (az. bonus, nessun slot). Vai avanti così.</div>
+          <div class="turn-txt en"><strong>Action:</strong> Attack. Full damage + necrotic + fear. Hex moves if target dies (bonus action, no slot). Repeat.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRIGHTENED -->
+  <div class="tactic-block" onclick="toggleTactic(this)">
+    <div class="tactic-header">
+      <div>
+        <div class="tactic-title"><span class="it">😱 Perché "Spaventato" È Forte</span><span class="en">😱 Why Frightened Is Strong</span></div>
+        <div class="tactic-sub"><span class="it">non è solo narrativo</span><span class="en">it's not just flavor</span></div>
+      </div>
+      <div class="tactic-chev">▼</div>
+    </div>
+    <div class="tactic-body"><div class="tt">
+      <p class="it">Una creatura spaventata da te ha <strong>svantaggio a tutti gli attacchi</strong> mentre ti vede, e <strong>non può avvicinarsi volontariamente</strong> a te. Se è già in mischia con te, è bloccata: non può fuggire verso i tuoi alleati, non può colpirti bene.</p>
+      <p class="en">A creature frightened of you has <strong>disadvantage on all attack rolls</strong> while it can see you, and <strong>cannot willingly move closer</strong> to you. If it's already in melee range, it's stuck: can't flee to your allies, can't hit you well.</p>
+      <p class="it">In pratica diventi un muro. Usalo per <strong>proteggere chi sta dietro di te</strong> — il mago, l'arciere. Non perché sei buono — perché è tattico.</p>
+      <p class="en">In practice you become a wall. Use it to <strong>protect those behind you</strong> — the wizard, the archer. Not because you're good — because it's tactical.</p>
+      <div class="tip">
+        <strong class="it">Situazione ideale:</strong><strong class="en">Ideal situation:</strong>
+        <span class="it"> il nemico più pericoloso è in mischia. Turno 1: Form of Dread, attacca, spaventa. Risultato: lui rimane bloccato davanti a te con svantaggio agli attacchi per un turno intero. I tuoi alleati ringraziano (o non ringraziano, ma l'effetto è lo stesso).</span>
+        <span class="en"> The most dangerous enemy is in melee. Round 1: Form of Dread, attack, frighten. Result: he's stuck in front of you with disadvantage on attacks for a full turn. Your allies are grateful (or not, but the effect is the same).</span>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- SLOT MANAGEMENT -->
+  <div class="tactic-block" onclick="toggleTactic(this)">
+    <div class="tactic-header">
+      <div>
+        <div class="tactic-title"><span class="it">🃏 Gestione dell'Unico Slot</span><span class="en">🃏 Managing Your One Slot</span></div>
+        <div class="tactic-sub"><span class="it">hai una cartuccia, non sprecarla</span><span class="en">you have one bullet, don't waste it</span></div>
+      </div>
+      <div class="tactic-chev">▼</div>
+    </div>
+    <div class="tactic-body"><div class="tt">
+      <p class="it">Hai un solo slot di 1° livello. Si recupera con un <em>riposo breve</em> (15-30 minuti), quindi non è un dramma — ma durante uno scontro hai una sola scelta.</p>
+      <p class="en">You have one 1st-level slot. It recovers on a <em>short rest</em> (15-30 min), so it's not catastrophic — but during a fight you only get one choice.</p>
+      <p class="it"><strong>Hex</strong> in combattimento — sempre. +1d6 necrotico su ogni colpo per un'ora, si sposta gratis se il bersaglio muore. Nessuna alternativa è competitiva in mischia.</p>
+      <p class="en"><strong>Hex</strong> in combat — always. +1d6 necrotic on every hit for an hour, moves for free when the target dies. Nothing else competes in melee.</p>
+      <p class="it"><strong>Charm Person</strong> fuori dal combattimento — in taverna, in un corridoio, prima che le spade escano. In combattimento ha vantaggio al TS: è praticamente sprecato.</p>
+      <p class="en"><strong>Charm Person</strong> outside combat — in a tavern, hallway, before swords come out. In combat it saves with advantage: essentially wasted.</p>
+      <div class="tip it"><strong>Bonus:</strong> se riesci a fare un riposo breve tra uno scontro e l'altro, recuperi lo slot. Non è necessario dormire. Bastano 15 minuti a brontolare seduto su una roccia.</div>
+      <div class="tip en"><strong>Bonus:</strong> if you can short rest between encounters, you recover the slot. No sleep needed. Just 15 minutes grumbling on a rock.</div>
+    </div></div>
+  </div>
+
+  <!-- ARMOR -->
+  <div class="tactic-block" onclick="toggleTactic(this)">
+    <div class="tactic-header">
+      <div>
+        <div class="tactic-title"><span class="it">🛡️ CA 18 al Livello 1</span><span class="en">🛡️ AC 18 at Level 1</span></div>
+        <div class="tactic-sub"><span class="it">è ridicolmente alta, usala</span><span class="en">it's absurdly high, use it</span></div>
+      </div>
+      <div class="tactic-chev">▼</div>
+    </div>
+    <div class="tactic-body"><div class="tt">
+      <p class="it">CA 18 al livello 1 è quasi irraggiungibile per chiunque altro. La maggior parte dei nemici di basso livello ha bonus di attacco tra +2 e +5: ti colpiscono solo con un 16+ o con un 13+. Sei costruito per stare davanti.</p>
+      <p class="en">AC 18 at level 1 is almost unreachable for anyone else. Most low-level enemies have +2 to +5 attack bonuses: they only hit you on a 16+ or 13+. You're built to be in front.</p>
+      <p class="it"><strong>Non stare in seconda linea.</strong> Se ti metti a distanza, sprechi l'armatura, perdi l'efficacia di Form of Dread in mischia, e i tuoi alleati meno corazzati assorbono i colpi al posto tuo.</p>
+      <p class="en"><strong>Don't hang back.</strong> Staying at range wastes the armor, reduces Form of Dread's melee effectiveness, and your less-armored allies take the hits instead.</p>
+      <p class="it">I PF temporanei di Form of Dread (1d10+1 in media ~6-7) sono un buffer aggiuntivo. Attivala <strong>all'inizio di ogni scontro significativo</strong>, non quando stai già per morire.</p>
+      <p class="en">Form of Dread's temp HP (1d10+1, avg ~6-7) are extra padding. Activate it <strong>at the start of every meaningful encounter</strong>, not when you're already dying.</p>
+    </div></div>
+  </div>
+
+  <!-- WHAT NOT TO DO -->
+  <div class="tactic-block" onclick="toggleTactic(this)">
+    <div class="tactic-header">
+      <div>
+        <div class="tactic-title"><span class="it">⚠️ Cosa Non Fare</span><span class="en">⚠️ What Not To Do</span></div>
+        <div class="tactic-sub"><span class="it">errori classici da warlock alle prime armi</span><span class="en">classic rookie warlock mistakes</span></div>
+      </div>
+      <div class="tactic-chev">▼</div>
+    </div>
+    <div class="tactic-body">
+      <div class="warn it"><strong>Non attivare Form of Dread e Hex nello stesso turno.</strong> Entrambe azioni bonus — fisicamente impossibile, ma qualcuno ci prova lo stesso.</div>
+      <div class="warn en"><strong>Don't activate Form of Dread and Hex on the same turn.</strong> Both are bonus actions — physically impossible, but people try anyway.</div>
+      <div class="warn it"><strong>Non usare Charm Person su qualcuno che ti sta già attaccando.</strong> Ha vantaggio al TS. Hai letteralmente dato soldi per perdere.</div>
+      <div class="warn en"><strong>Don't use Charm Person on someone already fighting you.</strong> They save with advantage. You literally paid to lose.</div>
+      <div class="warn it"><strong>Non dimenticare la concentrazione su Hex.</strong> Se subisci danno, devi superare un TS Costituzione (CD 10 o metà danno, il più alto) o perdi Hex e lo slot. Con CON +1 non sei imbattibile.</div>
+      <div class="warn en"><strong>Don't forget Hex requires concentration.</strong> When you take damage, make a CON save (DC 10 or half damage, whichever is higher) or lose Hex and the slot. With CON +1 you're not invincible.</div>
+      <div class="warn it"><strong>Non sprecare Form of Dread su scontri banali.</strong> Hai 2 usi per riposo lungo. Usali sulle risse vere.</div>
+      <div class="warn en"><strong>Don't burn Form of Dread on trivial fights.</strong> You have 2 uses per long rest. Save them for real brawls.</div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="sec it">Fuori dal Combattimento</div>
+  <div class="sec en">Out of Combat</div>
+
+  <div class="tactic-block" onclick="toggleTactic(this)">
+    <div class="tactic-header">
+      <div>
+        <div class="tactic-title"><span class="it">🎭 Situazioni Sociali</span><span class="en">🎭 Social Situations</span></div>
+        <div class="tactic-sub"><span class="it">dove sei davvero pericoloso</span><span class="en">where you're actually dangerous</span></div>
+      </div>
+      <div class="tactic-chev">▼</div>
+    </div>
+    <div class="tactic-body"><div class="tt">
+      <p class="it">Con Raggiro +5, Persuasione +5, vantaggio a Raggiro quando ti fingi qualcun altro (Actor), e Taumaturgia che ti cambia voce e occhi — sei costruito per dominare qualsiasi stanza senza sfoderare la spada.</p>
+      <p class="en">With Deception +5, Persuasion +5, advantage on Deception when disguised (Actor), and Thaumaturgy changing your voice and eyes — you're built to dominate any room without drawing your sword.</p>
+
+      <p class="it"><strong>Prima di parlare con qualcuno di importante:</strong> attiva Taumaturgia (voce 3× più forte, occhi che cambiano). Non è magia visibile come un fulmine — è una presenza. Il master quasi sempre chiede il tiro a questo punto.</p>
+      <p class="en"><strong>Before talking to someone important:</strong> activate Thaumaturgy (voice 3× louder, eyes that shift). It's not flashy magic like a lightning bolt — it's presence. The DM will almost always call for a roll at this point.</p>
+
+      <p class="it"><strong>Percius non minaccia mai direttamente.</strong> È vecchio, stanco, e ha già visto tutto. Il suo modo di mettere pressione è la calma totale di chi sa già come andrà a finire.</p>
+      <p class="en"><strong>Percius never threatens directly.</strong> He's old, tired, and has seen everything. His way of applying pressure is the total calm of someone who already knows how it ends.</p>
+
+      <div class="tip it"><strong>Tecnica per spingere il tiro:</strong> descrivi sempre prima l'azione fisica, poi parla. "Percius si avvicina di mezzo passo, abbassa la voce — anzi, la alza tre volte col Taumaturgia — e dice: [cosa vuoi ottenere]." Il DM quasi non può fare a meno di chiedere il tiro.</div>
+      <div class="tip en"><strong>Technique to trigger the roll:</strong> always describe the physical action first, then speak. "Percius steps half a pace closer, lowers his voice — actually raises it three times with Thaumaturgy — and says: [what you want]." The DM can barely resist calling for the roll.</div>
+    </div></div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ LORE ═══════════════ -->
 <div id="page-lore" class="pg">
-  <div class="lore">
-    <div class="lt"><span class="it">Chi sei</span><span class="en">Who you are</span></div>
-    <div class="lb it">Sir Percius Precarius. Già Cavaliere d'Accademia di <em>Sanctaphrax</em> e cercatore di pietre dell'anima per conto dell'Ordine. Hai perso la memoria — come tutti i tuoi compagni — dopo un incidente di cui conosci solo i contorni.</div>
-    <div class="lb en">Sir Percius Precarius. Former Academy Knight of <em>Sanctaphrax</em> and soul-stone seeker for the Order. You lost your memory — as did all your companions — after an incident whose full shape still eludes you.</div>
+  <div class="lore"><div class="lt"><span class="it">Chi sei</span><span class="en">Who you are</span></div>
+    <div class="lb it">Sir Percius Precarius. Già Cavaliere d'Accademia di <em>Sanctaphrax</em> e cercatore di pietre dell'anima. Hai perso la memoria — come tutti i tuoi compagni — dopo un incidente di cui conosci solo i contorni.</div>
+    <div class="lb en">Sir Percius Precarius. Former Academy Knight of <em>Sanctaphrax</em> and soul-stone seeker. You lost your memory — as did all your companions — after an incident whose full shape still eludes you.</div>
   </div>
-  <div class="lore">
-    <div class="lt"><span class="it">Il Patto</span><span class="en">The Pact</span></div>
-    <div class="lb it">Vecchio e spaventato di morire, hai ceduto. Una delle pietre che custodivi ti ha <em>chiamato</em>. L'hai rotta. Le anime intrappolate — tra cui un potente stregone Waif — sono entrate in te. Il Waif non è abbastanza forte da controllarti, così ha accettato il patto: tu sopravvivi, lui ottiene un corpo. <em>Il tuo patrono è dentro di te.</em></div>
-    <div class="lb en">Old and afraid to die, you broke. One of the stones you were guarding <em>called to you</em>. You shattered it. The trapped souls — including a powerful Waif sorcerer — entered you. The Waif wasn't strong enough to dominate you, so he accepted the bargain: you survive, he gets a body. <em>Your patron lives inside you.</em></div>
+  <div class="lore"><div class="lt"><span class="it">Il Patto</span><span class="en">The Pact</span></div>
+    <div class="lb it">Vecchio e spaventato di morire, hai rotto una delle pietre che custodivi. Le anime intrappolate — tra cui un potente stregone Waif — sono entrate in te. Il Waif non era abbastanza forte da controllarti: ha accettato il patto. <em>Il tuo patrono è dentro di te.</em></div>
+    <div class="lb en">Old and afraid to die, you shattered one of the stones you were guarding. The trapped souls — including a powerful Waif sorcerer — entered you. The Waif wasn't strong enough to dominate you: he accepted the bargain. <em>Your patron lives inside you.</em></div>
   </div>
-  <div class="lore">
-    <div class="lt"><span class="it">La Colpa</span><span class="en">The Guilt</span></div>
-    <div class="lb it">Hai causato — o contribuito a causare — lo schianto di un <em>galeone volante</em>. Eravate in cerca di <em>Stormphrax</em> — fumini solidificati che cambiano peso con la luce. Nessuno sa che eri tu. Neanche tu ne sei completamente sicuro. Ma sai di aver fatto qualcosa.</div>
-    <div class="lb en">You caused — or helped cause — the crash of a <em>sky galleon</em>. You were searching for <em>Stormphrax</em> — solidified stormclouds that change weight with light. Nobody knows it was you. You're not entirely sure yourself. But you know you did something.</div>
+  <div class="lore"><div class="lt"><span class="it">La Colpa</span><span class="en">The Guilt</span></div>
+    <div class="lb it">Hai causato lo schianto di un <em>galeone volante</em>. Eravate in cerca di <em>Stormphrax</em> — fumini solidificati che cambiano peso con la luce. Nessuno sa che eri tu. Neanche tu ne sei completamente sicuro. Ma sai di aver fatto qualcosa.</div>
+    <div class="lb en">You caused the crash of a <em>sky galleon</em>. You were searching for <em>Stormphrax</em> — solidified stormclouds that change weight with light. Nobody knows it was you. You're not entirely sure yourself. But you know you did something.</div>
   </div>
-  <div class="lore">
-    <div class="lt"><span class="it">La Spada</span><span class="en">The Sword</span></div>
+  <div class="lore"><div class="lt"><span class="it">La Spada</span><span class="en">The Sword</span></div>
     <div class="lb it">Il miniaturale nell'elsa ritrae un giovane cavaliere in armatura di Sanctaphrax. Lo trovi familiare, ma non sai perché. Sei tu, duecento anni fa.</div>
-    <div class="lb en">The portrait in the hilt shows a young knight in Sanctaphrax armor. He looks familiar, but you can't place why. It's you, two hundred years ago.</div>
+    <div class="lb en">The portrait in the hilt shows a young knight in Sanctaphrax armor. He looks familiar. It's you, two hundred years ago.</div>
   </div>
-  <div class="lore">
-    <div class="lt"><span class="it">L'Armatura</span><span class="en">The Armor</span></div>
-    <div class="lb it">Autentica, ma di duecento anni fa. Stile desueto, incisioni di un'epoca passata. Chi conosce la storia dell'Ordine la riconosce come <em>quella dell'incidente</em>. Nessuno sospetta tu sia il sopravvissuto.</div>
-    <div class="lb en">Authentic, but two centuries old. Obsolete style, engravings of a forgotten era. Those who know the Order's history recognize it as the armor <em>from that incident</em>. Nobody suspects you are the survivor.</div>
-  </div>
-  <div class="lore">
-    <div class="lt"><span class="it">Personalità</span><span class="en">Personality</span></div>
-    <div class="lb it">Caotico Neutrale. <em>Egoista ma non malvagio.</em> Vecchio brontolone che pensa di sapere tutto — e per certi versi ha ragione, ha vissuto duecento anni. Diffidente, cinico, con un codice cavalleresco sepolto sotto due secoli di compromessi.</div>
-    <div class="lb en">Chaotic Neutral. <em>Selfish, not evil.</em> A grumpy old man who thinks he knows everything — and in many ways he does, having lived two centuries. Wary, cynical, with a chivalric code buried under two hundred years of compromise.</div>
+  <div class="lore"><div class="lt"><span class="it">Personalità</span><span class="en">Personality</span></div>
+    <div class="lb it">Caotico Neutrale. <em>Egoista ma non malvagio.</em> Vecchio brontolone che pensa di sapere tutto — e per certi versi ha ragione. Diffidente, cinico, con un codice cavalleresco sepolto sotto duecento anni di compromessi.</div>
+    <div class="lb en">Chaotic Neutral. <em>Selfish, not evil.</em> A grumpy old man who thinks he knows everything — and in many ways he does. Wary, cynical, with a chivalric code buried under two hundred years of compromise.</div>
   </div>
   <div class="rule"></div>
-  <div class="sec it">Il Mondo — Il Bordo</div><div class="sec en">The World — The Edge</div>
-  <div class="lore">
-    <div class="lt">Sanctaphrax</div>
-    <div class="lb it"><em>Città fluttuante</em> tenuta ancorata da catene. Sede dell'Ordine dei Cavalieri d'Accademia, studiosi-guerrieri in cerca di <em>Stormphrax</em> — cristalli di temporale condensato, pesantissimi al buio e privi di peso alla luce.</div>
-    <div class="lb en">A <em>floating city</em> held down by anchor chains. Home of the Order of Academy Knights, scholar-warriors who sought <em>Stormphrax</em> — condensed storm crystals, impossibly heavy in darkness and weightless in light.</div>
+  <div class="sec it">Il Mondo</div><div class="sec en">The World</div>
+  <div class="lore"><div class="lt">Sanctaphrax</div>
+    <div class="lb it"><em>Città fluttuante</em> tenuta da catene. Sede dei Cavalieri d'Accademia, in cerca di <em>Stormphrax</em> — cristalli di temporale, pesantissimi al buio e senza peso alla luce.</div>
+    <div class="lb en">A <em>floating city</em> held by anchor chains. Home of the Academy Knights, seekers of <em>Stormphrax</em> — storm crystals, impossibly heavy in darkness, weightless in light.</div>
   </div>
-  <div class="lore">
-    <div class="lt"><span class="it">I Waif</span><span class="en">The Waifs</span></div>
-    <div class="lb it">Creature telepate del Bordo. Capaci di leggere i pensieri e influenzare le menti. Il Waif dentro di te è il più potente delle anime che hai assorbito — ma non abbastanza da sopraffarti. Per ora siete soci, per necessità.</div>
-    <div class="lb en">Telepathic creatures of the Edge. Able to read minds and influence others. The Waif inside you is the most powerful of the souls you absorbed — but not powerful enough to overwhelm you. For now, you are partners out of necessity.</div>
+  <div class="lore"><div class="lt"><span class="it">I Waif</span><span class="en">The Waifs</span></div>
+    <div class="lb it">Creature telepate del Bordo. Leggono i pensieri, influenzano le menti. Il Waif dentro di te è il più potente delle anime che hai assorbito — ma non abbastanza da sopraffarti. Per ora siete soci.</div>
+    <div class="lb en">Telepathic creatures of the Edge. They read minds and influence others. The Waif inside you is the most powerful soul you absorbed — but not powerful enough to overwhelm you. For now, you're partners.</div>
   </div>
 </div>
 
 <script>
+// ── STATE ──
 let S={hp:9,gp:10,slotUsed:false,fod:[false,false],lang:'it'};
-function load(){try{const d=localStorage.getItem('percius_v3');if(d)Object.assign(S,JSON.parse(d));}catch(e){}}
-function save(){try{localStorage.setItem('percius_v3',JSON.stringify(S));}catch(e){}}
+function load(){try{const d=localStorage.getItem('percius_v4');if(d)Object.assign(S,JSON.parse(d));}catch(e){}}
+function save(){try{localStorage.setItem('percius_v4',JSON.stringify(S));}catch(e){}}
 
-function render(){
-  const h=document.getElementById('hp-cur');
-  h.textContent=S.hp;
-  h.style.color=S.hp<=2?'#e05050':S.hp<=5?'#d49030':'#c43030';
-  document.getElementById('gp-val').textContent=S.gp+' GP';
-  const pip=document.getElementById('slot-pip');
-  S.slotUsed?pip.classList.add('used'):pip.classList.remove('used');
-  const avail=S.fod.filter(u=>!u).length;
-  document.getElementById('fod-tag').textContent=avail+' / 2';
-  S.fod.forEach((used,i)=>{
-    const el=document.getElementById('fod-'+i);
-    if(el) used?el.classList.add('used'):el.classList.remove('used');
-  });
-  document.body.className=S.lang==='en'?'en':'';
+// ── STAT DATA ──
+const STATS = {
+  str:{
+    it:{name:'Forza',save:'+2',skills:[['Atletica','FOR','+2',false]],note:'Usata per gli attacchi con la spadona, la lancia e i pugnali (modificatore FOR già incluso nei bonus che vedi in Equip).'},
+    en:{name:'Strength',save:'+2',skills:[['Athletics','STR','+2',false]],note:'Used for attacks with greatsword, spear, and daggers (STR modifier already included in the bonuses shown in Gear).'}
+  },
+  dex:{
+    it:{name:'Destrezza',save:'−1',skills:[['Acrobazia','DES','−1',false],['Rapidità di Mano','DES','−1',false],['Furtività','DES','−1',false]],note:'Determina l\'iniziativa (−1). Non modifica la CA perché indossi armatura pesante — quella ha un valore fisso. Il tuo punto debole principale.'},
+    en:{name:'Dexterity',save:'−1',skills:[['Acrobatics','DEX','−1',false],['Sleight of Hand','DEX','−1',false],['Stealth','DEX','−1',false]],note:'Determines initiative (−1). Doesn\'t affect AC because you wear heavy armor — that has a fixed value. Your main weak point.'}
+  },
+  con:{
+    it:{name:'Costituzione',save:'+1',skills:[],note:'Nessuna abilità usa CON, ma è cruciale per la concentrazione: ogni volta che subisci danno mentre Hex è attivo, fai un TS CON (CD 10 o metà danno) o perdi l\'incantesimo e lo slot.'},
+    en:{name:'Constitution',save:'+1',skills:[],note:'No skills use CON, but it\'s crucial for concentration: whenever you take damage while Hex is active, make a CON save (DC 10 or half damage) or lose the spell and the slot.'}
+  },
+  int:{
+    it:{name:'Intelligenza',save:'+2',skills:[['Arcano','INT','+2',false],['Storia','INT','+2',false],['Indagare','INT','+4',true],['Natura','INT','+4',true],['Religione','INT','+2',false]],note:'La tua seconda stat più alta. Utile per capire il mondo, identificare magie e oggetti. Hai competenza in Indagare e Natura.'},
+    en:{name:'Intelligence',save:'+2',skills:[['Arcana','INT','+2',false],['History','INT','+2',false],['Investigation','INT','+4',true],['Nature','INT','+4',true],['Religion','INT','+2',false]],note:'Your second-highest stat. Useful for understanding the world, identifying magic and objects. You have proficiency in Investigation and Nature.'}
+  },
+  wis:{
+    it:{name:'Saggezza',save:'+0 ✦',skills:[['Addestrare Animali','SAG','−2',false],['Intuizione','SAG','−2',false],['Medicina','SAG','−2',false],['Percezione','SAG','−2',false],['Sopravvivenza','SAG','−2',false]],note:'Il tuo punto debole sociale. Percezione passiva = 8 — non noti quasi nulla senza cercare attivamente. Hai competenza al TS però (da warlock): +0 invece di −2.'},
+    en:{name:'Wisdom',save:'+0 ✦',skills:[['Animal Handling','WIS','−2',false],['Insight','WIS','−2',false],['Medicine','WIS','−2',false],['Perception','WIS','−2',false],['Survival','WIS','−2',false]],note:'Your social weak point. Passive Perception = 8 — you notice almost nothing without actively looking. You do have save proficiency (warlock): +0 instead of −2.'}
+  },
+  cha:{
+    it:{name:'Carisma',save:'+5 ✦',skills:[['Raggiro','CAR','+5',true],['Intrattenimento','CAR','+3',false],['Intimidire','CAR','+3',false],['Persuasione','CAR','+5',true]],note:'La tua stat principale. Governa il tuo spellcasting (DC 13, attacco +5) e le tue abilità sociali migliori. Con il feat Attore hai anche vantaggio a Raggiro quando ti fingi qualcun altro.'},
+    en:{name:'Charisma',save:'+5 ✦',skills:[['Deception','CHA','+5',true],['Performance','CHA','+3',false],['Intimidation','CHA','+3',false],['Persuasion','CHA','+5',true]],note:'Your primary stat. Governs spellcasting (DC 13, attack +5) and your best social skills. With Actor feat you also get advantage on Deception when disguised as someone else.'}
+  }
+};
+
+let selectedStat = null;
+
+function showStatDetail(key, el) {
+  const lang = S.lang;
+  const d = STATS[key][lang];
+  const panel = document.getElementById('stat-panel');
+
+  // Deselect if same
+  if (selectedStat === key) {
+    selectedStat = null;
+    panel.classList.remove('visible');
+    document.querySelectorAll('.sb').forEach(b => b.classList.remove('selected'));
+    return;
+  }
+  selectedStat = key;
+  document.querySelectorAll('.sb').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const saveLabel = lang === 'it' ? 'Tiro Salvezza' : 'Saving Throw';
+  const skillsLabel = lang === 'it' ? 'Abilità collegate' : 'Related Skills';
+  const profMark = lang === 'it' ? ' ✦' : ' ✦';
+
+  let html = `<div class="sp-title">${d.name}</div>`;
+  html += `<div class="sp-row"><span class="sp-lbl">${saveLabel}</span><span class="sp-val prof">${d.save}</span></div>`;
+  if (d.skills.length > 0) {
+    d.skills.forEach(([name, attr, val, prof]) => {
+      html += `<div class="sp-row"><span class="sp-lbl">${name}</span><span class="sp-val ${prof?'prof':''}">${val}${prof?profMark:''}</span></div>`;
+    });
+  }
+  if (d.note) html += `<div class="sp-note">${d.note}</div>`;
+
+  panel.innerHTML = html;
+  panel.classList.add('visible');
 }
 
+// ── RENDER ──
+function render() {
+  const h = document.getElementById('hp-cur');
+  h.textContent = S.hp;
+  h.style.color = S.hp<=2?'#e05050':S.hp<=5?'#d49030':'#c43030';
+  document.getElementById('gp-val').textContent = S.gp + ' GP';
+  const pip = document.getElementById('slot-pip');
+  S.slotUsed ? pip.classList.add('used') : pip.classList.remove('used');
+  const avail = S.fod.filter(u=>!u).length;
+  document.getElementById('fod-tag').textContent = avail + ' / 2';
+  S.fod.forEach((used,i)=>{
+    const el = document.getElementById('fod-'+i);
+    if(el) used ? el.classList.add('used') : el.classList.remove('used');
+  });
+  document.body.className = S.lang==='en' ? 'en' : '';
+  // refresh stat panel if open
+  if (selectedStat) {
+    const el = document.querySelector('.sb.selected');
+    if (el) showStatDetail(selectedStat, el);
+  }
+}
+
+// ── ACTIONS ──
 function changeHP(n){S.hp=Math.max(0,Math.min(9,S.hp+n));save();render();}
 function changeGP(n){S.gp=Math.max(0,S.gp+n);save();render();}
 function toggleSlot(){S.slotUsed=!S.slotUsed;save();render();}
@@ -687,9 +795,13 @@ function shortRest(btn){
   btn.textContent=S.lang==='en'?'✓ Slot recovered!':'✓ Slot recuperato!';
   setTimeout(()=>{btn.innerHTML=orig;},2000);
 }
-
-function toggleLang(){S.lang=S.lang==='it'?'en':'it';save();render();}
-
+function toggleLang(){
+  S.lang=S.lang==='it'?'en':'it';
+  selectedStat=null;
+  document.getElementById('stat-panel').classList.remove('visible');
+  document.querySelectorAll('.sb').forEach(b=>b.classList.remove('selected'));
+  save();render();
+}
 function showPage(name,btn){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
@@ -697,9 +809,10 @@ function showPage(name,btn){
   btn.classList.add('active');
   window.scrollTo(0,0);
 }
-
 function toggleCard(card){card.classList.toggle('open');}
+function toggleTactic(block){block.classList.toggle('open');}
 
+// ── SW ──
 if('serviceWorker' in navigator){
   const sw=`const C='p-v1';self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
   navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
