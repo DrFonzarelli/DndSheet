@@ -591,9 +591,9 @@ body{padding-bottom:62px;font-size:15px;}
   <div class="sec it">Armi</div><div class="sec en">Weapons</div>
   <div class="card" onclick="toggleCard(this)">
     <div class="ch"><div>
-      <div class="ct"><span class="it">Spadone — con miniatura</span><span class="en">Greatsword — with portrait</span></div>
-      <div class="tags"><span class="tag g">+4 · 2d6+2 <span class="it">taglio</span><span class="en">slashing</span></span><span class="tag"><span class="it">Pesante · 2 mani</span><span class="en">Heavy · Two-handed</span></span></div>
-      <div class="rollref"><span class="rr-pill"><span class="it">Tira</span><span class="en">Roll</span> 1d20 + <b>4</b></span><span class="rr-pill"><span class="it">Danno</span><span class="en">Dmg</span> <b>2d6+2</b></span><span class="rr-pill"><span class="it">Crit</span><span class="en">Crit</span> <b>4d6+2</b></span></div>
+      <div class="ct"><span class="it">Spada Lunga — con miniatura</span><span class="en">Longsword — with portrait</span></div>
+      <div class="tags"><span class="tag g">+4 · 1d8+2 <span class="it">taglio</span><span class="en">slashing</span></span><span class="tag"><span class="it">Versatile (2 mani 1d10+2)</span><span class="en">Versatile (two-handed 1d10+2)</span></span></div>
+      <div class="rollref"><span class="rr-pill"><span class="it">Tira</span><span class="en">Roll</span> 1d20 + <b>4</b></span><span class="rr-pill"><span class="it">Danno</span><span class="en">Dmg</span> <b>1d8+2</b></span><span class="rr-pill"><span class="it">2 mani</span><span class="en">2-h</span> <b>1d10+2</b></span><span class="rr-pill"><span class="it">Crit</span><span class="en">Crit</span> <b>2d8+2</b></span></div>
     </div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx">
       <p class="it">Nell'elsa è incastonato un <em>miniaturale</em> — un giovane cavaliere in armatura di Sanctaphrax. Non lo riconosci. Sei tu, duecento anni fa.</p>
@@ -1056,6 +1056,8 @@ const LEVEL_DATA = {
           id: 'mask_of_many_faces',
           name_it: 'Maschera dai Mille Volti', name_en: 'Mask of Many Faces',
           source: 'PHB · Nessun prerequisito',
+          prerequisite_it: 'Richiede accesso a Travestimento (Disguise Self)',
+          prerequisite_en: 'Requires Disguise Self spell access',
           rating: '⭐⭐',
           desc_it: 'Lanci <strong>Travestimento</strong> (Disguise Self) <em>a volontà, senza slot</em>. Con Raggiro +5, vantaggio da Attore quando ti fingi qualcun altro, e Taumaturgia per la voce — sei imbattibile in scenari sociali.',
           desc_en: 'Cast <strong>Disguise Self</strong> at will, <em>no slot needed</em>. With Deception +5, advantage from Actor when impersonating, and Thaumaturgy for voice — you\'re unstoppable in social scenes.'
@@ -1419,6 +1421,13 @@ function renderLevelUp() {
         <button class="lvl-apply" ${(prog.spells||[]).length === 0 ? 'disabled' : ''} onclick="lvlApplySpells(${target})">
           ${S.lang === 'it' ? '➕ Aggiungi a "Incantesimi Appresi"' : '➕ Add to "Learned Spells"'}
         </button>
+        <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--bo);font-size:11px;color:var(--gd);font-style:italic;margin-bottom:8px;">
+          ${S.lang === 'it' ? 'Non ti piace nessuno? Scrivi uno custom:' : 'Or add a custom one:'}
+        </div>
+        <div style="display:flex;gap:5px;margin-bottom:10px;">
+          <input id="custom-spell-${target}" type="text" class="inv-input" placeholder="${S.lang === 'it' ? 'Nome dell\'incantesimo...' : 'Spell name...'}" maxlength="50" style="flex:1;">
+          <button class="inv-addbtn" onclick="lvlAddCustomSpell(${target})" style="padding:0 10px;">+</button>
+        </div>
       </div>`;
   }
 
@@ -1438,6 +1447,7 @@ function renderLevelUp() {
       const picked = (prog.invos || []).includes(opt.id);
       const name = S.lang === 'it' ? opt.name_it : opt.name_en;
       const desc = S.lang === 'it' ? opt.desc_it : opt.desc_en;
+      const prereq = S.lang === 'it' ? opt.prerequisite_it : opt.prerequisite_en;
       html += `
         <div class="lvl-choice ${picked ? 'picked' : ''}" onclick="lvlPickInvo('${target}','${opt.id}')">
           <div class="lvl-choice-head">
@@ -1445,6 +1455,7 @@ function renderLevelUp() {
             <span class="lvl-choice-rating">${opt.rating}</span>
           </div>
           <div class="lvl-choice-source">${escapeHtml(opt.source)}</div>
+          ${prereq ? `<div style="font-size:10px;color:#d4a050;margin-top:2px;font-style:italic;">⚠ ${escapeHtml(prereq)}</div>` : ''}
           <div class="lvl-choice-desc">${desc}</div>
         </div>`;
     });
@@ -1566,6 +1577,24 @@ function lvlConfirm(target) {
       : `Confirm leveling to ${target}?\n\nThis updates the level shown on the sheet. The specific changes (HP max, spells, invocations) have already been applied by previous steps.`)) return;
   S.level = target;
   save(); render(); renderLevelUp();
+}
+
+function lvlAddCustomSpell(target) {
+  const inp = document.getElementById('custom-spell-' + target);
+  const name = (inp.value || '').trim();
+  if (!name) return;
+  S.spellsLearned.push({
+    name_it: name,
+    name_en: name,
+    source: S.lang === 'it' ? 'Custom' : 'Custom',
+    desc_it: '—',
+    desc_en: '—'
+  });
+  save();
+  alert(S.lang === 'it' ? `✓ "${name}" aggiunto a Incantesimi Appresi.` : `✓ "${name}" added to Learned Spells.`);
+  inp.value = '';
+  renderUserSpells();
+  renderLevelUp();
 }
 
 // ── HELPERS ──
