@@ -1049,6 +1049,8 @@ const LEVEL_DATA = {
           name_it: 'Mente Eldritchana', name_en: 'Eldritch Mind',
           source: 'TCoE · Nessun prerequisito',
           rating: '⭐⭐',
+          note_it: '✓ Ti dà: vantaggio ai TS Costituzione per mantenere concentrazione',
+          note_en: '✓ Grants: advantage on CON saves to maintain concentration',
           desc_it: '<strong>Vantaggio ai TS Costituzione</strong> per mantenere la concentrazione su un incantesimo. <em>Praticamente obbligatoria per te.</em> Con CON +1 perdi Hex troppo facilmente quando ti colpiscono in mischia — questa risolve il problema.',
           desc_en: '<strong>Advantage on CON saves</strong> to maintain spell concentration. <em>Practically mandatory for you.</em> With CON +1 you lose Hex too easily in melee — this fixes it.'
         },
@@ -1056,9 +1058,9 @@ const LEVEL_DATA = {
           id: 'mask_of_many_faces',
           name_it: 'Maschera dai Mille Volti', name_en: 'Mask of Many Faces',
           source: 'PHB · Nessun prerequisito',
-          prerequisite_it: 'Richiede accesso a Travestimento (Disguise Self)',
-          prerequisite_en: 'Requires Disguise Self spell access',
           rating: '⭐⭐',
+          note_it: '✓ Ti dà: Travestimento (Disguise Self) a volontà, senza slot',
+          note_en: '✓ Grants: Disguise Self at will, no slot needed',
           desc_it: 'Lanci <strong>Travestimento</strong> (Disguise Self) <em>a volontà, senza slot</em>. Con Raggiro +5, vantaggio da Attore quando ti fingi qualcun altro, e Taumaturgia per la voce — sei imbattibile in scenari sociali.',
           desc_en: 'Cast <strong>Disguise Self</strong> at will, <em>no slot needed</em>. With Deception +5, advantage from Actor when impersonating, and Thaumaturgy for voice — you\'re unstoppable in social scenes.'
         },
@@ -1067,6 +1069,8 @@ const LEVEL_DATA = {
           name_it: 'Vista del Diavolo', name_en: 'Devil\'s Sight',
           source: 'PHB · Nessun prerequisito',
           rating: '⭐',
+          note_it: '✓ Ti dà: scurovisione 120ft anche nel buio magico',
+          note_en: '✓ Grants: 120ft darkvision including magical darkness',
           desc_it: 'Vedi al buio normale e <strong>magico</strong> entro <strong>120 ft</strong>. Combo con l\'incantesimo Darkness (che non hai ancora). Utile se il DM ama scene buie. Negato dalle torce — non lasciare che gli alleati le accendano.',
           desc_en: 'See in normal and <strong>magical</strong> darkness within <strong>120 ft</strong>. Combos with the Darkness spell (you don\'t have it yet). Useful if your DM loves dark scenes. Negated by torches — don\'t let allies light them.'
         },
@@ -1075,6 +1079,8 @@ const LEVEL_DATA = {
           name_it: 'Visioni di Nebbia', name_en: 'Misty Visions',
           source: 'PHB · Nessun prerequisito',
           rating: '⭐',
+          note_it: '✓ Ti dà: Immagine Silenziosa (Silent Image) a volontà',
+          note_en: '✓ Grants: Silent Image at will',
           desc_it: 'Lanci <strong>Immagine Silenziosa</strong> (Silent Image) <em>a volontà</em>. Illusioni visive grandi (15ft cubo). Ottima per fingere presenze, distrarre nemici, o creare scenografia in narrazione. Pairs benissimo con Mask of Many Faces.',
           desc_en: 'Cast <strong>Silent Image</strong> at will. Big visual illusions (15ft cube). Great for fake presences, distracting enemies, or scene-setting in roleplay. Pairs well with Mask of Many Faces.'
         },
@@ -1083,6 +1089,8 @@ const LEVEL_DATA = {
           name_it: 'Influenza Affascinante', name_en: 'Beguiling Influence',
           source: 'PHB · Nessun prerequisito',
           rating: '○',
+          note_it: '⚠ Tu hai già: Raggiro e Persuasione con competenza',
+          note_en: '⚠ You already have: Deception and Persuasion proficiency',
           desc_it: 'Competenza in Raggiro e Persuasione. <em>Tu hai già entrambe.</em> Salta.',
           desc_en: 'Proficiency in Deception and Persuasion. <em>You already have both.</em> Skip.'
         },
@@ -1205,7 +1213,12 @@ function toggleLang() {
   const sp = document.getElementById('stat-panel');
   if (sp) sp.classList.remove('visible');
   document.querySelectorAll('.sb').forEach(b => b.classList.remove('selected'));
-  save(); render();
+  save();
+  render();
+  // Re-render level-up if currently viewing it
+  if (document.getElementById('page-levelup').classList.contains('active')) {
+    renderLevelUp();
+  }
 }
 function showPage(name, btn) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
@@ -1447,6 +1460,7 @@ function renderLevelUp() {
       const picked = (prog.invos || []).includes(opt.id);
       const name = S.lang === 'it' ? opt.name_it : opt.name_en;
       const desc = S.lang === 'it' ? opt.desc_it : opt.desc_en;
+      const note = S.lang === 'it' ? opt.note_it : opt.note_en;
       const prereq = S.lang === 'it' ? opt.prerequisite_it : opt.prerequisite_en;
       html += `
         <div class="lvl-choice ${picked ? 'picked' : ''}" onclick="lvlPickInvo('${target}','${opt.id}')">
@@ -1455,6 +1469,7 @@ function renderLevelUp() {
             <span class="lvl-choice-rating">${opt.rating}</span>
           </div>
           <div class="lvl-choice-source">${escapeHtml(opt.source)}</div>
+          ${note ? `<div style="font-size:11px;color:var(--go);margin-top:2px;font-style:italic;">${escapeHtml(note)}</div>` : ''}
           ${prereq ? `<div style="font-size:10px;color:#d4a050;margin-top:2px;font-style:italic;">⚠ ${escapeHtml(prereq)}</div>` : ''}
           <div class="lvl-choice-desc">${desc}</div>
         </div>`;
