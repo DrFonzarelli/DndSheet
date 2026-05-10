@@ -9,7 +9,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0f0d08">
 <title>Sir Percius Precarius</title>
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Sir%20Percius%20Precarius%22%2C%22short_name%22%3A%22Percius%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f0d08%22%2C%22theme_color%22%3A%22%230f0d08%22%7D">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root {
   --bg:#0f0d08; --bg2:#1a1610; --bg3:#221d13;
@@ -186,6 +188,157 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
 /* Tip box */
 .tip{background:#0a1a0a;border:1px solid #2a5a2a;border-left:3px solid #5a9a5a;border-radius:6px;padding:9px 12px;margin:10px 0;font-size:14px;color:#a0c8a0;line-height:1.6;}
 .tip strong{color:#80d080;}
+
+/* ───── COMPACT OVERRIDES ───── */
+body{padding-bottom:62px;font-size:15px;}
+.pg{padding:11px;}
+.sec{margin-top:13px;margin-bottom:7px;font-size:9.5px;padding-bottom:4px;}
+.sg{gap:5px;margin-bottom:6px;}
+.sb{padding:6px 4px;border-radius:6px;}
+.ss{font-size:23px;}
+.sn{font-size:7px;}
+.sm{font-size:13px;}
+.cg{gap:5px;margin-bottom:5px;}
+.cb2{padding:6px 4px;border-radius:6px;}
+.cv{font-size:18px;}
+.cl{font-size:6.5px;}
+.row{padding:4px 8px;gap:7px;}
+.rn{font-size:13px;}
+.rs{font-size:10px;min-width:24px;}
+.rv{font-size:13px;min-width:26px;}
+.dot{width:9px;height:9px;}
+.card{margin-bottom:6px;border-radius:7px;}
+.ch{padding:8px 11px 6px;}
+.ct{font-size:14px;}
+.cbody{padding:8px 11px 10px;}
+.tx{font-size:14px;line-height:1.55;}
+.pi{padding:5px 9px;font-size:13px;}
+.ist{padding:5px 9px;}
+.istl{font-size:13px;}
+.istv{font-size:14px;}
+.srow{padding:8px 11px;margin-bottom:7px;}
+.lore{padding:9px 11px;margin-bottom:7px;}
+.lb{font-size:14px;line-height:1.6;}
+.abtn{padding:9px;font-size:12px;margin-top:9px;}
+.tactic-block{margin-bottom:7px;}
+.tactic-header{padding:9px 11px 7px;}
+.tactic-body{padding:8px 11px 10px;}
+.tt{font-size:14px;line-height:1.6;}
+.warn,.tip{padding:7px 10px;font-size:13px;}
+
+/* Combat: compact 6-up grid */
+.cg6{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:6px;}
+
+/* Stat panel compact */
+.stat-panel{padding:9px 11px;margin-bottom:8px;}
+.sp-row{padding:3px 0;font-size:12.5px;}
+.sp-note{font-size:11.5px;padding-top:5px;margin-top:5px;}
+
+/* ───── CONDITIONS CHIPS ───── */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;}
+.chip{padding:5px 9px;background:var(--bg2);border:1px solid var(--bo);border-radius:14px;font-size:11.5px;color:var(--id);cursor:pointer;user-select:none;font-family:'Palatino Linotype',Palatino,Georgia,serif;letter-spacing:.03em;display:inline-flex;align-items:center;gap:4px;transition:all .15s;}
+.chip:active{transform:scale(.96);}
+.chip.on{background:var(--bg3);border-color:var(--go);color:var(--go);box-shadow:0 0 5px rgba(212,168,67,.25);}
+.chip.on.danger{border-color:var(--re);color:#e09090;box-shadow:0 0 5px rgba(196,48,48,.3);}
+.chip.on.purple{border-color:var(--tacaccent);color:#c0a0e0;box-shadow:0 0 5px rgba(144,96,192,.3);}
+.conc-warn{background:#1a0a0a;border:1px solid #6a2020;border-left:3px solid var(--re);border-radius:5px;padding:6px 10px;margin-top:5px;font-size:12px;color:#d0a0a0;line-height:1.4;display:none;}
+.conc-warn.on{display:block;}
+
+/* ───── ROLL REFERENCES (weapons) ───── */
+.rollref{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+.rr-pill{background:var(--bg3);border:1px solid var(--bo);border-radius:4px;padding:3px 7px;font-size:11.5px;color:var(--id);font-family:'Palatino Linotype',Palatino,Georgia,serif;}
+.rr-pill b{color:var(--go);font-weight:600;}
+
+/* ───── INVENTORY EDITOR ───── */
+.inv-list{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;}
+.inv-item{display:flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--bo);border-radius:5px;padding:6px 8px;}
+.inv-name{flex:1;font-size:13px;color:var(--in);}
+.inv-qty{font-size:11px;color:var(--gd);min-width:20px;text-align:right;}
+.inv-note-text{font-size:11.5px;color:var(--id);font-style:italic;line-height:1.4;margin-top:3px;padding-left:2px;}
+.inv-x{background:none;border:none;color:#a04040;font-size:16px;cursor:pointer;padding:0 4px;line-height:1;}
+.inv-x:active{color:var(--re);}
+.inv-add{display:flex;gap:5px;margin-bottom:6px;}
+.inv-input{flex:1;background:var(--bg2);border:1px solid var(--bo);border-radius:5px;padding:6px 8px;font-size:13px;color:var(--in);font-family:Georgia,serif;}
+.inv-input::placeholder{color:var(--gd);font-style:italic;opacity:.8;}
+.inv-input:focus{outline:none;border-color:var(--gd);}
+.inv-addbtn{background:var(--bg3);border:1px solid var(--bb);border-radius:5px;color:var(--go);padding:0 12px;font-size:14px;cursor:pointer;font-family:'Palatino Linotype',Palatino,Georgia,serif;}
+.inv-addbtn:active{background:var(--bo);}
+
+/* ───── LEVEL UP PAGE ───── */
+.lvl-hdr{background:linear-gradient(135deg,#1a1610 0%,#221d13 100%);border:1px solid var(--gd);border-radius:8px;padding:11px 13px;margin-bottom:11px;display:flex;justify-content:space-between;align-items:center;}
+.lvl-hdr-l{font-family:'Palatino Linotype',Palatino,Georgia,serif;}
+.lvl-hdr-cur{font-size:11px;color:var(--pd);letter-spacing:.1em;text-transform:uppercase;}
+.lvl-hdr-num{font-size:26px;color:var(--go);font-weight:700;line-height:1.1;}
+.lvl-hdr-arr{font-size:18px;color:var(--gd);margin:0 8px;}
+.lvl-hdr-r{text-align:right;}
+.lvl-hdr-target{font-size:11px;color:var(--pd);letter-spacing:.1em;text-transform:uppercase;}
+.lvl-hdr-tnum{font-size:26px;color:var(--in);font-weight:700;line-height:1.1;}
+
+.lvl-step{background:var(--bg2);border:1px solid var(--bo);border-left:3px solid var(--gd);border-radius:7px;padding:10px 12px;margin-bottom:9px;}
+.lvl-step.done{border-left-color:#5a9a5a;opacity:.75;}
+.lvl-step-num{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:9px;color:var(--pd);letter-spacing:.15em;text-transform:uppercase;margin-bottom:3px;}
+.lvl-step-num .check{color:#80d080;margin-left:5px;}
+.lvl-step-title{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:15px;font-weight:600;color:var(--pa);margin-bottom:6px;}
+.lvl-step-desc{font-size:13px;color:var(--id);line-height:1.5;margin-bottom:8px;}
+.lvl-step-desc strong{color:var(--pa);}
+.lvl-step-desc em{color:var(--go);font-style:italic;}
+
+/* HP step */
+.lvl-hp-row{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--bo);border-radius:5px;padding:7px 10px;margin-bottom:6px;font-size:13px;}
+.lvl-hp-row .lbl{color:var(--id);flex:1;}
+.lvl-hp-row .formula{color:var(--go);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-weight:600;}
+.lvl-hp-set{width:100%;padding:8px;background:var(--bg3);border:1px solid var(--bb);border-radius:5px;color:var(--pa);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:12px;letter-spacing:.05em;cursor:pointer;text-transform:uppercase;}
+.lvl-hp-set:active{background:var(--bo);}
+
+/* Choice cards */
+.lvl-choice{background:var(--bg3);border:1px solid var(--bo);border-radius:6px;padding:8px 10px;margin-bottom:5px;cursor:pointer;user-select:none;transition:border-color .12s;}
+.lvl-choice:active{background:#2a2418;}
+.lvl-choice.picked{border-color:var(--go);background:#231d12;box-shadow:inset 0 0 0 1px var(--gd);}
+.lvl-choice-head{display:flex;justify-content:space-between;align-items:center;gap:6px;}
+.lvl-choice-title{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:13.5px;font-weight:600;color:var(--pa);flex:1;}
+.lvl-choice.picked .lvl-choice-title{color:var(--go);}
+.lvl-choice-rating{font-size:11px;color:var(--gd);flex-shrink:0;letter-spacing:.05em;}
+.lvl-choice-desc{font-size:12px;color:var(--id);line-height:1.5;margin-top:4px;}
+.lvl-choice-desc em{color:var(--go);font-style:italic;}
+.lvl-choice-source{font-size:10px;color:var(--pd);font-style:italic;margin-top:3px;letter-spacing:.03em;}
+
+.lvl-counter{font-size:11px;color:var(--gd);font-style:italic;margin:5px 0 7px;letter-spacing:.03em;}
+.lvl-counter.complete{color:#80d080;}
+
+.lvl-apply{width:100%;padding:9px;background:linear-gradient(180deg,var(--bg3) 0%,#1a1610 100%);border:1px solid var(--go);border-radius:6px;color:var(--go);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:12px;letter-spacing:.07em;cursor:pointer;margin-top:6px;text-transform:uppercase;font-weight:600;}
+.lvl-apply:disabled{opacity:.4;cursor:not-allowed;border-color:var(--bo);color:var(--pd);}
+.lvl-apply:not(:disabled):active{background:var(--bo);}
+
+.lvl-confirm{width:100%;padding:13px;background:linear-gradient(180deg,#3a2a14 0%,#1a1610 100%);border:2px solid var(--go);border-radius:8px;color:var(--go);font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:14px;letter-spacing:.1em;cursor:pointer;margin-top:14px;text-transform:uppercase;font-weight:700;box-shadow:0 0 14px rgba(212,168,67,.2);}
+.lvl-confirm:disabled{opacity:.35;cursor:not-allowed;box-shadow:none;border-color:var(--bo);color:var(--pd);background:var(--bg3);}
+.lvl-confirm:not(:disabled):active{background:#2a1f10;}
+
+.lvl-summary{background:#0a1a0a;border:1px solid #2a5a2a;border-left:3px solid #5a9a5a;border-radius:6px;padding:9px 12px;margin-top:10px;font-size:12.5px;color:#a0c8a0;line-height:1.6;}
+.lvl-summary strong{color:#80d080;}
+.lvl-summary ul{margin:5px 0 0 18px;padding:0;}
+.lvl-summary li{margin-bottom:3px;}
+
+/* Custom invocations / spells lists */
+.userlist{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;}
+.userlist:empty + .userlist-empty{display:block;}
+.userlist-empty{display:none;font-size:12px;color:var(--pd);font-style:italic;text-align:center;padding:8px;background:var(--bg2);border:1px dashed var(--bo);border-radius:5px;margin-bottom:6px;}
+.userlist-item{background:var(--bg2);border:1px solid var(--bo);border-radius:5px;padding:7px 10px;}
+.userlist-head{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;}
+.userlist-name{font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:13.5px;font-weight:600;color:var(--pa);flex:1;}
+.userlist-source{font-size:10.5px;color:var(--pd);font-style:italic;margin-top:1px;}
+.userlist-desc{font-size:12px;color:var(--id);line-height:1.5;margin-top:4px;}
+.userlist-desc em{color:var(--go);}
+
+/* Notes textarea */
+.notes-ta{width:100%;background:var(--bg2);border:1px solid var(--bo);border-radius:5px;padding:8px 10px;font-size:13px;color:var(--in);font-family:Georgia,serif;line-height:1.5;resize:vertical;min-height:70px;}
+.notes-ta:focus{outline:none;border-color:var(--gd);}
+
+/* Editable hint */
+.editable-hint{display:inline-block;font-size:9px;color:var(--gd);margin-left:3px;opacity:.6;}
+
+/* Nav: 7 buttons now */
+.nb{font-size:7.5px;padding:5px 0 7px;}
+.nb .ic{font-size:15px;}
 </style>
 </head>
 <body>
@@ -195,8 +348,8 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   <div class="hdr-top">
     <div>
       <div class="cname">Sir Percius Precarius</div>
-      <div class="csub it">Warlock Infero Lv1 · Umano · Caotico Neutrale · ~200 anni</div>
-      <div class="csub en">Undead Warlock Lv1 · Human · Chaotic Neutral · ~200 years old</div>
+      <div class="csub it">Warlock Non Morto Lv<span id="lvl-it">1</span> · Umano · Caotico Neutrale · ~200 anni</div>
+      <div class="csub en">Undead Warlock Lv<span id="lvl-en">1</span> · Human · Chaotic Neutral · ~200 years old</div>
     </div>
     <div class="hpw">
       <div class="hpl it">Punti Ferita</div>
@@ -206,7 +359,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
         <div class="hpn" id="hp-cur">9</div>
         <button class="hpb" onclick="changeHP(1)">+</button>
       </div>
-      <div class="hpm">/ 9 max</div>
+      <div class="hpm" onclick="editHpMax()" style="cursor:pointer;">/ <span id="hp-max">9</span> max ✏</div>
     </div>
   </div>
   <div class="hdr-bot">
@@ -214,9 +367,12 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
       <span class="it">Cavaliere dell'Ordine · d8 · Prof +2</span>
       <span class="en">Knight of the Order · d8 · Prof +2</span>
     </div>
-    <button class="lbtn" onclick="toggleLang()">
-      <span class="it-i">🇬🇧 EN</span><span class="en-i">🇮🇹 IT</span>
-    </button>
+    <div style="display:flex;gap:6px;align-items:flex-start;flex-shrink:0;">
+      <button class="lbtn" id="install-btn" onclick="installPwa()" style="display:none;background:var(--bg3);color:var(--go);">📲 <span class="it-i">Installa</span><span class="en-i">Install</span></button>
+      <button class="lbtn" onclick="toggleLang()">
+        <span class="it-i">🇬🇧 EN</span><span class="en-i">🇮🇹 IT</span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -226,8 +382,9 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   <button class="nb" onclick="showPage('spells',this)"><span class="ic">🕯️</span><span class="it-i">Magia</span><span class="en-i">Spells</span></button>
   <button class="nb" onclick="showPage('gear',this)"><span class="ic">🛡️</span>Equip</button>
   <button class="nb" onclick="showPage('features',this)"><span class="ic">📜</span>Trait</button>
-  <button class="nb" onclick="showPage('tactics',this)"><span class="ic">🎯</span><span class="it-i">Tattiche</span><span class="en-i">Tactics</span></button>
+  <button class="nb" onclick="showPage('tactics',this)"><span class="ic">🎯</span><span class="it-i">Tatt</span><span class="en-i">Tact</span></button>
   <button class="nb" onclick="showPage('lore',this)"><span class="ic">🪶</span>Lore</button>
+  <button class="nb" onclick="showPage('levelup',this)"><span class="ic">⬆️</span>Lv</button>
 </nav>
 
 <!-- ═══════════════ STATS ═══════════════ -->
@@ -272,15 +429,28 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   </div>
 
   <div class="sec it">Combattimento</div><div class="sec en">Combat</div>
-  <div class="cg cg4">
+  <div class="cg cg6">
     <div class="cb2"><div class="cl">CA / AC</div><div class="cv">18</div></div>
     <div class="cb2"><div class="cl"><span class="it">Iniziativa</span><span class="en">Initiative</span></div><div class="cv">−1</div></div>
     <div class="cb2"><div class="cl"><span class="it">Velocità</span><span class="en">Speed</span></div><div class="cv">30</div></div>
     <div class="cb2"><div class="cl"><span class="it">Bonus Prof.</span><span class="en">Prof. Bonus</span></div><div class="cv">+2</div></div>
+    <div class="cb2"><div class="cl">Spell DC</div><div class="cv">13</div></div>
+    <div class="cb2"><div class="cl">Spell Atk</div><div class="cv">+5</div></div>
   </div>
-  <div class="cg cg2">
-    <div class="cb2"><div class="cl">Spell Save DC</div><div class="cv">13</div></div>
-    <div class="cb2"><div class="cl">Spell Attack</div><div class="cv">+5</div></div>
+
+  <div class="sec it">Condizioni — tocca per attivare</div>
+  <div class="sec en">Conditions — tap to toggle</div>
+  <div class="chips" id="cond-chips">
+    <div class="chip purple" data-cond="conc"><span class="it">🟡 Concentrazione</span><span class="en">🟡 Concentrating</span></div>
+    <div class="chip" data-cond="fod"><span class="it">🟣 Forma del Terrore</span><span class="en">🟣 Form of Dread</span></div>
+    <div class="chip danger" data-cond="frightened"><span class="it">😱 Spaventato</span><span class="en">😱 Frightened</span></div>
+    <div class="chip danger" data-cond="poisoned"><span class="it">🤢 Avvelenato</span><span class="en">🤢 Poisoned</span></div>
+    <div class="chip danger" data-cond="prone"><span class="it">⬇️ Prono</span><span class="en">⬇️ Prone</span></div>
+    <div class="chip danger" data-cond="incap"><span class="it">💫 Incapacitato</span><span class="en">💫 Incapacitated</span></div>
+  </div>
+  <div class="conc-warn" id="conc-warn">
+    <span class="it"><strong>Stai concentrando.</strong> Se subisci danno → TS Costituzione (CD 10 o metà danno) o perdi l'incantesimo.</span>
+    <span class="en"><strong>You are concentrating.</strong> If you take damage → CON save (DC 10 or half damage) or lose the spell.</span>
   </div>
 
   <div class="sec it">Tiri Salvezza</div><div class="sec en">Saving Throws</div>
@@ -396,6 +566,20 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
     </div>
   </div>
 
+  <div class="sec it">Incantesimi Appresi (Lv 2+)</div><div class="sec en">Learned Spells (Lv 2+)</div>
+  <div class="userlist" id="user-spells"></div>
+  <div class="userlist-empty" id="user-spells-empty">
+    <span class="it">Nessuno ancora. Salirai di livello e li aggiungerai dalla tab Lv ↑.</span>
+    <span class="en">None yet. Level up via the Lv ↑ tab to add them.</span>
+  </div>
+
+  <div class="sec it">Invocazioni Eldritchane (Lv 2+)</div><div class="sec en">Eldritch Invocations (Lv 2+)</div>
+  <div class="userlist" id="user-invos"></div>
+  <div class="userlist-empty" id="user-invos-empty">
+    <span class="it">Le invocazioni si sbloccano al livello 2 dalla tab Lv ↑.</span>
+    <span class="en">Invocations unlock at level 2 via the Lv ↑ tab.</span>
+  </div>
+
   <button class="abtn" id="rest-btn" onclick="shortRest(this)">
     <span class="it">☽ Riposo Breve — Recupera Slot</span>
     <span class="en">☽ Short Rest — Recover Slot</span>
@@ -409,6 +593,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
     <div class="ch"><div>
       <div class="ct"><span class="it">Spadone — con miniatura</span><span class="en">Greatsword — with portrait</span></div>
       <div class="tags"><span class="tag g">+4 · 2d6+2 <span class="it">taglio</span><span class="en">slashing</span></span><span class="tag"><span class="it">Pesante · 2 mani</span><span class="en">Heavy · Two-handed</span></span></div>
+      <div class="rollref"><span class="rr-pill"><span class="it">Tira</span><span class="en">Roll</span> 1d20 + <b>4</b></span><span class="rr-pill"><span class="it">Danno</span><span class="en">Dmg</span> <b>2d6+2</b></span><span class="rr-pill"><span class="it">Crit</span><span class="en">Crit</span> <b>4d6+2</b></span></div>
     </div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx">
       <p class="it">Nell'elsa è incastonato un <em>miniaturale</em> — un giovane cavaliere in armatura di Sanctaphrax. Non lo riconosci. Sei tu, duecento anni fa.</p>
@@ -419,6 +604,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
     <div class="ch"><div>
       <div class="ct"><span class="it">Lancia — con stendardo</span><span class="en">Spear — with banner</span></div>
       <div class="tags"><span class="tag g">+4 · 1d6+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Lancio 20/60</span><span class="en">Thrown 20/60</span></span></div>
+      <div class="rollref"><span class="rr-pill"><span class="it">Tira</span><span class="en">Roll</span> 1d20 + <b>4</b></span><span class="rr-pill"><span class="it">Danno</span><span class="en">Dmg</span> <b>1d6+2</b></span><span class="rr-pill"><span class="it">Crit</span><span class="en">Crit</span> <b>2d6+2</b></span></div>
     </div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx">
       <p class="it">Sulla cuspide è avvolto lo <em>stendardo dell'Ordine</em> — sbiadito, ma riconoscibile. Mischia o lancio: +4, 1d6+2 perforante.</p>
@@ -429,6 +615,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
     <div class="ch"><div>
       <div class="ct"><span class="it">Pugnali ×2</span><span class="en">Daggers ×2</span></div>
       <div class="tags"><span class="tag g">+4 · 1d4+2 <span class="it">perfo</span><span class="en">piercing</span></span><span class="tag"><span class="it">Fine · Lancio 20/60</span><span class="en">Finesse · Thrown 20/60</span></span></div>
+      <div class="rollref"><span class="rr-pill"><span class="it">Tira</span><span class="en">Roll</span> 1d20 + <b>4</b></span><span class="rr-pill"><span class="it">Danno</span><span class="en">Dmg</span> <b>1d4+2</b></span><span class="rr-pill"><span class="it">Crit</span><span class="en">Crit</span> <b>2d4+2</b></span></div>
     </div><div class="chv">▼</div></div>
     <div class="cbody"><div class="tx"><p><span class="it">Mischia o lancio: +4, 1d4+2 perforante.</span><span class="en">Melee or thrown: +4, 1d4+2 piercing.</span></p></div></div>
   </div>
@@ -443,9 +630,21 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
       <p class="en">• Book of lore · Ink + pen · 10 parchment sheets · Sand bag · Small knife · Traveler's clothes</p>
     </div></div>
   </div>
+
+  <div class="sec it">Inventario libero</div><div class="sec en">Free Inventory</div>
+  <div class="inv-add">
+    <input class="inv-input" id="inv-name" type="text" placeholder="" maxlength="60" onkeydown="if(event.key==='Enter')addInv()">
+    <button class="inv-addbtn" onclick="addInv()">+</button>
+  </div>
+  <div class="inv-list" id="inv-list"></div>
+  <div class="userlist-empty" id="inv-empty">
+    <span class="it">Nessun oggetto. Aggiungine sopra.</span>
+    <span class="en">No items. Add some above.</span>
+  </div>
+
   <div class="sec it">Denaro</div><div class="sec en">Currency</div>
-  <div class="ist"><span class="istl"><span class="it">Monete d'oro</span><span class="en">Gold Pieces</span></span><span class="istv" id="gp-val">10 GP</span></div>
-  <div class="brow" style="margin-top:8px;"><button class="abtn" onclick="changeGP(-1)">− 1 GP</button><button class="abtn" onclick="changeGP(1)">+ 1 GP</button></div>
+  <div class="ist" onclick="editGP()" style="cursor:pointer;"><span class="istl"><span class="it">Monete d'oro ✏</span><span class="en">Gold Pieces ✏</span></span><span class="istv" id="gp-val">10 GP</span></div>
+  <div class="brow" style="margin-top:6px;"><button class="abtn" onclick="changeGP(-1)">− 1 GP</button><button class="abtn" onclick="changeGP(1)">+ 1 GP</button></div>
 </div>
 
 <!-- ═══════════════ FEATURES ═══════════════ -->
@@ -454,7 +653,7 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
   <div class="card" onclick="toggleCard(this)">
     <div class="ch"><div>
       <div class="ct"><span class="it">Forma del Terrore</span><span class="en">Form of Dread</span></div>
-      <div class="tags"><span class="tag g"><span class="it">Warlock Infero Lv1</span><span class="en">Undead Warlock Lv1</span></span><span class="tag"><span class="it">Az. Bonus · 1 min</span><span class="en">Bonus Action · 1 min</span></span><span class="tag" id="fod-tag">2 / 2</span></div>
+      <div class="tags"><span class="tag g"><span class="it">Warlock Non Morto Lv1</span><span class="en">Undead Warlock Lv1</span></span><span class="tag"><span class="it">Az. Bonus · 1 min</span><span class="en">Bonus Action · 1 min</span></span><span class="tag" id="fod-tag">2 / 2</span></div>
     </div><div class="chv">▼</div></div>
     <div class="cbody">
       <div class="it"><div class="olbl">Testo ufficiale (Van Richten's Guide to Ravenloft)</div><div class="tx">
@@ -689,13 +888,77 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px 
     <div class="lb it">Creature telepate del Bordo. Leggono i pensieri, influenzano le menti. Il Waif dentro di te è il più potente delle anime che hai assorbito — ma non abbastanza da sopraffarti. Per ora siete soci.</div>
     <div class="lb en">Telepathic creatures of the Edge. They read minds and influence others. The Waif inside you is the most powerful soul you absorbed — but not powerful enough to overwhelm you. For now, you're partners.</div>
   </div>
+
+  <div class="rule"></div>
+  <div class="sec it">Note di Sessione</div><div class="sec en">Session Notes</div>
+  <textarea class="notes-ta" id="notes-ta" placeholder=""></textarea>
+</div>
+
+<!-- ═══════════════ LEVEL UP ═══════════════ -->
+<div id="page-levelup" class="pg">
+
+  <div class="lvl-hdr">
+    <div class="lvl-hdr-l">
+      <div class="lvl-hdr-cur"><span class="it">Livello attuale</span><span class="en">Current level</span></div>
+      <div class="lvl-hdr-num" id="lvl-cur">1</div>
+    </div>
+    <div class="lvl-hdr-arr">→</div>
+    <div class="lvl-hdr-r">
+      <div class="lvl-hdr-target"><span class="it">Sali a</span><span class="en">Leveling to</span></div>
+      <div class="lvl-hdr-tnum" id="lvl-tgt">2</div>
+    </div>
+  </div>
+
+  <div id="lvl-content"></div>
+
+  <div class="rule"></div>
+  <div style="font-size:11px;color:var(--pd);font-style:italic;text-align:center;margin-top:8px;line-height:1.5;">
+    <span class="it">Le scelte sono guidate ma non automatiche.<br>Tu confermi, l'app aggiorna i dati nelle altre tab.</span>
+    <span class="en">Choices are guided, not automatic.<br>You confirm, the app updates other tabs.</span>
+  </div>
 </div>
 
 <script>
 // ── STATE ──
-let S={hp:9,gp:10,slotUsed:false,fod:[false,false],lang:'it'};
-function load(){try{const d=localStorage.getItem('percius_v4');if(d)Object.assign(S,JSON.parse(d));}catch(e){}}
-function save(){try{localStorage.setItem('percius_v4',JSON.stringify(S));}catch(e){}}
+const DEFAULT_S = {
+  hp: 9, hpMax: 9, gp: 10,
+  slotUsed: false, fod: [false, false],
+  lang: 'it',
+  level: 1,
+  conditions: { conc: false, fod: false, frightened: false, poisoned: false, prone: false, incap: false },
+  inventory: [],            // [{ name, qty }]
+  spellsLearned: [],        // [{ name_it, name_en, source, desc_it, desc_en }]
+  invocations: [],          // [{ name, source, desc_it, desc_en }]
+  notes: '',
+  lvlProgress: {}           // { '2': { hpDone:true, spell:'aoa', invos:['eldritch_mind','mask'] } }
+};
+let S = JSON.parse(JSON.stringify(DEFAULT_S));
+
+function load() {
+  try {
+    const d = localStorage.getItem('percius_v5');
+    if (d) {
+      const parsed = JSON.parse(d);
+      // merge so new fields appear with defaults
+      S = Object.assign({}, DEFAULT_S, parsed);
+      S.conditions = Object.assign({}, DEFAULT_S.conditions, parsed.conditions || {});
+      S.lvlProgress = parsed.lvlProgress || {};
+      S.inventory = parsed.inventory || [];
+      S.spellsLearned = parsed.spellsLearned || [];
+      S.invocations = parsed.invocations || [];
+    } else {
+      // try migrate from v4
+      const old = localStorage.getItem('percius_v4');
+      if (old) {
+        const o = JSON.parse(old);
+        Object.assign(S, o);
+      }
+    }
+  } catch (e) { console.error('load failed', e); }
+}
+function save() {
+  try { localStorage.setItem('percius_v5', JSON.stringify(S)); } catch (e) {}
+}
 
 // ── STAT DATA ──
 const STATS = {
@@ -725,14 +988,159 @@ const STATS = {
   }
 };
 
-let selectedStat = null;
+// ── LEVEL UP DATA (scalable: add levels/classes here) ──
+// Each level entry describes what's gained, plus options for choices.
+// Sources: PHB (2014), TCoE (Tasha's), VRGtR (Van Richten's), XGtE
+const LEVEL_DATA = {
+  warlock: {
+    2: {
+      hpFormula: '1d8 + 1',
+      hpFormulaNote_it: '(1d8 + modificatore CON +1)',
+      hpFormulaNote_en: '(1d8 + CON modifier +1)',
+      newSpells: 1,
+      maxSpellLevel: 1,
+      newInvocations: 2,
+      features: [],
+      spellOptions: [
+        {
+          id: 'armor_of_agathys',
+          name_it: 'Armatura di Agathys', name_en: 'Armor of Agathys',
+          source: 'PHB · Slot 1° · Az. azione · Self · 1h · senza Conc.',
+          rating: '⭐⭐',
+          desc_it: 'Ti circondi di gelo spettrale. Guadagni <strong>5 PF temporanei</strong>; finché li hai, una creatura che ti colpisce in mischia subisce <strong>5 danni da freddo</strong>. Esclusiva del warlock. <em>Perfetta per Percius in prima linea.</em> Nota: i PF temp non si accumulano con quelli di Forma del Terrore — usa il valore più alto.',
+          desc_en: 'You\'re wreathed in spectral frost. Gain <strong>5 temporary HP</strong>; while you have them, a creature that hits you in melee takes <strong>5 cold damage</strong>. Warlock-exclusive. <em>Perfect for Percius on the front line.</em> Note: temp HP don\'t stack with Form of Dread — use the higher value.'
+        },
+        {
+          id: 'bane',
+          name_it: 'Maledizione (Bane)', name_en: 'Bane',
+          source: 'PHB · Slot 1° · Azione · 30 ft · 1 min · Conc.',
+          rating: '⭐',
+          desc_it: 'Fino a <strong>3 creature</strong>: TS Carisma o sottraggono <strong>1d4</strong> ai loro tiri d\'attacco e TS per 1 minuto. <em>È nell\'expanded list dei Non Morti.</em> Buon debuff di gruppo, ma richiede concentrazione (sostituisce Hex).',
+          desc_en: 'Up to <strong>3 creatures</strong>: CHA save or subtract <strong>1d4</strong> from attack rolls and saves for 1 minute. <em>On the Undead expanded list.</em> Solid party debuff, but requires concentration (replaces Hex).'
+        },
+        {
+          id: 'cause_fear',
+          name_it: 'Terrore (Cause Fear)', name_en: 'Cause Fear',
+          source: 'XGtE · Slot 1° · Azione · 60 ft · 1 min · Conc.',
+          rating: '○',
+          desc_it: 'TS Saggezza o <strong>spaventato</strong>. Funziona su quasi tutto tranne costrutti e non morti — limite serio. Forma del Terrore fa già paura senza spendere slot.',
+          desc_en: 'WIS save or <strong>frightened</strong>. Works on almost anything except constructs and undead — major limit. Form of Dread already does fear without spending slots.'
+        },
+        {
+          id: 'protection_evil_good',
+          name_it: 'Protezione dal Bene e dal Male', name_en: 'Protection from Evil and Good',
+          source: 'PHB · Slot 1° · Azione · Tocco · 10 min · Conc.',
+          rating: '○',
+          desc_it: 'Il bersaglio è protetto da: <em>aberrazioni, bestie, celestiali, elementali, fatati, immondi, non morti</em>. Loro hanno <strong>svantaggio</strong> agli attacchi contro di lui, e lui è immune a charm/paura/possessione da loro. Situazionale ma forte se sai cosa affronti.',
+          desc_en: 'Target is protected against: <em>aberrations, beasts, celestials, elementals, fey, fiends, undead</em>. They have <strong>disadvantage</strong> to attack the target, and target is immune to charm/fear/possession from them. Situational but strong if you know what you\'re fighting.'
+        },
+        {
+          id: 'false_life',
+          name_it: 'Falsa Vita (False Life)', name_en: 'False Life',
+          source: 'PHB · Slot 1° · Az. azione · Self · 1h · senza Conc.',
+          rating: '○',
+          desc_it: '<strong>1d4+4 PF temporanei</strong> per 1 ora. <em>Nell\'expanded list Non Morti.</em> Mediocre: i PF temp non si accumulano con Forma del Terrore, e Armor of Agathys fa più cose.',
+          desc_en: '<strong>1d4+4 temporary HP</strong> for 1 hour. <em>On the Undead expanded list.</em> Mediocre: temp HP don\'t stack with Form of Dread, and Armor of Agathys does more.'
+        }
+      ],
+      invocationOptions: [
+        {
+          id: 'eldritch_mind',
+          name_it: 'Mente Eldritchana', name_en: 'Eldritch Mind',
+          source: 'TCoE · Nessun prerequisito',
+          rating: '⭐⭐',
+          desc_it: '<strong>Vantaggio ai TS Costituzione</strong> per mantenere la concentrazione su un incantesimo. <em>Praticamente obbligatoria per te.</em> Con CON +1 perdi Hex troppo facilmente quando ti colpiscono in mischia — questa risolve il problema.',
+          desc_en: '<strong>Advantage on CON saves</strong> to maintain spell concentration. <em>Practically mandatory for you.</em> With CON +1 you lose Hex too easily in melee — this fixes it.'
+        },
+        {
+          id: 'mask_of_many_faces',
+          name_it: 'Maschera dai Mille Volti', name_en: 'Mask of Many Faces',
+          source: 'PHB · Nessun prerequisito',
+          rating: '⭐⭐',
+          desc_it: 'Lanci <strong>Travestimento</strong> (Disguise Self) <em>a volontà, senza slot</em>. Con Raggiro +5, vantaggio da Attore quando ti fingi qualcun altro, e Taumaturgia per la voce — sei imbattibile in scenari sociali.',
+          desc_en: 'Cast <strong>Disguise Self</strong> at will, <em>no slot needed</em>. With Deception +5, advantage from Actor when impersonating, and Thaumaturgy for voice — you\'re unstoppable in social scenes.'
+        },
+        {
+          id: 'devils_sight',
+          name_it: 'Vista del Diavolo', name_en: 'Devil\'s Sight',
+          source: 'PHB · Nessun prerequisito',
+          rating: '⭐',
+          desc_it: 'Vedi al buio normale e <strong>magico</strong> entro <strong>120 ft</strong>. Combo con l\'incantesimo Darkness (che non hai ancora). Utile se il DM ama scene buie. Negato dalle torce — non lasciare che gli alleati le accendano.',
+          desc_en: 'See in normal and <strong>magical</strong> darkness within <strong>120 ft</strong>. Combos with the Darkness spell (you don\'t have it yet). Useful if your DM loves dark scenes. Negated by torches — don\'t let allies light them.'
+        },
+        {
+          id: 'misty_visions',
+          name_it: 'Visioni di Nebbia', name_en: 'Misty Visions',
+          source: 'PHB · Nessun prerequisito',
+          rating: '⭐',
+          desc_it: 'Lanci <strong>Immagine Silenziosa</strong> (Silent Image) <em>a volontà</em>. Illusioni visive grandi (15ft cubo). Ottima per fingere presenze, distrarre nemici, o creare scenografia in narrazione. Pairs benissimo con Mask of Many Faces.',
+          desc_en: 'Cast <strong>Silent Image</strong> at will. Big visual illusions (15ft cube). Great for fake presences, distracting enemies, or scene-setting in roleplay. Pairs well with Mask of Many Faces.'
+        },
+        {
+          id: 'beguiling_influence',
+          name_it: 'Influenza Affascinante', name_en: 'Beguiling Influence',
+          source: 'PHB · Nessun prerequisito',
+          rating: '○',
+          desc_it: 'Competenza in Raggiro e Persuasione. <em>Tu hai già entrambe.</em> Salta.',
+          desc_en: 'Proficiency in Deception and Persuasion. <em>You already have both.</em> Skip.'
+        },
+        {
+          id: 'eldritch_sight',
+          name_it: 'Vista Eldritchana', name_en: 'Eldritch Sight',
+          source: 'PHB · Nessun prerequisito',
+          rating: '○',
+          desc_it: 'Lanci <strong>Individuazione del Magico</strong> a volontà. Utile, ma è un rituale: lo faresti gratis con altri sistemi.',
+          desc_en: 'Cast <strong>Detect Magic</strong> at will. Useful, but it\'s a ritual spell: you\'d cast it free via other means.'
+        },
+        {
+          id: 'fiendish_vigor',
+          name_it: 'Vigore Immondo', name_en: 'Fiendish Vigor',
+          source: 'PHB · Nessun prerequisito',
+          rating: '○',
+          desc_it: 'Lanci <strong>Falsa Vita</strong> a volontà (sempre 1° livello: 1d4+4 temp). I PF temp <em>non</em> si accumulano con Forma del Terrore — quindi mediocre per te.',
+          desc_en: 'Cast <strong>False Life</strong> at will (always 1st level: 1d4+4 temp HP). Temp HP <em>don\'t</em> stack with Form of Dread — so mediocre for you.'
+        },
+        {
+          id: 'armor_of_shadows',
+          name_it: 'Armatura d\'Ombre', name_en: 'Armor of Shadows',
+          source: 'PHB · Nessun prerequisito',
+          rating: '○',
+          desc_it: 'Lanci <strong>Armatura del Mago</strong> a volontà. <em>Inutile per te:</em> hai già armatura pesante (CA 18). Non si stacca con Mage Armor.',
+          desc_en: 'Cast <strong>Mage Armor</strong> at will. <em>Useless for you:</em> you already have heavy armor (CA 18). Doesn\'t stack with Mage Armor.'
+        }
+      ]
+    }
+    // Future: 3, 4, 5... add following same shape
+  }
+};
 
+// ── PWA Install ──
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('install-btn');
+  if (btn) btn.style.display = 'inline-flex';
+});
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  const btn = document.getElementById('install-btn');
+  if (btn) btn.style.display = 'none';
+});
+function installPwa() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  const btn = document.getElementById('install-btn');
+  if (btn) btn.style.display = 'none';
+}
+
+// ── STAT DETAIL ──
+let selectedStat = null;
 function showStatDetail(key, el) {
   const lang = S.lang;
   const d = STATS[key][lang];
   const panel = document.getElementById('stat-panel');
-
-  // Deselect if same
   if (selectedStat === key) {
     selectedStat = null;
     panel.classList.remove('visible');
@@ -742,11 +1150,8 @@ function showStatDetail(key, el) {
   selectedStat = key;
   document.querySelectorAll('.sb').forEach(b => b.classList.remove('selected'));
   el.classList.add('selected');
-
   const saveLabel = lang === 'it' ? 'Tiro Salvezza' : 'Saving Throw';
-  const skillsLabel = lang === 'it' ? 'Abilità collegate' : 'Related Skills';
-  const profMark = lang === 'it' ? ' ✦' : ' ✦';
-
+  const profMark = ' ✦';
   let html = `<div class="sp-title">${d.name}</div>`;
   html += `<div class="sp-row"><span class="sp-lbl">${saveLabel}</span><span class="sp-val prof">${d.save}</span></div>`;
   if (d.skills.length > 0) {
@@ -755,70 +1160,490 @@ function showStatDetail(key, el) {
     });
   }
   if (d.note) html += `<div class="sp-note">${d.note}</div>`;
-
   panel.innerHTML = html;
   panel.classList.add('visible');
 }
 
+// ── HP / GP ──
+function changeHP(n) { S.hp = Math.max(0, Math.min(S.hpMax, S.hp + n)); save(); render(); }
+function changeGP(n) { S.gp = Math.max(0, S.gp + n); save(); render(); }
+function editHpMax() {
+  const cur = S.hpMax;
+  const v = prompt(S.lang === 'it' ? `PF massimi (attuali: ${cur})` : `Max HP (current: ${cur})`, cur);
+  if (v === null) return;
+  const n = parseInt(v, 10);
+  if (!isNaN(n) && n > 0) {
+    S.hpMax = n;
+    if (S.hp > n) S.hp = n;
+    save(); render();
+  }
+}
+function editGP() {
+  const v = prompt(S.lang === 'it' ? `Monete d'oro (attuali: ${S.gp})` : `Gold pieces (current: ${S.gp})`, S.gp);
+  if (v === null) return;
+  const n = parseInt(v, 10);
+  if (!isNaN(n) && n >= 0) { S.gp = n; save(); render(); }
+}
+
+// ── SLOTS / FOD ──
+function toggleSlot() { S.slotUsed = !S.slotUsed; save(); render(); }
+function toggleFoD(i) { S.fod[i] = !S.fod[i]; save(); render(); }
+function resetFoD() { S.fod = [false, false]; save(); render(); }
+function shortRest(btn) {
+  S.slotUsed = false; save(); render();
+  const orig = btn.innerHTML;
+  btn.textContent = S.lang === 'en' ? '✓ Slot recovered!' : '✓ Slot recuperato!';
+  setTimeout(() => { btn.innerHTML = orig; }, 2000);
+}
+
+// ── LANG / NAV ──
+function toggleLang() {
+  S.lang = S.lang === 'it' ? 'en' : 'it';
+  selectedStat = null;
+  const sp = document.getElementById('stat-panel');
+  if (sp) sp.classList.remove('visible');
+  document.querySelectorAll('.sb').forEach(b => b.classList.remove('selected'));
+  save(); render();
+}
+function showPage(name, btn) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+  if (name === 'levelup') renderLevelUp();
+}
+function toggleCard(card) { card.classList.toggle('open'); }
+function toggleTactic(block) { block.classList.toggle('open'); }
+
+// ── CONDITIONS ──
+function toggleCond(key) {
+  S.conditions[key] = !S.conditions[key];
+  save(); render();
+}
+function renderConditions() {
+  document.querySelectorAll('.chip').forEach(chip => {
+    const k = chip.dataset.cond;
+    if (S.conditions[k]) chip.classList.add('on');
+    else chip.classList.remove('on');
+  });
+  const w = document.getElementById('conc-warn');
+  if (w) {
+    if (S.conditions.conc) w.classList.add('on');
+    else w.classList.remove('on');
+  }
+}
+
+// ── INVENTORY ──
+function addInv() {
+  const inp = document.getElementById('inv-name');
+  const v = (inp.value || '').trim();
+  if (!v) return;
+  S.inventory.push({ name: v, qty: 1 });
+  inp.value = '';
+  save(); renderInventory();
+}
+function removeInv(idx) {
+  S.inventory.splice(idx, 1);
+  save(); renderInventory();
+}
+function changeInvQty(idx, delta) {
+  const it = S.inventory[idx];
+  if (!it) return;
+  it.qty = Math.max(1, (it.qty || 1) + delta);
+  save(); renderInventory();
+}
+function renderInventory() {
+  const list = document.getElementById('inv-list');
+  const empty = document.getElementById('inv-empty');
+  if (!list) return;
+  list.innerHTML = '';
+  if (S.inventory.length === 0) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  S.inventory.forEach((it, idx) => {
+    const div = document.createElement('div');
+    div.className = 'inv-item';
+    div.innerHTML = `
+      <button class="hpb" style="width:24px;height:24px;font-size:14px;" onclick="changeInvQty(${idx},-1)">−</button>
+      <span class="inv-qty">${it.qty || 1}×</span>
+      <span class="inv-name">${escapeHtml(it.name)}</span>
+      <button class="hpb" style="width:24px;height:24px;font-size:14px;" onclick="changeInvQty(${idx},1)">+</button>
+      <button class="inv-x" onclick="removeInv(${idx})" aria-label="remove">✕</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+// ── USER SPELLS / INVOCATIONS LISTS ──
+function renderUserSpells() {
+  const list = document.getElementById('user-spells');
+  const empty = document.getElementById('user-spells-empty');
+  if (!list) return;
+  list.innerHTML = '';
+  if (S.spellsLearned.length === 0) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  S.spellsLearned.forEach((sp, idx) => {
+    const div = document.createElement('div');
+    div.className = 'userlist-item';
+    const name = S.lang === 'it' ? sp.name_it : sp.name_en;
+    const desc = S.lang === 'it' ? sp.desc_it : sp.desc_en;
+    div.innerHTML = `
+      <div class="userlist-head">
+        <div>
+          <div class="userlist-name">${escapeHtml(name)}</div>
+          <div class="userlist-source">${escapeHtml(sp.source)}</div>
+        </div>
+        <button class="inv-x" onclick="removeUserSpell(${idx})" aria-label="remove">✕</button>
+      </div>
+      <div class="userlist-desc">${desc}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+function removeUserSpell(idx) {
+  if (!confirm(S.lang === 'it' ? 'Rimuovere questo incantesimo?' : 'Remove this spell?')) return;
+  S.spellsLearned.splice(idx, 1);
+  save(); renderUserSpells();
+}
+function renderUserInvos() {
+  const list = document.getElementById('user-invos');
+  const empty = document.getElementById('user-invos-empty');
+  if (!list) return;
+  list.innerHTML = '';
+  if (S.invocations.length === 0) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  S.invocations.forEach((iv, idx) => {
+    const div = document.createElement('div');
+    div.className = 'userlist-item';
+    const name = S.lang === 'it' ? iv.name_it : iv.name_en;
+    const desc = S.lang === 'it' ? iv.desc_it : iv.desc_en;
+    div.innerHTML = `
+      <div class="userlist-head">
+        <div>
+          <div class="userlist-name">${escapeHtml(name)}</div>
+          <div class="userlist-source">${escapeHtml(iv.source)}</div>
+        </div>
+        <button class="inv-x" onclick="removeUserInvo(${idx})" aria-label="remove">✕</button>
+      </div>
+      <div class="userlist-desc">${desc}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+function removeUserInvo(idx) {
+  if (!confirm(S.lang === 'it' ? 'Rimuovere questa invocazione?' : 'Remove this invocation?')) return;
+  S.invocations.splice(idx, 1);
+  save(); renderUserInvos();
+}
+
+// ── NOTES ──
+function bindNotes() {
+  const ta = document.getElementById('notes-ta');
+  if (!ta) return;
+  ta.value = S.notes || '';
+  ta.placeholder = S.lang === 'it' ? 'Note libere — campagna, idee, regole della casa…' : 'Free notes — campaign, ideas, house rules…';
+  ta.oninput = () => { S.notes = ta.value; save(); };
+}
+
+// ── LEVEL UP ──
+function renderLevelUp() {
+  const target = S.level + 1;
+  document.getElementById('lvl-cur').textContent = S.level;
+  document.getElementById('lvl-tgt').textContent = target;
+
+  const data = LEVEL_DATA.warlock[target];
+  const c = document.getElementById('lvl-content');
+  if (!data) {
+    c.innerHTML = `
+      <div class="lvl-step" style="border-left-color:var(--bo);">
+        <div class="lvl-step-title">${S.lang === 'it' ? 'Livello massimo coperto' : 'Max level covered'}</div>
+        <div class="lvl-step-desc">
+          ${S.lang === 'it'
+            ? 'La guida arriverà fino al livello 5 (e oltre, in futuro). Per il livello ' + target + ' aspetta che il sistema venga esteso, oppure modifica manualmente le tue stat dalle altre tab.'
+            : 'The guide currently goes up to level 5 (more later). For level ' + target + ' wait for the system to be extended, or update your stats manually from other tabs.'}
+        </div>
+      </div>`;
+    return;
+  }
+
+  // get progress
+  if (!S.lvlProgress[target]) S.lvlProgress[target] = { hpDone: false, spells: [], invos: [] };
+  const prog = S.lvlProgress[target];
+
+  let html = '';
+
+  // ── STEP 1: HP ──
+  html += `
+    <div class="lvl-step ${prog.hpDone ? 'done' : ''}">
+      <div class="lvl-step-num">${S.lang === 'it' ? 'Passo 1' : 'Step 1'} · ${S.lang === 'it' ? 'Punti Ferita' : 'Hit Points'}${prog.hpDone ? '<span class="check">✓</span>' : ''}</div>
+      <div class="lvl-step-title">${S.lang === 'it' ? '🎲 Aumenta i PF massimi' : '🎲 Increase Max HP'}</div>
+      <div class="lvl-step-desc">
+        ${S.lang === 'it'
+          ? `Tira fisicamente <strong>${data.hpFormula}</strong> ${data.hpFormulaNote_it} e aggiungi il risultato al tuo HP max attuale (<strong>${S.hpMax}</strong>). Poi tocca il bottone qui sotto e inserisci il nuovo totale.`
+          : `Physically roll <strong>${data.hpFormula}</strong> ${data.hpFormulaNote_en} and add the result to your current Max HP (<strong>${S.hpMax}</strong>). Then tap the button below and enter the new total.`}
+      </div>
+      <div class="lvl-hp-row">
+        <span class="lbl">${S.lang === 'it' ? 'HP max attuale:' : 'Current Max HP:'}</span>
+        <span class="formula">${S.hpMax}</span>
+      </div>
+      <button class="lvl-hp-set" onclick="lvlSetHpMax(${target})">${S.lang === 'it' ? '✏ Imposta nuovo HP max' : '✏ Set new Max HP'}</button>
+    </div>`;
+
+  // ── STEP 2: SPELL ──
+  if (data.newSpells > 0) {
+    const spellsLeft = data.newSpells - (prog.spells || []).length;
+    const spellsDone = spellsLeft <= 0;
+    html += `
+      <div class="lvl-step ${spellsDone ? 'done' : ''}">
+        <div class="lvl-step-num">${S.lang === 'it' ? 'Passo 2' : 'Step 2'} · ${S.lang === 'it' ? 'Incantesimo' : 'Spell'}${spellsDone ? '<span class="check">✓</span>' : ''}</div>
+        <div class="lvl-step-title">${S.lang === 'it' ? `📖 Scegli ${data.newSpells} incantesim${data.newSpells>1?'i':'o'} di livello ${data.maxSpellLevel}°` : `📖 Pick ${data.newSpells} ${data.maxSpellLevel}${ord(data.maxSpellLevel)}-level spell${data.newSpells>1?'s':''}`}</div>
+        <div class="lvl-step-desc">${S.lang === 'it'
+          ? 'Tocca un incantesimo per selezionarlo. Le stelline indicano la qualità per <em>te</em> (Percius, mischia, Non Morto). Poi conferma.'
+          : 'Tap a spell to select. Stars rate it for <em>you</em> (Percius, melee, Undead). Then confirm.'}</div>
+        <div class="lvl-counter ${spellsDone ? 'complete' : ''}">${S.lang === 'it' ? `Selezionati: ${(prog.spells||[]).length} / ${data.newSpells}` : `Selected: ${(prog.spells||[]).length} / ${data.newSpells}`}</div>`;
+    data.spellOptions.forEach(opt => {
+      const picked = (prog.spells || []).includes(opt.id);
+      const name = S.lang === 'it' ? opt.name_it : opt.name_en;
+      const desc = S.lang === 'it' ? opt.desc_it : opt.desc_en;
+      html += `
+        <div class="lvl-choice ${picked ? 'picked' : ''}" onclick="lvlPickSpell('${target}','${opt.id}')">
+          <div class="lvl-choice-head">
+            <span class="lvl-choice-title">${escapeHtml(name)}</span>
+            <span class="lvl-choice-rating">${opt.rating}</span>
+          </div>
+          <div class="lvl-choice-source">${escapeHtml(opt.source)}</div>
+          <div class="lvl-choice-desc">${desc}</div>
+        </div>`;
+    });
+    html += `
+        <button class="lvl-apply" ${(prog.spells||[]).length === 0 ? 'disabled' : ''} onclick="lvlApplySpells(${target})">
+          ${S.lang === 'it' ? '➕ Aggiungi a "Incantesimi Appresi"' : '➕ Add to "Learned Spells"'}
+        </button>
+      </div>`;
+  }
+
+  // ── STEP 3: INVOCATIONS ──
+  if (data.newInvocations > 0) {
+    const invosLeft = data.newInvocations - (prog.invos || []).length;
+    const invosDone = invosLeft <= 0;
+    html += `
+      <div class="lvl-step ${invosDone ? 'done' : ''}">
+        <div class="lvl-step-num">${S.lang === 'it' ? 'Passo 3' : 'Step 3'} · ${S.lang === 'it' ? 'Invocazioni' : 'Invocations'}${invosDone ? '<span class="check">✓</span>' : ''}</div>
+        <div class="lvl-step-title">${S.lang === 'it' ? `🔮 Scegli ${data.newInvocations} Invocazion${data.newInvocations>1?'i':'e'} Eldritchan${data.newInvocations>1?'e':'a'}` : `🔮 Pick ${data.newInvocations} Eldritch Invocation${data.newInvocations>1?'s':''}`}</div>
+        <div class="lvl-step-desc">${S.lang === 'it'
+          ? 'Le invocazioni sono il marchio del warlock. Tocca per selezionare, poi conferma.'
+          : 'Invocations define your warlock. Tap to select, then confirm.'}</div>
+        <div class="lvl-counter ${invosDone ? 'complete' : ''}">${S.lang === 'it' ? `Selezionate: ${(prog.invos||[]).length} / ${data.newInvocations}` : `Selected: ${(prog.invos||[]).length} / ${data.newInvocations}`}</div>`;
+    data.invocationOptions.forEach(opt => {
+      const picked = (prog.invos || []).includes(opt.id);
+      const name = S.lang === 'it' ? opt.name_it : opt.name_en;
+      const desc = S.lang === 'it' ? opt.desc_it : opt.desc_en;
+      html += `
+        <div class="lvl-choice ${picked ? 'picked' : ''}" onclick="lvlPickInvo('${target}','${opt.id}')">
+          <div class="lvl-choice-head">
+            <span class="lvl-choice-title">${escapeHtml(name)}</span>
+            <span class="lvl-choice-rating">${opt.rating}</span>
+          </div>
+          <div class="lvl-choice-source">${escapeHtml(opt.source)}</div>
+          <div class="lvl-choice-desc">${desc}</div>
+        </div>`;
+    });
+    html += `
+        <button class="lvl-apply" ${(prog.invos||[]).length === 0 ? 'disabled' : ''} onclick="lvlApplyInvos(${target})">
+          ${S.lang === 'it' ? '➕ Aggiungi a "Invocazioni"' : '➕ Add to "Invocations"'}
+        </button>
+      </div>`;
+  }
+
+  // ── SUMMARY + CONFIRM ──
+  const allDone = prog.hpDone
+    && (data.newSpells === 0 || (prog.spells && prog.spells.length >= data.newSpells))
+    && (data.newInvocations === 0 || (prog.invos && prog.invos.length >= data.newInvocations));
+
+  html += `
+    <div class="lvl-summary">
+      <strong>${S.lang === 'it' ? 'Riepilogo modifiche da applicare:' : 'Summary of changes to apply:'}</strong>
+      <ul>
+        <li>${S.lang === 'it' ? `HP max aggiornato (era 9, ora <strong>${S.hpMax}</strong>)` : `Max HP updated (was 9, now <strong>${S.hpMax}</strong>)`}${prog.hpDone ? ' ✓' : ''}</li>
+        <li>${S.lang === 'it' ? `${data.newSpells} incantesim${data.newSpells>1?'i':'o'} aggiunto${data.newSpells>1?'i':''} a Magia` : `${data.newSpells} spell${data.newSpells>1?'s':''} added to Spells`} ${(prog.spells||[]).length>=data.newSpells ? '✓' : ''}</li>
+        <li>${S.lang === 'it' ? `${data.newInvocations} invocazion${data.newInvocations>1?'i':'e'} aggiunte alle Invocazioni` : `${data.newInvocations} invocation${data.newInvocations>1?'s':''} added to Invocations`} ${(prog.invos||[]).length>=data.newInvocations ? '✓' : ''}</li>
+        <li>${S.lang === 'it' ? `Livello passa da ${S.level} a ${target}` : `Level goes from ${S.level} to ${target}`}</li>
+      </ul>
+    </div>
+    <button class="lvl-confirm" ${allDone ? '' : 'disabled'} onclick="lvlConfirm(${target})">
+      ${allDone
+        ? (S.lang === 'it' ? `🎖️ Conferma livello ${target}` : `🎖️ Confirm level ${target}`)
+        : (S.lang === 'it' ? `Completa tutti i passi prima di confermare` : `Complete all steps to confirm`)}
+    </button>`;
+
+  c.innerHTML = html;
+}
+
+function lvlSetHpMax(target) {
+  const data = LEVEL_DATA.warlock[target];
+  const cur = S.hpMax;
+  const v = prompt(
+    S.lang === 'it'
+      ? `Hai tirato ${data.hpFormula}? Inserisci il NUOVO HP max (era ${cur}).`
+      : `Rolled ${data.hpFormula}? Enter the NEW Max HP (was ${cur}).`,
+    cur
+  );
+  if (v === null) return;
+  const n = parseInt(v, 10);
+  if (isNaN(n) || n <= cur) {
+    alert(S.lang === 'it' ? `Il nuovo HP max deve essere > ${cur}.` : `New Max HP must be > ${cur}.`);
+    return;
+  }
+  S.hpMax = n;
+  S.hp = Math.min(n, S.hp + (n - cur)); // optionally bring current HP up
+  if (!S.lvlProgress[target]) S.lvlProgress[target] = { hpDone: false, spells: [], invos: [] };
+  S.lvlProgress[target].hpDone = true;
+  save(); render(); renderLevelUp();
+}
+
+function lvlPickSpell(target, id) {
+  const prog = S.lvlProgress[target] || (S.lvlProgress[target] = { hpDone: false, spells: [], invos: [] });
+  const data = LEVEL_DATA.warlock[target];
+  const ix = prog.spells.indexOf(id);
+  if (ix >= 0) prog.spells.splice(ix, 1);
+  else if (prog.spells.length < data.newSpells) prog.spells.push(id);
+  save(); renderLevelUp();
+}
+function lvlPickInvo(target, id) {
+  const prog = S.lvlProgress[target] || (S.lvlProgress[target] = { hpDone: false, spells: [], invos: [] });
+  const data = LEVEL_DATA.warlock[target];
+  const ix = prog.invos.indexOf(id);
+  if (ix >= 0) prog.invos.splice(ix, 1);
+  else if (prog.invos.length < data.newInvocations) prog.invos.push(id);
+  save(); renderLevelUp();
+}
+
+function lvlApplySpells(target) {
+  const prog = S.lvlProgress[target];
+  const data = LEVEL_DATA.warlock[target];
+  if (!prog || prog.spells.length === 0) return;
+  prog.spells.forEach(id => {
+    const opt = data.spellOptions.find(o => o.id === id);
+    if (!opt) return;
+    // skip if already in S.spellsLearned (by id-like name match)
+    const exists = S.spellsLearned.some(s => s.name_en === opt.name_en);
+    if (exists) return;
+    S.spellsLearned.push({
+      name_it: opt.name_it, name_en: opt.name_en,
+      source: opt.source,
+      desc_it: opt.desc_it, desc_en: opt.desc_en
+    });
+  });
+  save();
+  alert(S.lang === 'it' ? `✓ Aggiunto a "Incantesimi Appresi" nella tab Magia.` : `✓ Added to "Learned Spells" in the Spells tab.`);
+  renderUserSpells();
+  renderLevelUp();
+}
+function lvlApplyInvos(target) {
+  const prog = S.lvlProgress[target];
+  const data = LEVEL_DATA.warlock[target];
+  if (!prog || prog.invos.length === 0) return;
+  prog.invos.forEach(id => {
+    const opt = data.invocationOptions.find(o => o.id === id);
+    if (!opt) return;
+    const exists = S.invocations.some(s => s.name_en === opt.name_en);
+    if (exists) return;
+    S.invocations.push({
+      name_it: opt.name_it, name_en: opt.name_en,
+      source: opt.source,
+      desc_it: opt.desc_it, desc_en: opt.desc_en
+    });
+  });
+  save();
+  alert(S.lang === 'it' ? `✓ Aggiunte a "Invocazioni" nella tab Magia.` : `✓ Added to "Invocations" in the Spells tab.`);
+  renderUserInvos();
+  renderLevelUp();
+}
+
+function lvlConfirm(target) {
+  if (!confirm(S.lang === 'it'
+      ? `Confermi il passaggio al livello ${target}?\n\nQuesto aggiorna il livello visibile nella scheda. Le modifiche specifiche (HP max, incantesimi, invocazioni) le hai già applicate dai passi precedenti.`
+      : `Confirm leveling to ${target}?\n\nThis updates the level shown on the sheet. The specific changes (HP max, spells, invocations) have already been applied by previous steps.`)) return;
+  S.level = target;
+  save(); render(); renderLevelUp();
+}
+
+// ── HELPERS ──
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+function ord(n) { return ['st','nd','rd'][((n+90)%100-10)%10-1] || 'th'; }
+
+// ── CONDITION CHIPS BIND ──
+function bindConditionChips() {
+  document.querySelectorAll('.chip[data-cond]').forEach(chip => {
+    chip.onclick = () => toggleCond(chip.dataset.cond);
+  });
+}
+
+// ── INVENTORY PLACEHOLDER UPDATE ──
+function updateInvPlaceholder() {
+  const inp = document.getElementById('inv-name');
+  if (inp) inp.placeholder = S.lang === 'it' ? 'Nome oggetto…' : 'Item name…';
+}
+
 // ── RENDER ──
 function render() {
+  // HP
   const h = document.getElementById('hp-cur');
   h.textContent = S.hp;
-  h.style.color = S.hp<=2?'#e05050':S.hp<=5?'#d49030':'#c43030';
+  // ratio-based color
+  const ratio = S.hpMax > 0 ? S.hp / S.hpMax : 0;
+  h.style.color = ratio <= 0.25 ? '#e05050' : ratio <= 0.55 ? '#d49030' : '#c43030';
+  document.getElementById('hp-max').textContent = S.hpMax;
+  // Level display
+  const lvlIt = document.getElementById('lvl-it');
+  const lvlEn = document.getElementById('lvl-en');
+  if (lvlIt) lvlIt.textContent = S.level;
+  if (lvlEn) lvlEn.textContent = S.level;
+  // GP
   document.getElementById('gp-val').textContent = S.gp + ' GP';
+  // Slot
   const pip = document.getElementById('slot-pip');
-  S.slotUsed ? pip.classList.add('used') : pip.classList.remove('used');
-  const avail = S.fod.filter(u=>!u).length;
-  document.getElementById('fod-tag').textContent = avail + ' / 2';
-  S.fod.forEach((used,i)=>{
-    const el = document.getElementById('fod-'+i);
-    if(el) used ? el.classList.add('used') : el.classList.remove('used');
+  if (pip) (S.slotUsed ? pip.classList.add('used') : pip.classList.remove('used'));
+  // FoD
+  const avail = S.fod.filter(u => !u).length;
+  const fodTag = document.getElementById('fod-tag');
+  if (fodTag) fodTag.textContent = avail + ' / 2';
+  S.fod.forEach((used, i) => {
+    const el = document.getElementById('fod-' + i);
+    if (el) (used ? el.classList.add('used') : el.classList.remove('used'));
   });
-  document.body.className = S.lang==='en' ? 'en' : '';
-  // refresh stat panel if open
+  // Lang body class
+  document.body.className = S.lang === 'en' ? 'en' : '';
+  // Stat panel refresh
   if (selectedStat) {
     const el = document.querySelector('.sb.selected');
     if (el) showStatDetail(selectedStat, el);
   }
+  // Conditions chips
+  renderConditions();
+  // Inventory
+  renderInventory();
+  updateInvPlaceholder();
+  // User lists
+  renderUserSpells();
+  renderUserInvos();
+  // Notes placeholder
+  bindNotes();
 }
 
-// ── ACTIONS ──
-function changeHP(n){S.hp=Math.max(0,Math.min(9,S.hp+n));save();render();}
-function changeGP(n){S.gp=Math.max(0,S.gp+n);save();render();}
-function toggleSlot(){S.slotUsed=!S.slotUsed;save();render();}
-function toggleFoD(i){S.fod[i]=!S.fod[i];save();render();}
-function resetFoD(){S.fod=[false,false];save();render();}
-
-function shortRest(btn){
-  S.slotUsed=false;save();render();
-  const orig=btn.innerHTML;
-  btn.textContent=S.lang==='en'?'✓ Slot recovered!':'✓ Slot recuperato!';
-  setTimeout(()=>{btn.innerHTML=orig;},2000);
-}
-function toggleLang(){
-  S.lang=S.lang==='it'?'en':'it';
-  selectedStat=null;
-  document.getElementById('stat-panel').classList.remove('visible');
-  document.querySelectorAll('.sb').forEach(b=>b.classList.remove('selected'));
-  save();render();
-}
-function showPage(name,btn){
-  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  btn.classList.add('active');
-  window.scrollTo(0,0);
-}
-function toggleCard(card){card.classList.toggle('open');}
-function toggleTactic(block){block.classList.toggle('open');}
-
-// ── SW ──
-if('serviceWorker' in navigator){
-  const sw=`const C='p-v1';self.addEventListener('install',()=>self.skipWaiting());self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
-  navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW reg failed', err));
+  });
 }
 
-load();render();
+// ── INIT ──
+load();
+bindConditionChips();
+render();
 </script>
 </body>
 </html>
